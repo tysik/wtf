@@ -1,19 +1,25 @@
-CC = gcc
-CFLAGS = -fpic -Wall -Wextra -O2
-LDFLAGS = -shared
+CC := gcc
+C_FLAGS := -fpic -Wall -Wextra -O2
+LINKFLAGS := -shared
 
-SRC = quaternions.c
-SOURCE_DIR = src
-BUILD_DIR = build
-TARGET_LIB = quaternions.so
-
-.PHONY: all
-all: ${TARGET_LIB}
-
-${TARGET_LIB}: ${SOURCE_DIR}/${SRC}
-	mkdir -p ${BUILD_DIR}
-	$(CC) ${LDFLAGS} -o ${BUILD_DIR}/$@ $^
-
+.PHONY: $(TARGET)
 .PHONY: clean
+
+SRC_PATH := ./src/
+BUILD_PATH := ./build/
+INCLUDE_PATH := ./include
+
+TARGET := quaternions.so
+
+OBJS := quaternions.o
+OBJ := $(patsubst %,$(BUILD_PATH)%,$(OBJS))
+
+$(BUILD_PATH)%.o: $(SRC_PATH)%.c
+	@mkdir -p $(BUILD_PATH)
+	@$(CC) $(C_FLAGS) -o $@ -c $< -I $(INCLUDE_PATH)
+
+$(TARGET): $(OBJ)
+	@$(CC) -o $(BUILD_PATH)$@ $^ $(LINKFLAGS)
+
 clean:
-	rm -rf ${BUILD_DIR}
+	@rm -rf $(BUILD_PATH)
