@@ -22,4 +22,6 @@ Quat qsub(const Quat* q1, const Quat* q2);
 Quat qmul(const Quat* q1, const Quat* q2);
 Quat qdiv(const Quat* q1, const Quat* q2);
 
+bool qcmp(const Quat* q1, const Quat* q2);
+
 #endif // QUATERNIONS_H_
