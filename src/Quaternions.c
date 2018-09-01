@@ -1,4 +1,4 @@
-#include "quaternions.h"
+#include "Quaternions.h"
 
 #include <stdlib.h>
 

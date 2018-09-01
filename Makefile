@@ -7,11 +7,11 @@ LINKFLAGS := -shared
 
 SRC_PATH := ./src/
 BUILD_PATH := ./build/
-INCLUDE_PATH := ./include
+INCLUDE_PATH := ./include/
 
 TARGET := quaternions.so
 
-OBJS := quaternions.o
+OBJS := Quaternions.o
 OBJ := $(patsubst %,$(BUILD_PATH)%,$(OBJS))
 
 $(BUILD_PATH)%.o: $(SRC_PATH)%.c
