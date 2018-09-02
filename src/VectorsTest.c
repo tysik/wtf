@@ -45,7 +45,7 @@ static char* testDot() {
 static char* testCross() {
     Vect v1 = {.x = 1.0, .y = 2.0, .z = 3.0};
     Vect v2 = {.x = 1.0, .y = 1.0, .z = 1.0};
-    Vect v_expected = {.x = -1.0, .y = 2.0, .z = -1.0};   
+    Vect v_expected = {.x = -1.0, .y = 2.0, .z = -1.0};
     Vect v = vcross(&v1, &v2);
     mu_assert("error, cross != cross(v1,v2)", vcmp(&v, &v_expected) == true);
 }
@@ -60,14 +60,23 @@ static char* testScale() {
 
 static char* testNorm() {
     Vect v1 = {.x = 1.0, .y = 2.0, .z = 3.0};
-    double n_squared_expected = 14.0;
-    double n_expected = 3.741657;
-    double n_squared = vnormSquared(&v1);
-    double n = vnorm(&v1);
-    mu_assert("error, nSquared != normSquared(v1)",
-              dcmp(n_squared, n_squared_expected) == true);
-    //FIXME:
-    //mu_assert("error, n != norm(v1)", dcmp(n, n_expected) == true);
+    Vect v2 = {.x = 0.1, .y = 0.2, .z = 0.3};
+
+    double n1_sqr_expected = 14.0;
+    double n1_sqr = vnormSquared(&v1);
+    double n2_sqr_expected = 0.14;
+    double n2_sqr = vnormSquared(&v2);
+    mu_assert("error, nSquared != normSquared(v1)", dcmp(n1_sqr, n1_sqr_expected) == true);
+    mu_assert("error, nSquared != normSquared(v2)", dcmp(n2_sqr, n2_sqr_expected) == true);
+
+    double n1_expected = 3.741657;
+    double n1 = vnorm(&v1);
+    double n2_expected = 0.374165;
+    double n2 = vnorm(&v2);
+    mu_assert("error, n != norm(v1)", dcmp(n1, n1_expected) == true);
+    mu_assert("error, n != norm(v2)", dcmp(n2, n2_expected) == true);
+
+    return 0;
 }
 
 static char* all_tests() {
