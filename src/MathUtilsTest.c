@@ -6,9 +6,9 @@
 static int tests_run = 0;
 
 static char* testMax() {
-    mu_assert("error, max != 4.0", dmax(4, 1.0, 2.0, 3.0, 4.0) == 4.0); 
-    mu_assert("error, max != -1.0", dmax(4, -1.0, -2.0, -3.0, -4.0) == -1.0); 
-    mu_assert("error, max != 0.001", dmax(4, 0.0, 0.001, -3.001, -40.0) == 0.001); 
+    mu_assert("error, max != 4.0", dmax(4, 1.0, 2.0, 3.0, 4.0) == 4.0);
+    mu_assert("error, max != -1.0", dmax(4, -1.0, -2.0, -3.0, -4.0) == -1.0);
+    mu_assert("error, max != 0.001", dmax(4, 0.0, 0.001, -3.001, -40.0) == 0.001);
 }
 
 static char* testCompare() {

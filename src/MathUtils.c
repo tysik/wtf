@@ -1,5 +1,6 @@
 #include "MathUtils.h"
 
+#include <math.h>
 #include <stdio.h>
 
 double dmax(int num_args, ...) {

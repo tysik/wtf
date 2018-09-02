@@ -3,6 +3,8 @@
 
 #include <stdbool.h>
 
+// TODO use scalar and vector as Quat
+
 typedef struct Quat { double w, i, j, k; } Quat;
 
 typedef struct ResultQuat {

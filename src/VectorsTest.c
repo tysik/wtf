@@ -18,9 +18,7 @@ static char* testAdd() {
     Vect v1 = {.x = 1.0, .y = 2.0, .z = 3.0};
     Vect v2 = {.x = 1.0, .y = 1.0, .z = 1.0};
     Vect v_expected = {
-        .x = 2.0,
-        .y = 3.0,
-        .z = 4.0,
+        .x = 2.0, .y = 3.0, .z = 4.0,
     };
     Vect v = vadd(&v1, &v2);
     mu_assert("error, v != v1+v2", vcmp(&v, &v_expected) == true);
@@ -69,9 +67,9 @@ static char* testNorm() {
     mu_assert("error, nSquared != normSquared(v1)", dcmp(n1_sqr, n1_sqr_expected) == true);
     mu_assert("error, nSquared != normSquared(v2)", dcmp(n2_sqr, n2_sqr_expected) == true);
 
-    double n1_expected = 3.741657;
+    double n1_expected = 3.741657387;
     double n1 = vnorm(&v1);
-    double n2_expected = 0.374165;
+    double n2_expected = 0.374165738;
     double n2 = vnorm(&v2);
     mu_assert("error, n != norm(v1)", dcmp(n1, n1_expected) == true);
     mu_assert("error, n != norm(v2)", dcmp(n2, n2_expected) == true);
@@ -87,7 +85,6 @@ static char* all_tests() {
     mu_run_test(testCross);
     mu_run_test(testScale);
     mu_run_test(testNorm);
-
     return 0;
 }
 
