@@ -5,8 +5,11 @@
 #include <stdarg.h>
 #include <stdbool.h>
 
-bool dcmp(double a, double b);
+// Get the largest value from the arguments
+double dmax(int num_args, ...);
 
-double dmax(double, ...);
+// Compare a and b for equality with limited precission
+// Returns true if a is approx. equal to b
+bool dcmp(double a, double b);
 
 #endif // MATH_UTILS_H_
