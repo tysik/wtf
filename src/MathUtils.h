@@ -2,9 +2,10 @@
 #define MATH_UTILS_H_
 
 #include <math.h>
+#include <stdio.h>
 
 bool dcmp(double a, double b) {
-    static const double Precision = 1.0e-9;
+    static const double Precision = 1.0e-8;
     return fabs(a - b) < Precision;
 }
 

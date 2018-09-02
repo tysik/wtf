@@ -10,9 +10,9 @@ typedef struct ResultQuat {
     Quat q;
 } ResultQuat;
 
-Quat empty();
-Quat from(double w, double i, double j, double k);
-Quat fromRPY(double roll, double pitch, double yaw);
+Quat qEmpty();
+Quat qFrom(double w, double i, double j, double k);
+Quat qFromRPY(double roll, double pitch, double yaw);
 
 Quat qreal(const Quat* q);
 Quat qpure(const Quat* q);
