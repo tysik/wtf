@@ -9,7 +9,7 @@ typedef struct Vect {
 } Vect;
 
 // Construct an empty vector (0, 0, 0)
-Vect vEmpty();
+Vect vempty();
 
 // Negate a vector
 // TODO add tests

@@ -3,7 +3,7 @@
 
 #include <math.h>
 
-Vect vEmpty() {
+Vect vempty() {
     Vect v = {.x = 0.0, .y = 0.0, .z = 0.0};
     return v;
 }
