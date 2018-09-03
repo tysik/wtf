@@ -1,6 +1,8 @@
 #ifndef MIN_TEST_H_
 #define MIN_TEST_H_
 
+// Based on http://www.jera.com/techinfo/jtns/jtn002.html
+
 #define mu_assert(message, test)                                                                   \
     do {                                                                                           \
         if (!(test))                                                                               \
