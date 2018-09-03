@@ -1,58 +1,67 @@
 #include "Quaternions.h"
 #include "MathUtils.h"
 
-#include <stdlib.h>
+#include <math.h>
 
-Quat empty() {
-    Quat q = {.w = 1.0, .i = 0.0, .j = 0.0, .k = 0.0};
-    return q;
-}
-
-Quat from(double w, double i, double j, double k) {
-    Quat q = {.w = w, .i = i, .j = j, .k = k};
+Quat qempty() {
+    Quat q = {.w = 1.0, .v = vempty()};
     return q;
 }
 
 Quat qreal(const Quat* q) {
-    Quat qx = {.w = q->w, .i = 0.0, .j = 0.0, .k = 0.0};
+    Quat qx = {.s = q->s, .v = vempty()};
     return qx;
 }
 
 Quat qpure(const Quat* q) {
-    Quat qx = {.w = 0.0, .i = q->i, .j = q->j, .k = q->k};
+    Quat qx = {.s = 0.0, .v = q->v};
     return qx;
 }
 
 Quat qconj(const Quat* q) {
-    Quat qx = {.w = q->w, .i = -q->i, .j = -q->j, .k = -q->k};
+    Quat qx = {.s = q->s, .v = vneg(&q->v)};
     return qx;
 }
 
 bool qcmp(const Quat* q1, const Quat* q2) {
-    return dcmp(q1->w, q2->w) && dcmp(q1->i, q2->i) && dcmp(q1->j, q2->j) && dcmp(q1->k, q2->k);
+    return dcmp(q1->s, q2->s) && vcmp(&q1->v, &q2->v);
 }
 
 Quat qadd(const Quat* q1, const Quat* q2) {
-    Quat q = {.w = q1->w + q2->w, .i = q1->i + q2->i, .j = q1->j + q2->j, .k = q1->k + q2->k};
+    Quat q = {.s = q1->s + q2->s, .v = vadd(&q1->v, &q2->v)};
     return q;
 }
 
 Quat qsub(const Quat* q1, const Quat* q2) {
-    Quat q = {.w = q1->w - q2->w, .i = q1->i - q2->i, .j = q1->j - q2->j, .k = q1->k - q2->k};
+    Quat q = {.s = q1->s - q2->s, .v = vsub(&q1->v, &q2->v)};
     return q;
 }
 
 Quat qmul(const Quat* q1, const Quat* q2) {
-    Quat q = {.w = q1->w * q2->w - q1->i * q2->i - q1->j * q2->j - q1->k * q2->k,
-              .i = q1->w * q2->i + q1->i * q2->w + q1->j * q2->k - q1->k * q2->j,
-              .j = q1->w * q2->j + q1->j * q2->w + q1->k * q2->i - q1->i * q2->k,
-              .k = q1->w * q2->k + q1->k * q2->w + q1->i * q2->j - q1->j * q2->i};
+    // Quat q = {.w = q1->w * q2->w - q1->i * q2->i - q1->j * q2->j - q1->k * q2->k,
+    //           .i = q1->w * q2->i + q1->i * q2->w + q1->j * q2->k - q1->k * q2->j,
+    //           .j = q1->w * q2->j + q1->j * q2->w + q1->k * q2->i - q1->i * q2->k,
+    //           .k = q1->w * q2->k + q1->k * q2->w + q1->i * q2->j - q1->j * q2->i};
+    Vect v1 = vscale(q1->s, &q2->v);
+    Vect v2 = vscale(q2->s, &q1->v);
+    Vect v3 = vcross(&q1->v, &q2->v);
+    Vect vx = vadd(&v1, &v2);
+    
+    double s = q1->s * q2->s - vdot(&q1->v, &q2->v);
+    Vect v = vadd(&vx, &v3);
+    Quat q = {.s = s, .v = v};
     return q;
 }
 
 Quat qscale(double k, const Quat* q) {
-    Quat qx = {.w = q->w * k, .i = q->i * k, .j = q->j * k, .k = q->k * k};
+    Quat qx = {.s = k * q->s, .v = vscale(k, &q->v)};
     return qx;
 }
 
-double qnorm(const Quat* q) { return q->w * q->w + q->i * q->i + q->j * q->j + q->k * q->k; }
+double qnorm(const Quat* q) {
+    return sqrt(qnormSquared(q));
+}
+
+double qnormSquared(const Quat* q) {
+    return q->s * q->s + vnormSquared(&q->v);
+}

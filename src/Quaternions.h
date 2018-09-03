@@ -1,35 +1,68 @@
 #ifndef QUATERNIONS_H_
 #define QUATERNIONS_H_
 
+#include "Vectors.h"
+
 #include <stdbool.h>
 
-// TODO use scalar and vector as Quat
+// TODO Review tests and add more
 
-typedef struct Quat { double w, i, j, k; } Quat;
+// Quaternion can be used either by components w, i, j, and k
+// or by scale s and vector v form
+typedef union Quat {
+    struct {
+        double w, i, j, k;
+    };
+    struct {
+        double s;
+        Vect v;
+    };
+} Quat;
 
-typedef struct ResultQuat {
-    bool ok;
-    Quat q;
-} ResultQuat;
+// TODO: Consider using ResultQuat
+// typedef struct ResultQuat {
+//     bool ok;
+//     Quat q;
+// } ResultQuat;
 
-Quat qEmpty();
-Quat qFrom(double w, double i, double j, double k);
-Quat qFromRPY(double roll, double pitch, double yaw);
+// Construct an empty quaternion (1, 0, 0, 0)
+Quat qempty();
 
+// Construct a quaternion from RPY in radians
+// TODO
+Quat qfromRPY(double roll, double pitch, double yaw);
+
+// Get the real part from a quaternion
 Quat qreal(const Quat* q);
+
+// Get the imaginary part of a quaternion
 Quat qpure(const Quat* q);
+
+// Get the conjugate of a quaternion
 Quat qconj(const Quat* q);
 
+// Add two quaternions
 Quat qadd(const Quat* q1, const Quat* q2);
+
+// Subtract two quaternions
 Quat qsub(const Quat* q1, const Quat* q2);
 
+// Multiply two quaternions
 Quat qmul(const Quat* q1, const Quat* q2);
+
+// Divide quaternion q1 by quaternion q2
 Quat qdiv(const Quat* q1, const Quat* q2);
 
+// Scale a quaternion by a scalar
 Quat qscale(double k, const Quat* q);
 
+// Compare two quaternions by components
 bool qcmp(const Quat* q1, const Quat* q2);
 
+// Get the norm of a quaternion
 double qnorm(const Quat* q);
+
+// Get a squared norm of a quaternion
+double qnormSquared(const Quat* q);
 
 #endif // QUATERNIONS_H_
