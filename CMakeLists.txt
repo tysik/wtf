@@ -13,7 +13,7 @@ add_library(vectors SHARED src/Vectors.c)
 target_link_libraries(vectors math_utils)
 
 add_library(quaternions SHARED src/Quaternions.c)
-target_link_libraries(quaternions math_utils)
+target_link_libraries(quaternions math_utils vectors)
 
 # Tests
 add_executable(math_utils_test src/MathUtilsTest.c)
