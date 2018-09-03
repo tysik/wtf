@@ -11,6 +11,10 @@ typedef struct Vect {
 // Construct an empty vector (0, 0, 0)
 Vect vEmpty();
 
+// Negate a vector
+// TODO add tests
+Vect vneg(const Vect* v);
+
 // Add two vectors
 Vect vadd(const Vect* v1, const Vect* v2);
 

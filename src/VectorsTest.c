@@ -10,50 +10,65 @@ static char* testCompare() {
     Vect v1 = {.x = 1.0, .y = 2.0, .z = 3.0};
     Vect v2 = {.x = 1.0, .y = 2.0, .z = 3.0};
     Vect v3 = {.x = 1.0, .y = 1.0, .z = 1.0};
+
     mu_assert("error, v1 != v2", vcmp(&v1, &v2) == true);
     mu_assert("error, v1 == v3", vcmp(&v1, &v3) == false);
+    return 0;
 }
 
 static char* testAdd() {
     Vect v1 = {.x = 1.0, .y = 2.0, .z = 3.0};
     Vect v2 = {.x = 1.0, .y = 1.0, .z = 1.0};
-    Vect v_expected = {
-        .x = 2.0, .y = 3.0, .z = 4.0,
-    };
+
+    Vect v_expected = {.x = 2.0, .y = 3.0, .z = 4.0};
     Vect v = vadd(&v1, &v2);
-    mu_assert("error, v != v1+v2", vcmp(&v, &v_expected) == true);
+
+    mu_assert("error, v_expected != v1+v2", vcmp(&v, &v_expected) == true);
+    return 0;
 }
 
 static char* testSubtract() {
     Vect v1 = {.x = 1.0, .y = 2.0, .z = 3.0};
     Vect v2 = {.x = 1.0, .y = 1.0, .z = 1.0};
+
     Vect v_expected = {.x = 0.0, .y = 1.0, .z = 2.0};
     Vect v = vsub(&v1, &v2);
-    mu_assert("error, v != v1-v2", vcmp(&v, &v_expected) == true);
+
+    mu_assert("error, v_expected != v1-v2", vcmp(&v, &v_expected) == true);
+    return 0;
 }
 
 static char* testDot() {
     Vect v1 = {.x = 1.0, .y = 2.0, .z = 3.0};
     Vect v2 = {.x = 1.0, .y = 1.0, .z = 1.0};
+
     double dot_expected = 6.0;
     double dot = vdot(&v1, &v2);
-    mu_assert("error, dot != dot(v1,v2)", dcmp(dot, dot_expected) == true);
+
+    mu_assert("error, dot_expected != dot(v1,v2)", dcmp(dot, dot_expected) == true);
+    return 0;
 }
 
 static char* testCross() {
     Vect v1 = {.x = 1.0, .y = 2.0, .z = 3.0};
     Vect v2 = {.x = 1.0, .y = 1.0, .z = 1.0};
+
     Vect v_expected = {.x = -1.0, .y = 2.0, .z = -1.0};
     Vect v = vcross(&v1, &v2);
-    mu_assert("error, cross != cross(v1,v2)", vcmp(&v, &v_expected) == true);
+
+    mu_assert("error, cross_expected != cross(v1,v2)", vcmp(&v, &v_expected) == true);
+    return 0;
 }
 
 static char* testScale() {
-    Vect v1 = {.x = 1.0, .y = 2.0, .z = 3.0};
+    Vect v = {.x = 1.0, .y = 2.0, .z = 3.0};
     double k = 2.0;
+
     Vect v_expected = {.x = 2.0, .y = 4.0, .z = 6.0};
-    Vect v = vscale(k, &v1);
-    mu_assert("error, v != k*v1", vcmp(&v, &v_expected) == true);
+    Vect v1 = vscale(k, &v);
+
+    mu_assert("error, v_expected != k*v", vcmp(&v1, &v_expected) == true);
+    return 0;
 }
 
 static char* testNorm() {
@@ -64,16 +79,27 @@ static char* testNorm() {
     double n1_sqr = vnormSquared(&v1);
     double n2_sqr_expected = 0.14;
     double n2_sqr = vnormSquared(&v2);
-    mu_assert("error, nSquared != normSquared(v1)", dcmp(n1_sqr, n1_sqr_expected) == true);
-    mu_assert("error, nSquared != normSquared(v2)", dcmp(n2_sqr, n2_sqr_expected) == true);
+    mu_assert("error, snorm_expected != snorm(v1)", dcmp(n1_sqr, n1_sqr_expected) == true);
+    mu_assert("error, snorm_expected != snorm(v2)", dcmp(n2_sqr, n2_sqr_expected) == true);
 
     double n1_expected = 3.741657387;
     double n1 = vnorm(&v1);
     double n2_expected = 0.374165738;
     double n2 = vnorm(&v2);
-    mu_assert("error, n != norm(v1)", dcmp(n1, n1_expected) == true);
-    mu_assert("error, n != norm(v2)", dcmp(n2, n2_expected) == true);
+    mu_assert("error, norm_expected != norm(v1)", dcmp(n1, n1_expected) == true);
+    mu_assert("error, norm_expected != norm(v2)", dcmp(n2, n2_expected) == true);
+    return 0;
+}
 
+static char* testNeg() {
+    Vect v1 = {.x = 1.0, .y = 2.0, .z = 3.0};
+    Vect v2 = {.x = -0.001, .y = 20.05, .z = -3000.0};
+
+    Vect v1_expected = {.x = -1.0, .y = -2.0, .z = -3.0};
+    Vect v2_expected = {.x = 0.001, .y = -20.05, .z = 3000.0};
+
+    mu_assert("error, v_expected != -v1", vcmp(&v1, &v1_expected) == true);
+    mu_assert("error, v_expected != -v2", vcmp(&v2, &v2_expected) == true);
     return 0;
 }
 

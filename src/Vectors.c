@@ -8,9 +8,9 @@ Vect vEmpty() {
     return v;
 }
 
-Vect vFrom(double x, double y, double z) {
-    Vect v = {.x = x, .y = y, .z = z};
-    return v;
+Vect vneg(const Vect* v) {
+    Vect vx = {.x = -v->x, .y = -v->y, .z = -v->z};
+    return vx;
 }
 
 Vect vadd(const Vect* v1, const Vect* v2) {
@@ -43,6 +43,10 @@ bool vcmp(const Vect* v1, const Vect* v2) {
     return dcmp(v1->x, v2->x) && dcmp(v1->y, v2->y) && dcmp(v1->z, v2->z);
 }
 
-double vnorm(const Vect* v) { return sqrt(vnormSquared(v)); }
+double vnorm(const Vect* v) {
+    return sqrt(vnormSquared(v));
+}
 
-double vnormSquared(const Vect* v) { return v->x * v->x + v->y * v->y + v->z * v->z; }
+double vnormSquared(const Vect* v) {
+    return v->x * v->x + v->y * v->y + v->z * v->z;
+}
