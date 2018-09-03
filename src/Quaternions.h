@@ -5,8 +5,6 @@
 
 #include <stdbool.h>
 
-// TODO Review tests and add more
-
 // Quaternion can be used either by components w, i, j, and k
 // or by scale s and vector v form
 typedef union Quat {
@@ -27,10 +25,6 @@ typedef union Quat {
 
 // Construct an empty quaternion (1, 0, 0, 0)
 Quat qempty();
-
-// Construct a quaternion from RPY in radians
-// TODO
-Quat qfromRPY(double roll, double pitch, double yaw);
 
 // Get the real part from a quaternion
 Quat qreal(const Quat* q);

@@ -92,7 +92,7 @@ static char* testConjugate() {
 
 static char* testNorm() {
     Quat q = {.w = 1.0, .i = 2.0, .j = 3.0, .k = 4.0};
-    
+
     double n_squared_expected = 30.0;
     double n_squared = qnormSquared(&q);
     double n_expected = 5.477225575;

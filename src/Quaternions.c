@@ -46,7 +46,7 @@ Quat qmul(const Quat* q1, const Quat* q2) {
     Vect v2 = vscale(q2->s, &q1->v);
     Vect v3 = vcross(&q1->v, &q2->v);
     Vect vx = vadd(&v1, &v2);
-    
+
     double s = q1->s * q2->s - vdot(&q1->v, &q2->v);
     Vect v = vadd(&vx, &v3);
     Quat q = {.s = s, .v = v};
