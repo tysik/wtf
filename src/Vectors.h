@@ -3,11 +3,13 @@
 
 #include <stdbool.h>
 
+#define PACKED __attribute__((packed, aligned(1)))
+
 // 3D cartesian vector
 typedef struct Vect {
     double x, y, z;
     bool is_normalized;
-} Vect;
+} PACKED Vect;
 
 // Construct an empty vector (0, 0, 0)
 Vect vempty();
