@@ -36,7 +36,27 @@ static char* testConjugate() {
 }
 
 static char* testUnit() {
-    // TODO implement unit
+    Quat q1 = {.w = 1.0, .i = 1.0, .j = 1.0, .k = 1.0, .is_normalized = false};
+    Quat q_expected = {.w = 0.5, .i = 0.5, .j = 0.5, .k = 0.5, .is_normalized = true};
+    Quat q = qunit(&q1);
+    
+    mu_assert("error, q_expected != qunit(q)", qcmp(&q, &q_expected));
+    mu_assert("error, q_expected is not normalized", q.is_normalized);
+
+    return 0;
+}
+
+static char* testInv() {
+    Quat q1 = {.w = 1.0, .i = 1.0, .j = 1.0, .k = 1.0};
+    Quat q_expected = {.w = 0.25, .i = -0.25, .j = -0.25, .k = -0.25};
+    Quat q = qinv(&q1);
+    
+    Quat q_expected2 = {.s = 1.0, .v = vempty()};
+    Quat q2 = qmul(&q1, &q);
+
+    mu_assert("error, q_expected != qinv(q)", qcmp(&q, &q_expected));
+    mu_assert("error, q_expected2 != qmul(q,qinv(q))", qcmp(&q2, &q_expected2));
+
     return 0;
 }
 
@@ -48,7 +68,18 @@ static char* testScale() {
     Quat q1 = qscale(k, &q);
 
     mu_assert("error, q_expected != qscale(k,q)", qcmp(&q1, &q_expected));
+    return 0;
+}
 
+static char* testRotor() {
+    Vect axis = {.x = 1.0, .y = 0.0, .z = 0.0, .is_normalized = true};
+    double theta = 90.0 * 3.1415926536 / 180.0;
+
+    Quat q_expected = {.w = 0.707106781, .i = 0.707106781, .j = 0.0, .k = 0.0};
+    Quat q = qrotor(theta, &axis);
+
+    mu_assert("error, q_expected != qrotor(theta,v)", qcmp(&q, &q_expected));
+    mu_assert("error, q_expected is not normalized", q.is_normalized);
     return 0;
 }
 
@@ -86,7 +117,11 @@ static char* testMultiply() {
 }
 
 static char* testDivide() {
-    // TODO implement unit
+    Quat q1 = {.w = 1.0, .i = 1.0, .j = 1.0, .k = 1.0};
+    Quat q_expected = {.w = 1.0, .i = 0.0, .j = 0.0, .k = 0.0};
+    Quat q = qdiv(&q1, &q1);
+
+    mu_assert("error, q_expected != qdiv(q1,q2)", qcmp(&q, &q_expected));
     return 0;
 }
 
@@ -135,11 +170,14 @@ static char* all_tests() {
     mu_run_test(testEmpty);
     mu_run_test(testConjugate);
     mu_run_test(testUnit);
+    mu_run_test(testInv);
     mu_run_test(testScale);
+    mu_run_test(testRotor);
     mu_run_test(testCompare);
     mu_run_test(testAdd);
     mu_run_test(testSubtract);
     mu_run_test(testMultiply);
+    mu_run_test(testDivide);
     mu_run_test(testReal);
     mu_run_test(testPure);
     mu_run_test(testNorm);

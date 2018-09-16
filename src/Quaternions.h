@@ -26,15 +26,17 @@ Quat qempty();
 Quat qconj(const Quat* q);
 
 // Get the unit version of a quaternion
-// TODO Add test
 Quat qunit(const Quat* q);
 
 // Get the inverse of a quaternion
-// TODO Add test
 Quat qinv(const Quat* q);
 
 // Scale a quaternion by a scalar
 Quat qscale(double k, const Quat* q);
+
+// Construct a rotor about axis v
+// theta must be in radians
+Quat qrotor(double theta, const Vect* axis);
 
 // Add two quaternions
 Quat qadd(const Quat* q1, const Quat* q2);
@@ -46,7 +48,6 @@ Quat qsub(const Quat* q1, const Quat* q2);
 Quat qmul(const Quat* q1, const Quat* q2);
 
 // Divide two quaternions
-// TODO Add test
 Quat qdiv(const Quat* q1, const Quat* q2);
 
 // Get the imaginary part of a quaternion

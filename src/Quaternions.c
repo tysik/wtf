@@ -4,7 +4,8 @@
 #include <math.h>
 
 Quat qempty() {
-    Quat q = {.s = 0.0, .v = vempty(), .is_normalized = false};
+    Quat q = {.s = 0.0, .v = vempty()};
+    q.is_normalized = false;
     return q;
 }
 
@@ -29,17 +30,25 @@ Quat qunit(const Quat* q) {
 }
 
 Quat qinv(const Quat* q) {
+    Quat qx = qconj(q);
     if (q->is_normalized) {
-        return qconj(q);
+        return qx;
     } else {
         double norm_squared = qnormSquared(q);
-        return (norm_squared > 0.0) ? qscale(1.0 / norm_squared, q) : qempty();
+        return (norm_squared > 0.0) ? qscale(1.0 / norm_squared, &qx) : qempty();
     }
 }
 
 Quat qscale(double k, const Quat* q) {
     Quat qx = {.s = k * q->s, .v = vscale(k, &q->v)};
     return qx;
+}
+
+Quat qrotor(double theta, const Vect* axis) {
+    Vect normalized_axis = vnormal(axis);
+    Quat q = {.s = cos(theta / 2.0), .v = vscale(sin(theta / 2.0), &normalized_axis)};
+    q.is_normalized = true;
+    return q;
 }
 
 Quat qadd(const Quat* q1, const Quat* q2) {
