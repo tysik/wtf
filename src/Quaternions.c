@@ -105,5 +105,5 @@ bool qcmp(const Quat* q1, const Quat* q2) {
 }
 
 void qprint(const Quat* q) {
-    printf("(%.3f, %.3f, %.3f, %.3f)", q->w, q->i, q->j, q->k);
+    printf("(% .3f,% .3f,% .3f,% .3f)", q->w, q->i, q->j, q->k);
 }

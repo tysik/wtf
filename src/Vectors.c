@@ -69,5 +69,5 @@ bool vcmp(const Vect* v1, const Vect* v2) {
 }
 
 void vprint(const Vect* v) {
-    printf("(%.3f, %.3f, %.3f)", v->x, v->y, v->z);
+    printf("(% .3f,% .3f,% .3f)", v->x, v->y, v->z);
 }
