@@ -2,6 +2,7 @@
 #include "MathUtils.h"
 
 #include <math.h>
+#include <stdio.h>
 
 Quat qempty() {
     Quat q = {.s = 0.0, .v = vempty()};
@@ -101,4 +102,8 @@ double qnormSquared(const Quat* q) {
 
 bool qcmp(const Quat* q1, const Quat* q2) {
     return dcmp(q1->s, q2->s) && vcmp(&q1->v, &q2->v);
+}
+
+void qprint(const Quat* q) {
+    printf("(%.3f, %.3f, %.3f, %.3f)", q->w, q->i, q->j, q->k);
 }

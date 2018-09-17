@@ -2,6 +2,7 @@
 #include "MathUtils.h"
 
 #include <math.h>
+#include <stdio.h>
 
 Vect vempty() {
     Vect v = {.x = 0.0, .y = 0.0, .z = 0.0, .is_normalized = false};
@@ -65,4 +66,8 @@ double vnormSquared(const Vect* v) {
 
 bool vcmp(const Vect* v1, const Vect* v2) {
     return dcmp(v1->x, v2->x) && dcmp(v1->y, v2->y) && dcmp(v1->z, v2->z);
+}
+
+void vprint(const Vect* v) {
+    printf("(%.3f, %.3f, %.3f)", v->x, v->y, v->z);
 }

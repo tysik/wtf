@@ -6,7 +6,7 @@
 #include <stdbool.h>
 
 // Quaternion can be used either by components w, i, j, k
-// or by scalar s and vector v. In the latter case field 
+// or by scalar s and vector v. In the latter case field
 // is_normalized of v denotes normalized (unit) quaternion.
 typedef union Quat {
     struct {
@@ -64,5 +64,8 @@ double qnormSquared(const Quat* q);
 
 // Compare two quaternions by components
 bool qcmp(const Quat* q1, const Quat* q2);
+
+// Printf a quaterniong to stdout
+void qprint(const Quat* q);
 
 #endif // QUATERNIONS_H_

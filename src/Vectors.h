@@ -44,4 +44,7 @@ double vnormSquared(const Vect* v);
 // Compare two vectors by coordinates
 bool vcmp(const Vect* v1, const Vect* v2);
 
+// Print a vector to stdout
+void vprint(const Vect* v);
+
 #endif // VECTORS_H_
