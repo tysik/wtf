@@ -1,10 +1,11 @@
-#ifndef ROTATIONS_H_
-#define ROTATIONS_H_
+#ifndef CTF_ROTATIONS_H_
+#define CTF_ROTATIONS_H_
 
-#include "Vectors.h"
 #include "Quaternions.h"
+#include "Vectors.h"
 
-// Rotate vector v with quaternion q
-Vect rotate(const Vect* v, const Quat* q);
+typedef struct Rot {
+    double R[3][3];
+} Rot;
 
-#endif // ROTATIONS_H_
+#endif // CTF_ROTATIONS_H_

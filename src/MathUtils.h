@@ -1,5 +1,5 @@
-#ifndef MATH_UTILS_H_
-#define MATH_UTILS_H_
+#ifndef CTF_MATH_UTILS_H_
+#define CTF_MATH_UTILS_H_
 
 #include <stdarg.h>
 #include <stdbool.h>
@@ -11,4 +11,4 @@ double dmax(int num_args, ...);
 // Returns true if a is approx. equal to b
 bool dcmp(double a, double b);
 
-#endif // MATH_UTILS_H_
+#endif // CTF_MATH_UTILS_H_

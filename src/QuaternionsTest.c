@@ -143,6 +143,21 @@ static char* testPure() {
     return 0;
 }
 
+static char* testRotate() {
+    Vect axis = {.x = 1.0, .y = 0.0, .z = 0.0, .is_normalized = true};
+    Quat rotor = qrotor(3.1415926536 / 2.0, &axis);
+
+    Vect to_rotate = {.x = 0.0, .y = 1.0, .z = 0.0, .is_normalized = true};
+    Vect rotated = qrotate(&to_rotate, &rotor);
+    Vect expected = {.x = 0.0, .y = 0.0, .z = 1.0, .is_normalized = true};
+
+    mu_assert("error, v_expected != rotate(v,q)", vcmp(&rotated, &expected));
+    mu_assert("error, norm(v) != norm(rotate(v,q))",
+              dcmp(vnormSquared(&to_rotate), vnormSquared(&rotated)));
+
+    return 0;
+}
+
 static char* testNorm() {
     Quat q = {.w = 1.0, .i = 2.0, .j = 3.0, .k = 4.0};
 
@@ -180,6 +195,7 @@ static char* all_tests() {
     mu_run_test(testDivide);
     mu_run_test(testReal);
     mu_run_test(testPure);
+    mu_run_test(testRotate);
     mu_run_test(testNorm);
     return 0;
 }
