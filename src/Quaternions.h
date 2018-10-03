@@ -5,6 +5,8 @@
 
 #include <stdbool.h>
 
+#define PACKED __attribute__((packed, aligned(1)))
+
 // Quaternion can be used either by components w, i, j, k
 // or by scalar s and vector v. In the latter case field
 // is_normalized of v denotes normalized (unit) quaternion.
@@ -18,6 +20,8 @@ typedef union Quat {
         Vect v;
     };
 } Quat;
+
+#undef PACKED
 
 // Construct an empty quaternion (0, 0, 0, 0)
 Quat qempty();

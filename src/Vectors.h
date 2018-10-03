@@ -11,6 +11,8 @@ typedef struct PACKED Vect {
     bool is_normalized;
 } Vect;
 
+#undef PACKED
+
 // Construct an empty vector (0, 0, 0)
 Vect vempty();
 
