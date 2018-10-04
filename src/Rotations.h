@@ -1,9 +1,13 @@
 #ifndef CTF_ROTATIONS_H_
 #define CTF_ROTATIONS_H_
 
+#include "Quaternions.h"
+
 typedef double Rot[3][3];
 
 void reye(Rot* R);
+
+void rfromQuat(const Quat* q, Rot* result);
 
 void rrand(Rot* R);
 

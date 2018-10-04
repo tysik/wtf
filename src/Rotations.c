@@ -1,5 +1,6 @@
 #include "Rotations.h"
 
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -12,6 +13,27 @@ void reye(Rot* R) {
         }
         (*R)[rows][rows] = 1.0;
     }
+}
+
+void rfromQuat(const Quat* q, Rot* result) {
+    assert(q->is_normalized && "Non-unit quaternion");
+
+    // Diagonal
+    (*result)[0][0] = q->w * q->w + q->i * q->i - 0.5;
+    (*result)[1][1] = q->w * q->w + q->j * q->j - 0.5;
+    (*result)[2][2] = q->w * q->w + q->k * q->k - 0.5;
+
+    // Upper triange
+    (*result)[0][1] = q->i * q->j - q->w * q->k;
+    (*result)[0][2] = q->w * q->j + q->i * q->k;
+    (*result)[1][2] = q->j * q->k - q->w * q->i;
+
+    // Lower triangle
+    (*result)[1][0] = q->w * q->k + q->i * q->j;
+    (*result)[2][0] = q->i * q->k - q->w * q->j;
+    (*result)[2][1] = q->w * q->i + q->j * q->k;
+
+    rscale(2.0, result, result);
 }
 
 void rrand(Rot* R) {
