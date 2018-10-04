@@ -1,15 +1,17 @@
-#ifndef VECTORS_H_
-#define VECTORS_H_
+#ifndef CTF_VECTORS_H_
+#define CTF_VECTORS_H_
 
 #include <stdbool.h>
 
 #define PACKED __attribute__((packed, aligned(1)))
 
 // 3D cartesian vector
-typedef struct Vect {
+typedef struct PACKED Vect {
     double x, y, z;
     bool is_normalized;
-} PACKED Vect;
+} Vect;
+
+#undef PACKED
 
 // Construct an empty vector (0, 0, 0)
 Vect vempty();
@@ -47,4 +49,4 @@ bool vcmp(const Vect* v1, const Vect* v2);
 // Print a vector to stdout
 void vprint(const Vect* v);
 
-#endif // VECTORS_H_
+#endif // CTF_VECTORS_H_

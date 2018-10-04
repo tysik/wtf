@@ -1,23 +1,27 @@
-#ifndef QUATERNIONS_H_
-#define QUATERNIONS_H_
+#ifndef CTF_QUATERNIONS_H_
+#define CTF_QUATERNIONS_H_
 
 #include "Vectors.h"
 
 #include <stdbool.h>
 
+#define PACKED __attribute__((packed, aligned(1)))
+
 // Quaternion can be used either by components w, i, j, k
 // or by scalar s and vector v. In the latter case field
 // is_normalized of v denotes normalized (unit) quaternion.
 typedef union Quat {
-    struct {
+    struct PACKED {
         double w, i, j, k;
         bool is_normalized;
-    } PACKED;
-    struct {
+    };
+    struct PACKED {
         double s;
         Vect v;
-    } PACKED;
+    };
 } Quat;
+
+#undef PACKED
 
 // Construct an empty quaternion (0, 0, 0, 0)
 Quat qempty();
@@ -53,6 +57,9 @@ Quat qdiv(const Quat* q1, const Quat* q2);
 // Get the imaginary part of a quaternion
 Vect qpure(const Quat* q);
 
+// Rotate vector v with quaternion q
+Vect qrotate(const Vect* v, const Quat* q);
+
 // Get the real part of a quaternion
 double qreal(const Quat* q);
 
@@ -68,4 +75,4 @@ bool qcmp(const Quat* q1, const Quat* q2);
 // Printf a quaterniong to stdout
 void qprint(const Quat* q);
 
-#endif // QUATERNIONS_H_
+#endif // CTF_QUATERNIONS_H_

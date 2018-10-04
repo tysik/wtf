@@ -1,10 +1,20 @@
-#ifndef ROTATIONS_H_
-#define ROTATIONS_H_
+#ifndef CTF_ROTATIONS_H_
+#define CTF_ROTATIONS_H_
 
-#include "Vectors.h"
 #include "Quaternions.h"
 
-// Rotate vector v with quaternion q
-Vect rotate(const Vect* v, const Quat* q);
+typedef double Rot[3][3];
 
-#endif // ROTATIONS_H_
+void reye(Rot* R);
+
+void rfromQuat(const Quat* q, Rot* result);
+
+void rrand(Rot* R);
+
+void rscale(double d, const Rot* R, Rot* result);
+
+void rmul(const Rot* R1, const Rot* R2, Rot* result);
+
+void rprint(const Rot* R);
+
+#endif // CTF_ROTATIONS_H_
