@@ -23,7 +23,7 @@ add_library(ctf SHARED
 )
 target_link_libraries(ctf m)
 
-# Tests
+#Tests
 add_executable(math_utils_test 
     src/MinTest.h
     src/MathUtilsTest.c
@@ -42,8 +42,8 @@ add_executable(quaternions_test
 )
 target_link_libraries(quaternions_test ctf)
 
-add_executable(rotations_test 
-    src/MinTest.h
-    src/RotationsTest.c
-)
-target_link_libraries(rotations_test ctf)
+# add_executable(rotations_test 
+#     src/MinTest.h
+#     src/RotationsTest.c
+# )
+# target_link_libraries(rotations_test ctf)

@@ -6,6 +6,7 @@
 #include <stdbool.h>
 
 #define PACKED __attribute__((packed, aligned(1)))
+#define MUST_USE __attribute__ ((warn_unused_result))
 
 // Quaternion can be used either by components w, i, j, k
 // or by scalar s and vector v. In the latter case field
@@ -21,58 +22,77 @@ typedef union Quat {
     };
 } Quat;
 
-#undef PACKED
-
 // Construct an empty quaternion (0, 0, 0, 0)
-Quat qempty();
+void qempty(Quat* q);
 
-// Get the conjugate version of a quaternion
-Quat qconj(const Quat* q);
+// Construct a pure quaternion from vector (0, x, y, z)
+void qpure(Quat* q, const Vect* v);
 
-// Get the unit version of a quaternion
-Quat qunit(const Quat* q);
+// Construct real quaternion from number (s, 0, 0, 0)
+void qreal(Quat* q, double s);
 
-// Get the inverse of a quaternion
-Quat qinv(const Quat* q);
+// Construct a rotor about an axis
+// Theta must be given in radians
+// Axis must be normalized
+void qrotor(Quat* q, double theta, const Vect* axis);
+
+// Conjugate a quaternion
+void qconjugate(Quat* q);
 
 // Scale a quaternion by a scalar
-Quat qscale(double k, const Quat* q);
+void qscale(Quat* q, double k);
 
-// Construct a rotor about axis v
-// theta must be in radians
-Quat qrotor(double theta, const Vect* axis);
+// Normalize a quaternion
+// Returns:
+//  1 if the quaternion was already normalized
+//  0 if the normalization was OK
+// -1 in case of failure
+int MUST_USE qnormalize(Quat* q);
 
-// Add two quaternions
-Quat qadd(const Quat* q1, const Quat* q2);
+// Inverse a quaternion
+// Returns:
+//  0 if the inversion was OK
+// -1 in case of failure
+int MUST_USE qinverse(Quat* q);
 
-// Subtract two quaternions
-Quat qsub(const Quat* q1, const Quat* q2);
+// Add quaternion q2 to quaternion q1
+void qadd(Quat* q1, const Quat* q2);
+
+// Subtract quaternion q2 from quaternion q1
+void qsub(Quat* q1, const Quat* q2);
 
 // Multiply two quaternions
-Quat qmul(const Quat* q1, const Quat* q2);
+void qmul(Quat* q, const Quat* q1, const Quat* q2);
 
 // Divide two quaternions
-Quat qdiv(const Quat* q1, const Quat* q2);
+// Returns:
+//  0 if the division was OK
+// -1 in case of failure
+int MUST_USE qdiv(Quat* q, const Quat* q1, const Quat* q2);
 
-// Get the imaginary part of a quaternion
-Vect qpure(const Quat* q);
-
-// Rotate vector v with quaternion q
-Vect qrotate(const Vect* v, const Quat* q);
-
-// Get the real part of a quaternion
-double qreal(const Quat* q);
+// Rotate a vector about a quaternion
+// Q must be a proper (normalized) rotor 
+void qrotate(Vect* v, const Quat* q);
 
 // Get the norm of a quaternion
-double qnorm(const Quat* q);
+double MUST_USE qnorm(const Quat* q);
 
 // Get a squared norm of a quaternion
-double qnormSquared(const Quat* q);
+double MUST_USE qnormSquared(const Quat* q);
+
+// Check if a quaternion is pure
+bool MUST_USE qisPure(const Quat* q);
+
+// Check if a quaternion is real
+bool MUST_USE qisReal(const Quat* q);
 
 // Compare two quaternions by components
-bool qcmp(const Quat* q1, const Quat* q2);
+bool MUST_USE qcmp(const Quat* q1, const Quat* q2);
 
 // Printf a quaterniong to stdout
 void qprint(const Quat* q);
+
+#undef PACKED
+#undef MUST_USE
 
 #endif // CTF_QUATERNIONS_H_
