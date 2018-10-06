@@ -9,6 +9,7 @@ static char* testMax() {
     mu_assert("error, max != 4.0", dmax(4, 1.0, 2.0, 3.0, 4.0) == 4.0);
     mu_assert("error, max != -1.0", dmax(4, -1.0, -2.0, -3.0, -4.0) == -1.0);
     mu_assert("error, max != 0.001", dmax(4, 0.0, 0.001, -3.001, -40.0) == 0.001);
+    return 0;
 }
 
 static char* testCompare() {
@@ -29,6 +30,7 @@ static char* testCompare() {
     double c3 = 1000.00001;
     mu_assert("error, c1 == c2", dcmp(c1, c2) == false);
     mu_assert("error, c1 != c3", dcmp(c1, c3) == true);
+    return 0;
 }
 
 static char* all_tests() {

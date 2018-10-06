@@ -4,12 +4,7 @@ project (CTFs C)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
-
-# find_package(OpenMP)
-# if(OPENMP_FOUND)
-#     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-#     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
-# endif()
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -pedantic")
 
 add_library(ctf SHARED 
     src/MathUtils.h
@@ -42,8 +37,8 @@ add_executable(quaternions_test
 )
 target_link_libraries(quaternions_test ctf)
 
-# add_executable(rotations_test 
-#     src/MinTest.h
-#     src/RotationsTest.c
-# )
-# target_link_libraries(rotations_test ctf)
+add_executable(rotations_test 
+    src/MinTest.h
+    src/RotationsTest.c
+)
+target_link_libraries(rotations_test ctf)
