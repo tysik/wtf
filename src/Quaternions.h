@@ -22,9 +22,6 @@ typedef union Quat {
     };
 } Quat;
 
-// TODO: Review tests!
-// TODO: Review redundant functions (qempty, qpure, qreal, qadd, qsub);
-
 // Construct an empty quaternion (0, 0, 0, 0)
 void qempty(Quat* q);
 
@@ -83,8 +80,14 @@ double MUST_USE qnorm(const Quat* q);
 // Get a squared norm of a quaternion
 double MUST_USE qnormSquared(const Quat* q);
 
+// Check if a quaternion is pure
+bool MUST_USE qisPure(const Quat* q);
+
+// Check if a quaternion is real
+bool MUST_USE qisReal(const Quat* q);
+
 // Compare two quaternions by components
-bool qcmp(const Quat* q1, const Quat* q2);
+bool MUST_USE qcmp(const Quat* q1, const Quat* q2);
 
 // Printf a quaterniong to stdout
 void qprint(const Quat* q);

@@ -80,16 +80,18 @@ void qsub(Quat* q1, const Quat* q2) {
 void qmul(Quat* q, const Quat* q1, const Quat* q2) {
     // q1 * q2 = [s1, v1] * [s2, v2] =
     // [s1 * s2 - dot(v1,v2), s1 * v2 + s2 * v1 + cross(v1,v2)]
-    q->s = q1->s * q2->s - vdot(&q1->v, &q2->v);
-    vcross(&q->v, &q1->v, &q2->v);
+    Quat result;
+    result.s = q1->s * q2->s - vdot(&q1->v, &q2->v);
+    vcross(&result.v, &q1->v, &q2->v);
 
     Vect v_aux = q1->v;
     vscale(&v_aux, q2->s);
-    vadd(&q->v, &v_aux);
+    vadd(&result.v, &v_aux);
 
     v_aux = q2->v;
     vscale(&v_aux, q1->s);
-    vadd(&q->v, &v_aux);
+    vadd(&result.v, &v_aux);
+    *q = result;
 }
 
 int qdiv(Quat* q, const Quat* q1, const Quat* q2) {
@@ -103,17 +105,17 @@ int qdiv(Quat* q, const Quat* q1, const Quat* q2) {
 
 void qrotate(Vect* v, const Quat* q) {
     assert(q->is_normalized && "Using non-unit quaternion for rotation");
-    Quat q_v = {.s = 0.0, .v = *v};
+    Quat qv;
+    qpure(&qv, v);
+
     Quat q_inv = *q;
-    if (qinverse(&q_inv) < 0) {
-        return;
-    }
+    qconjugate(&q_inv); // Unit quat. inverse is its conjugate.
 
     Quat q_result;
-    qmul(&q_result, q, &q_v);
+    qmul(&q_result, q, &qv);
     qmul(&q_result, &q_result, &q_inv);
 
-    q_result.is_normalized = v->is_normalized; // The norm of a vector is preserved
+    q_result.is_normalized = v->is_normalized; // The norm of a vector is preserved.
     *v = q_result.v;
 }
 
@@ -123,6 +125,14 @@ double qnorm(const Quat* q) {
 
 double qnormSquared(const Quat* q) {
     return (q->is_normalized) ? 1.0 : q->s * q->s + vnormSquared(&q->v);
+}
+
+bool qisPure(const Quat* q) {
+    return q->w == 0.0;
+}
+
+bool qisReal(const Quat* q) {
+    return q->i == 0.0 && q->j == 0.0 && q->k == 0.0;
 }
 
 bool qcmp(const Quat* q1, const Quat* q2) {

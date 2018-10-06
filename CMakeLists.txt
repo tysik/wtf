@@ -23,24 +23,24 @@ add_library(ctf SHARED
 )
 target_link_libraries(ctf m)
 
-# Tests
-# add_executable(math_utils_test 
-#     src/MinTest.h
-#     src/MathUtilsTest.c
-# )
-# target_link_libraries(math_utils_test ctf)
+#Tests
+add_executable(math_utils_test 
+    src/MinTest.h
+    src/MathUtilsTest.c
+)
+target_link_libraries(math_utils_test ctf)
 
-# add_executable(vectors_test 
-#     src/MinTest.h
-#     src/VectorsTest.c
-# )
-# target_link_libraries(vectors_test ctf)
+add_executable(vectors_test 
+    src/MinTest.h
+    src/VectorsTest.c
+)
+target_link_libraries(vectors_test ctf)
 
-# add_executable(quaternions_test 
-#     src/MinTest.h
-#     src/QuaternionsTest.c
-# )
-# target_link_libraries(quaternions_test ctf)
+add_executable(quaternions_test 
+    src/MinTest.h
+    src/QuaternionsTest.c
+)
+target_link_libraries(quaternions_test ctf)
 
 # add_executable(rotations_test 
 #     src/MinTest.h

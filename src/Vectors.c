@@ -3,6 +3,7 @@
 
 #include <math.h>
 #include <stdio.h>
+#include <string.h>
 
 void vempty(Vect* v) {
     v->x = v->y = v->z = 0.0;
@@ -25,6 +26,11 @@ void vversorZ(Vect* v) {
     v->z = 1.0;
     v->x = v->y = 0.0;
     v->is_normalized = true;
+}
+
+void vfromArray(Vect* v, double (*a)[3]) {
+    memcpy(v, a, 3 * sizeof(double));
+    v->is_normalized = false;
 }
 
 void vnegate(Vect* v) {

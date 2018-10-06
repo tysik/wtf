@@ -12,8 +12,6 @@ typedef struct PACKED Vect {
     bool is_normalized;
 } Vect;
 
-// TODO: Review tests!
-
 // Construct an empty vector (0, 0, 0)
 void vempty(Vect* v);
 
@@ -25,6 +23,9 @@ void vversorY(Vect* v);
 
 // Construct a Z axis versor (0, 0, 1)
 void vversorZ(Vect* v);
+
+// Construct a vector from array of 3 doubles
+void vfromArray(Vect* v, double (*a)[3]);
 
 // Negate a vector
 void vnegate(Vect* v);
