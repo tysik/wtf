@@ -3,18 +3,31 @@
 
 #include "Quaternions.h"
 
+// 3D rotation matrix
 typedef double Rot[3][3];
 
-void reye(Rot* R);
+// Construct an identity matrix
+void reye(Rot* r);
 
-void rfromQuat(const Quat* q, Rot* result);
+void rrotX(Rot* r, double theta);
+void rrotY(Rot* r, double theta);
+void rrotZ(Rot* r, double theta);
+
+// Construct rotation matrix from a quaternion
+// Q must be a proper (normalized) rotor 
+void rfromQuat(Rot* r, const Quat* q);
+
+void rtoQuat(Quat* q, const Rot* r);
 
 void rrand(Rot* R);
 
-void rscale(double d, const Rot* R, Rot* result);
+// Scale a matrix by a scalar
+void rscale(Rot* r, double k);
 
-void rmul(const Rot* R1, const Rot* R2, Rot* result);
+// Multiply r1 by r2
+void rmul(Rot* r, const Rot* r1, const Rot* r2);
 
-void rprint(const Rot* R);
+// Print a rotation matrix to stdout
+void rprint(const Rot* r);
 
 #endif // CTF_ROTATIONS_H_
