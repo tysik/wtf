@@ -14,7 +14,7 @@ static char* testConstruction() {
     Quat qr_exp = {.w = 1.0, .i = 0.0, .j = 0.0, .k = 0.0};
 
     qempty(&qe);
-    Vect v = {.x = 1.0, .y = 2.0, .z = 3.0};
+    wtf_vec_t v = {.x = 1.0, .y = 2.0, .z = 3.0};
     qpure(&qp, &v);
     qreal(&qr, 1.0);
 
@@ -31,10 +31,10 @@ static char* testRotor() {
     Quat qry_exp = {.w = 0.707106781, .i = 0.0, .j = 0.707106781, .k = 0.0};
     Quat qrz_exp = {.w = 0.707106781, .i = 0.0, .j = 0.0, .k = 0.707106781};
 
-    Vect vi, vj, vk;
-    vversorX(&vi);
-    vversorY(&vj);
-    vversorZ(&vk);
+    wtf_vec_t vi, vj, vk;
+    wtf_versor_x(&vi);
+    wtf_versor_y(&vj);
+    wtf_versor_z(&vk);
 
     double theta = 90.0 * 3.1415926536 / 180.0;
     qrotor(&qrx, theta, &vi);
@@ -170,31 +170,31 @@ static char* testDivide() {
 }
 
 static char* testRotate() {
-    Vect v_exp = {.x = 0.0, .y = 0.0, .z = 2.0, .is_normalized = false};
+    wtf_vec_t v_exp = {.x = 0.0, .y = 0.0, .z = 2.0, .is_normalized = false};
 
-    Vect axis;
-    vversorX(&axis);
+    wtf_vec_t axis;
+    wtf_versor_x(&axis);
 
     Quat rotor;
     qrotor(&rotor, 3.1415926536 / 2.0, &axis);
     // qprint(&rotor);
     // printf("\n");
 
-    Vect to_rotate;
-    vversorY(&to_rotate);
-    vscale(&to_rotate, 2.0);
-    // vprint(&to_rotate);
+    wtf_vec_t to_rotate;
+    wtf_versor_y(&to_rotate);
+    wtf_scale_vec(&to_rotate, 2.0);
+    // wtf_print_vec(&to_rotate);
     // printf("\n");
 
-    Vect rotated = to_rotate;
+    wtf_vec_t rotated = to_rotate;
     qrotate(&rotated, &rotor);
-    // vprint(&rotated);
+    // wtf_print_vec(&rotated);
     // printf("\n");
 
-    mu_assert("error, qrotate(v,q) != v_exp", vcmp(&rotated, &v_exp));
+    mu_assert("error, qrotate(v,q) != v_exp", wtf_compare_vec(&rotated, &v_exp));
     mu_assert("error, norm(v) != norm(rotate(v,q))",
               to_rotate.is_normalized == rotated.is_normalized &&
-                  dcmp(vnorm(&to_rotate), vnorm(&rotated)));
+                  dcmp(wtf_vec_norm(&to_rotate), wtf_vec_norm(&rotated)));
 
     return 0;
 }

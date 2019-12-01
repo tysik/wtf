@@ -7,34 +7,34 @@
 
 void qempty(Quat* q) {
     q->s = 0.0;
-    vempty(&q->v);
+    wtf_empty_vec(&q->v);
 }
 
-void qpure(Quat* q, const Vect* v) {
+void qpure(Quat* q, const wtf_vec_t* v) {
     q->s = 0.0;
     q->v = *v;
 }
 
 void qreal(Quat* q, double s) {
     q->s = s;
-    vempty(&q->v);
+    wtf_empty_vec(&q->v);
 }
 
-void qrotor(Quat* q, double theta, const Vect* axis) {
+void qrotor(Quat* q, double theta, const wtf_vec_t* axis) {
     assert(axis->is_normalized && "Using non-versor axis for rotor");
     q->s = cos(theta / 2.0);
     q->v = *axis;
-    vscale(&q->v, sin(theta / 2.0));
+    wtf_scale_vec(&q->v, sin(theta / 2.0));
     q->is_normalized = true;
 }
 
 void qconjugate(Quat* q) {
-    vnegate(&q->v);
+    wtf_negate_vec(&q->v);
 }
 
 void qscale(Quat* q, double k) {
     q->s = k * q->s;
-    vscale(&q->v, k);
+    wtf_scale_vec(&q->v, k);
 }
 
 int qnormalize(Quat* q) {
@@ -69,28 +69,28 @@ int qinverse(Quat* q) {
 
 void qadd(Quat* q1, const Quat* q2) {
     q1->s = q1->s + q2->s;
-    vadd(&q1->v, &q2->v);
+    wtf_add_vec(&q1->v, &q2->v);
 }
 
 void qsub(Quat* q1, const Quat* q2) {
     q1->s = q1->s - q2->s;
-    vsub(&q1->v, &q2->v);
+    wtf_subtract_vec(&q1->v, &q2->v);
 }
 
 void qmul(Quat* q, const Quat* q1, const Quat* q2) {
     // q1 * q2 = [s1, v1] * [s2, v2] =
     // [s1 * s2 - dot(v1,v2), s1 * v2 + s2 * v1 + cross(v1,v2)]
     Quat result;
-    result.s = q1->s * q2->s - vdot(&q1->v, &q2->v);
-    vcross(&result.v, &q1->v, &q2->v);
+    result.s = q1->s * q2->s - wtf_vec_dot(&q1->v, &q2->v);
+    wtf_vec_cross(&result.v, &q1->v, &q2->v);
 
-    Vect v_aux = q1->v;
-    vscale(&v_aux, q2->s);
-    vadd(&result.v, &v_aux);
+    wtf_vec_t v_aux = q1->v;
+    wtf_scale_vec(&v_aux, q2->s);
+    wtf_add_vec(&result.v, &v_aux);
 
     v_aux = q2->v;
-    vscale(&v_aux, q1->s);
-    vadd(&result.v, &v_aux);
+    wtf_scale_vec(&v_aux, q1->s);
+    wtf_add_vec(&result.v, &v_aux);
     *q = result;
 }
 
@@ -103,7 +103,7 @@ int qdiv(Quat* q, const Quat* q1, const Quat* q2) {
     return 0;
 }
 
-void qrotate(Vect* v, const Quat* q) {
+void qrotate(wtf_vec_t* v, const Quat* q) {
     assert(q->is_normalized && "Using non-unit quaternion for rotation");
     Quat qv;
     qpure(&qv, v);
@@ -124,7 +124,7 @@ double qnorm(const Quat* q) {
 }
 
 double qnormSquared(const Quat* q) {
-    return (q->is_normalized) ? 1.0 : q->s * q->s + vnormSquared(&q->v);
+    return (q->is_normalized) ? 1.0 : q->s * q->s + wtf_vec_squared_norm(&q->v);
 }
 
 bool qisPure(const Quat* q) {
@@ -136,7 +136,7 @@ bool qisReal(const Quat* q) {
 }
 
 bool qcmp(const Quat* q1, const Quat* q2) {
-    return dcmp(q1->s, q2->s) && vcmp(&q1->v, &q2->v);
+    return dcmp(q1->s, q2->s) && wtf_compare_vec(&q1->v, &q2->v);
 }
 
 void qprint(const Quat* q) {

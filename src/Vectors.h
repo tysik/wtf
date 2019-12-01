@@ -1,5 +1,5 @@
-#ifndef CTF_VECTORS_H_
-#define CTF_VECTORS_H_
+#ifndef WTF_VECTORS_H_
+#define WTF_VECTORS_H_
 
 #include <stdbool.h>
 
@@ -7,64 +7,64 @@
 #define MUST_USE __attribute__((warn_unused_result))
 
 // 3D cartesian vector
-typedef struct PACKED Vect {
+typedef struct PACKED wtf_vec_t {
     double x, y, z;
     bool is_normalized;
-} Vect;
+} wtf_vec_t;
 
 // Construct an empty vector (0, 0, 0)
-void vempty(Vect* v);
+void wtf_empty_vec(wtf_vec_t* v);
 
 // Construct an X axis versor (1, 0, 0)
-void vversorX(Vect* v);
+void wtf_versor_x(wtf_vec_t* v);
 
 // Construct a Y axis versor (0, 1, 0)
-void vversorY(Vect* v);
+void wtf_versor_y(wtf_vec_t* v);
 
 // Construct a Z axis versor (0, 0, 1)
-void vversorZ(Vect* v);
+void wtf_versor_z(wtf_vec_t* v);
 
 // Construct a vector from array of 3 doubles
-void vfromArray(Vect* v, double (*a)[3]);
+void wtf_vec_from_array(wtf_vec_t* v, double (*a)[3]);
 
 // Negate a vector
-void vnegate(Vect* v);
+void wtf_negate_vec(wtf_vec_t* v);
 
 // Scale a vector by a scalar
-void vscale(Vect* v, double k);
+void wtf_scale_vec(wtf_vec_t* v, double k);
 
 // Normalize a vector
 // Returns:
 //  1 if the vector was already normalized
 //  0 if the normalization was OK
 // -1 in case of failure
-int MUST_USE vnormalize(Vect* v);
+int MUST_USE wtf_normalize_vec(wtf_vec_t* v);
 
 // Add vector v2 to vector v1
-void vadd(Vect* v1, const Vect* v2);
+void wtf_add_vec(wtf_vec_t* v1, const wtf_vec_t* v2);
 
 // Subtract vector v2 from vector v1
-void vsub(Vect* v1, const Vect* v2);
+void wtf_subtract_vec(wtf_vec_t* v1, const wtf_vec_t* v2);
 
 // Get a cross product of two vectors: v1 x v2
-void vcross(Vect* v, const Vect* v1, const Vect* v2);
+void wtf_vec_cross(wtf_vec_t* v, const wtf_vec_t* v1, const wtf_vec_t* v2);
 
 // Get a dot product of two vectors: v1 * v2
-double MUST_USE vdot(const Vect* v1, const Vect* v2);
+double MUST_USE wtf_vec_dot(const wtf_vec_t* v1, const wtf_vec_t* v2);
 
 // Get a norm of a vector
-double MUST_USE vnorm(const Vect* v);
+double MUST_USE wtf_vec_norm(const wtf_vec_t* v);
 
 // Get a squared norm of a vector
-double MUST_USE vnormSquared(const Vect* v);
+double MUST_USE wtf_vec_squared_norm(const wtf_vec_t* v);
 
 // Compare two vectors by coordinates
-bool MUST_USE vcmp(const Vect* v1, const Vect* v2);
+bool MUST_USE wtf_compare_vec(const wtf_vec_t* v1, const wtf_vec_t* v2);
 
 // Print a vector to stdout
-void vprint(const Vect* v);
+void wtf_print_vec(const wtf_vec_t* v);
 
 #undef PACKED
 #undef MUST_USE
 
-#endif // CTF_VECTORS_H_
+#endif // WTF_VECTORS_H_

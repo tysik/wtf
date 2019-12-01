@@ -1,5 +1,5 @@
-#ifndef CTF_QUATERNIONS_H_
-#define CTF_QUATERNIONS_H_
+#ifndef WTF_QUATERNIONS_H_
+#define WTF_QUATERNIONS_H_
 
 #include "Vectors.h"
 
@@ -18,7 +18,7 @@ typedef union Quat {
     };
     struct PACKED {
         double s;
-        Vect v;
+        wtf_vec_t v;
     };
 } Quat;
 
@@ -26,7 +26,7 @@ typedef union Quat {
 void qempty(Quat* q);
 
 // Construct a pure quaternion from vector (0, x, y, z)
-void qpure(Quat* q, const Vect* v);
+void qpure(Quat* q, const wtf_vec_t* v);
 
 // Construct real quaternion from number (s, 0, 0, 0)
 void qreal(Quat* q, double s);
@@ -34,7 +34,7 @@ void qreal(Quat* q, double s);
 // Construct a rotor about an axis
 // Theta must be given in radians
 // Axis must be normalized
-void qrotor(Quat* q, double theta, const Vect* axis);
+void qrotor(Quat* q, double theta, const wtf_vec_t* axis);
 
 // Conjugate a quaternion
 void qconjugate(Quat* q);
@@ -72,7 +72,7 @@ int MUST_USE qdiv(Quat* q, const Quat* q1, const Quat* q2);
 
 // Rotate a vector about a quaternion
 // Q must be a proper (normalized) rotor 
-void qrotate(Vect* v, const Quat* q);
+void qrotate(wtf_vec_t* v, const Quat* q);
 
 // Get the norm of a quaternion
 double MUST_USE qnorm(const Quat* q);
@@ -95,4 +95,4 @@ void qprint(const Quat* q);
 #undef PACKED
 #undef MUST_USE
 
-#endif // CTF_QUATERNIONS_H_
+#endif // WTF_QUATERNIONS_H_

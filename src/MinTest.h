@@ -1,5 +1,5 @@
-#ifndef CTF_MIN_TEST_H_
-#define CTF_MIN_TEST_H_
+#ifndef WTF_MIN_TEST_H_
+#define WTF_MIN_TEST_H_
 
 // Based on http://www.jera.com/techinfo/jtns/jtn002.html
 
@@ -19,4 +19,4 @@
 
 extern int test_run;
 
-#endif // CTF_MIN_TEST_H_
+#endif // WTF_MIN_TEST_H_

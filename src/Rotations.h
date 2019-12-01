@@ -1,5 +1,5 @@
-#ifndef CTF_ROTATIONS_H_
-#define CTF_ROTATIONS_H_
+#ifndef WTF_ROTATIONS_H_
+#define WTF_ROTATIONS_H_
 
 #include "Quaternions.h"
 
@@ -30,4 +30,4 @@ void rmul(Rot* r, const Rot* r1, const Rot* r2);
 // Print a rotation matrix to stdout
 void rprint(const Rot* r);
 
-#endif // CTF_ROTATIONS_H_
+#endif // WTF_ROTATIONS_H_
