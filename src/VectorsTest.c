@@ -8,7 +8,10 @@
 static int tests_run = 0;
 
 static char* testConstruction() {
-    wtf_vec_t ve, vx, vy, vz, va;
+    wtf_vec_t ve = wtf_empty_vec();
+    wtf_vec_t vx = wtf_versor_x();
+    wtf_vec_t vy = wtf_versor_y();
+    wtf_vec_t vz = wtf_versor_z();
 
     wtf_vec_t ve_exp = {.x = 0.0, .y = 0.0, .z = 0.0, .is_normalized = false};
     wtf_vec_t vx_exp = {.x = 1.0, .y = 0.0, .z = 0.0, .is_normalized = true};
@@ -16,16 +19,11 @@ static char* testConstruction() {
     wtf_vec_t vz_exp = {.x = 0.0, .y = 0.0, .z = 1.0, .is_normalized = true};
     wtf_vec_t va_exp = {.x = -3.0, .y = 5.0, .z = 0.7};
 
-    wtf_empty_vec(&ve);
-    wtf_versor_x(&vx);
-    wtf_versor_y(&vy);
-    wtf_versor_z(&vz);
-
     double a[3] = {-3.0, 5.0, 0.7};
-    wtf_vec_from_array(&va, &a);
+    wtf_vec_t va = wtf_vec_from_array(&a);
 
-    mu_assert("error, wtf_empty_vec(v) != v_exp", wtf_compare_vec(&ve, &ve_exp));
-    mu_assert("error, wtf_empty_vec(v) is normalized", !ve.is_normalized);
+    mu_assert("error, wtf_empty_vec() != v_exp", wtf_compare_vec(&ve, &ve_exp));
+    mu_assert("error, wtf_empty_vec() is normalized", !ve.is_normalized);
 
     mu_assert("error, wtf_versor_x(v) != v_exp", wtf_compare_vec(&vx, &vx_exp));
     mu_assert("error, wtf_versor_x(v) is not normalized", vx.is_normalized);
@@ -36,7 +34,7 @@ static char* testConstruction() {
     mu_assert("error, wtf_versor_z(v) != v_exp", wtf_compare_vec(&vz, &vz_exp));
     mu_assert("error, wtf_versor_z(v) is not normalized", vz.is_normalized);
 
-    mu_assert("error, wtf_vec_from_array(v,a) != v_exp", wtf_compare_vec(&va, &va_exp));
+    mu_assert("error, wtf_vec_from_array(a) != v_exp", wtf_compare_vec(&va, &va_exp));
     return 0;
 }
 
@@ -139,15 +137,12 @@ static char* testSubtract() {
 }
 
 static char* testCross() {
-    wtf_vec_t v0;
-    wtf_vec_t vi, vj, vk;
+    wtf_vec_t v0 = wtf_empty_vec();
+    wtf_vec_t vi = wtf_versor_x();
+    wtf_vec_t vj = wtf_versor_y();
+    wtf_vec_t vk = wtf_versor_z();
+
     wtf_vec_t vni, vnj, vnk;
-
-    wtf_empty_vec(&v0);
-    wtf_versor_x(&vi);
-    wtf_versor_y(&vj);
-    wtf_versor_z(&vk);
-
     vni = vi, wtf_negate_vec(&vni);
     vnj = vj, wtf_negate_vec(&vnj);
     vnk = vk, wtf_negate_vec(&vnk);
@@ -196,10 +191,9 @@ static char* testCross() {
 }
 
 static char* testDot() {
-    wtf_vec_t vi, vj, vk;
-    wtf_versor_x(&vi);
-    wtf_versor_y(&vj);
-    wtf_versor_z(&vk);
+    wtf_vec_t vi = wtf_versor_x();
+    wtf_vec_t vj = wtf_versor_y();
+    wtf_vec_t vk = wtf_versor_z();
 
     mu_assert("error, wtf_vec_dot(vi,vi) != 1", dcmp(wtf_vec_dot(&vi, &vi), 1.0));
     mu_assert("error, wtf_vec_dot(vi,vj) != 0", dcmp(wtf_vec_dot(&vi, &vj), 0.0));

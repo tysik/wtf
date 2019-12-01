@@ -13,19 +13,19 @@ typedef struct PACKED wtf_vec_t {
 } wtf_vec_t;
 
 // Construct an empty vector (0, 0, 0)
-void wtf_empty_vec(wtf_vec_t* v);
+wtf_vec_t wtf_empty_vec();
 
 // Construct an X axis versor (1, 0, 0)
-void wtf_versor_x(wtf_vec_t* v);
+wtf_vec_t wtf_versor_x();
 
 // Construct a Y axis versor (0, 1, 0)
-void wtf_versor_y(wtf_vec_t* v);
+wtf_vec_t wtf_versor_y();
 
 // Construct a Z axis versor (0, 0, 1)
-void wtf_versor_z(wtf_vec_t* v);
+wtf_vec_t wtf_versor_z();
 
 // Construct a vector from array of 3 doubles
-void wtf_vec_from_array(wtf_vec_t* v, double (*a)[3]);
+wtf_vec_t wtf_vec_from_array(double (*a)[3]);
 
 // Negate a vector
 void wtf_negate_vec(wtf_vec_t* v);

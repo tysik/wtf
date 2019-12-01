@@ -5,32 +5,24 @@
 #include <stdio.h>
 #include <string.h>
 
-void wtf_empty_vec(wtf_vec_t* v) {
-    v->x = v->y = v->z = 0.0;
-    v->is_normalized = false;
+wtf_vec_t wtf_empty_vec() {
+    return (wtf_vec_t){.x = 0.0, .y = 0.0, .z = 0.0, .is_normalized = false};
 }
 
-void wtf_versor_x(wtf_vec_t* v) {
-    v->x = 1.0;
-    v->y = v->z = 0.0;
-    v->is_normalized = true;
+wtf_vec_t wtf_versor_x() {
+    return (wtf_vec_t){.x = 1.0, .y = 0.0, .z = 0.0, .is_normalized = true};
 }
 
-void wtf_versor_y(wtf_vec_t* v) {
-    v->y = 1.0;
-    v->x = v->z = 0.0;
-    v->is_normalized = true;
+wtf_vec_t wtf_versor_y() {
+    return (wtf_vec_t){.x = 0.0, .y = 1.0, .z = 0.0, .is_normalized = true};
 }
 
-void wtf_versor_z(wtf_vec_t* v) {
-    v->z = 1.0;
-    v->x = v->y = 0.0;
-    v->is_normalized = true;
+wtf_vec_t wtf_versor_z() {
+    return (wtf_vec_t){.x = 0.0, .y = 0.0, .z = 1.0, .is_normalized = true};
 }
 
-void wtf_vec_from_array(wtf_vec_t* v, double (*a)[3]) {
-    memcpy(v, a, 3 * sizeof(double));
-    v->is_normalized = false;
+wtf_vec_t wtf_vec_from_array(double (*a)[3]) {
+    return (wtf_vec_t){.x = (*a)[0], .y = (*a)[1], .z = (*a)[2], .is_normalized = false};
 }
 
 void wtf_negate_vec(wtf_vec_t* v) {

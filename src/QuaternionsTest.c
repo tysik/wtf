@@ -31,10 +31,9 @@ static char* testRotor() {
     Quat qry_exp = {.w = 0.707106781, .i = 0.0, .j = 0.707106781, .k = 0.0};
     Quat qrz_exp = {.w = 0.707106781, .i = 0.0, .j = 0.0, .k = 0.707106781};
 
-    wtf_vec_t vi, vj, vk;
-    wtf_versor_x(&vi);
-    wtf_versor_y(&vj);
-    wtf_versor_z(&vk);
+    wtf_vec_t vi = wtf_versor_x();
+    wtf_vec_t vj = wtf_versor_y();
+    wtf_vec_t vk = wtf_versor_z();
 
     double theta = 90.0 * 3.1415926536 / 180.0;
     qrotor(&qrx, theta, &vi);

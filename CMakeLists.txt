@@ -19,10 +19,10 @@ add_library(ctf SHARED
     src/MathUtils.c
     src/Vectors.h
     src/Vectors.c
-    src/Quaternions.h
-    src/Quaternions.c
-    src/Rotations.h
-    src/Rotations.c
+    # src/Quaternions.h
+    # src/Quaternions.c
+    # src/Rotations.h
+    # src/Rotations.c
 )
 target_link_libraries(ctf m)
 
@@ -43,19 +43,19 @@ add_executable(vectors_test
 target_link_libraries(vectors_test ctf)
 target_output_directory(vectors_test "tests/")
 
-add_executable(quaternions_test 
-    src/MinTest.h
-    src/QuaternionsTest.c
-)
-target_link_libraries(quaternions_test ctf)
-target_output_directory(quaternions_test "tests/")
+# add_executable(quaternions_test 
+#     src/MinTest.h
+#     src/QuaternionsTest.c
+# )
+# target_link_libraries(quaternions_test ctf)
+# target_output_directory(quaternions_test "tests/")
 
-add_executable(rotations_test 
-    src/MinTest.h
-    src/RotationsTest.c
-)
-target_link_libraries(rotations_test ctf)
-target_output_directory(rotations_test "tests/")
+# add_executable(rotations_test 
+#     src/MinTest.h
+#     src/RotationsTest.c
+# )
+# target_link_libraries(rotations_test ctf)
+# target_output_directory(rotations_test "tests/")
 
 # Examples
 # add_executable(example 
