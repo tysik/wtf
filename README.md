@@ -1,3 +1,3 @@
-# Quaternions for C
+# Weird TransFormations
 
-Simple implementation of quaternions arithmetics for C language.
+Simple implementation of 3D transformations in C (for didactic purpose).
