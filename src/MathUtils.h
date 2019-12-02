@@ -5,10 +5,10 @@
 #include <stdbool.h>
 
 // Get the largest value from the arguments
-double dmax(int num_args, ...);
+double wtf_dmax(int num_args, ...);
 
 // Compare a and b for equality with limited precission
 // Returns true if a is approx. equal to b
-bool dcmp(double a, double b);
+bool wtf_dcmp(double a, double b);
 
 #endif // WTF_MATH_UTILS_H_

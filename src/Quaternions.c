@@ -24,17 +24,17 @@ void qrotor(Quat* q, double theta, const wtf_vec_t* axis) {
     assert(axis->is_normalized && "Using non-versor axis for rotor");
     q->s = cos(theta / 2.0);
     q->v = *axis;
-    wtf_scale_vec(&q->v, sin(theta / 2.0));
+    wtf_vec_scaled(&q->v, sin(theta / 2.0));
     q->is_normalized = true;
 }
 
 void qconjugate(Quat* q) {
-    wtf_negate_vec(&q->v);
+    wtf_vec_negated(&q->v);
 }
 
 void qscale(Quat* q, double k) {
     q->s = k * q->s;
-    wtf_scale_vec(&q->v, k);
+    wtf_vec_scaled(&q->v, k);
 }
 
 int qnormalize(Quat* q) {
@@ -69,12 +69,12 @@ int qinverse(Quat* q) {
 
 void qadd(Quat* q1, const Quat* q2) {
     q1->s = q1->s + q2->s;
-    wtf_add_vec(&q1->v, &q2->v);
+    wtf_vec_add(&q1->v, &q2->v);
 }
 
 void qsub(Quat* q1, const Quat* q2) {
     q1->s = q1->s - q2->s;
-    wtf_subtract_vec(&q1->v, &q2->v);
+    wtf_vec_subtract(&q1->v, &q2->v);
 }
 
 void qmul(Quat* q, const Quat* q1, const Quat* q2) {
@@ -85,12 +85,12 @@ void qmul(Quat* q, const Quat* q1, const Quat* q2) {
     wtf_vec_cross(&result.v, &q1->v, &q2->v);
 
     wtf_vec_t v_aux = q1->v;
-    wtf_scale_vec(&v_aux, q2->s);
-    wtf_add_vec(&result.v, &v_aux);
+    wtf_vec_scaled(&v_aux, q2->s);
+    wtf_vec_add(&result.v, &v_aux);
 
     v_aux = q2->v;
-    wtf_scale_vec(&v_aux, q1->s);
-    wtf_add_vec(&result.v, &v_aux);
+    wtf_vec_scaled(&v_aux, q1->s);
+    wtf_vec_add(&result.v, &v_aux);
     *q = result;
 }
 
@@ -136,7 +136,7 @@ bool qisReal(const Quat* q) {
 }
 
 bool qcmp(const Quat* q1, const Quat* q2) {
-    return dcmp(q1->s, q2->s) && wtf_compare_vec(&q1->v, &q2->v);
+    return wtf_dcmp(q1->s, q2->s) && wtf_compare_vec(&q1->v, &q2->v);
 }
 
 void qprint(const Quat* q) {

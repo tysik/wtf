@@ -3,7 +3,7 @@
 #include <math.h>
 #include <stdio.h>
 
-double dmax(int num_args, ...) {
+double wtf_dmax(int num_args, ...) {
     // Based on http://publications.gbdirect.co.uk/c_book/chapter9/stdarg.html
     va_list args;
     va_start(args, num_args);
@@ -20,8 +20,8 @@ double dmax(int num_args, ...) {
     return max;
 }
 
-bool dcmp(double a, double b) {
+bool wtf_dcmp(double a, double b) {
     // Based on http://realtimecollisiondetection.net/blog/?p=89
     static const double Precision = 1.0e-7;
-    return fabs(a - b) < Precision * dmax(3, 1.0, fabs(a), fabs(b));
+    return fabs(a - b) < Precision * wtf_dmax(3, 1.0, fabs(a), fabs(b));
 }

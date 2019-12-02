@@ -6,7 +6,7 @@
 
 static int tests_run = 0;
 
-static char* testConstruction() {
+static char* test_construction() {
     Quat qe, qp, qr;
 
     Quat qe_exp = {.w = 0.0, .i = 0.0, .j = 0.0, .k = 0.0};
@@ -67,7 +67,7 @@ static char* testConjugate() {
     return 0;
 }
 
-static char* testScale() {
+static char* test_scale() {
     Quat q = {.w = 1.0, .i = 2.0, .j = 3.0, .k = 4.0};
     Quat q_exp = {.w = 2.5, .i = 5.0, .j = 7.5, .k = 10.0};
 
@@ -78,7 +78,7 @@ static char* testScale() {
     return 0;
 }
 
-static char* testNormalize() {
+static char* test_normalize() {
     Quat q = {.w = 1.0, .i = 1.0, .j = 1.0, .k = 1.0, .is_normalized = false};
     Quat q_exp = {.w = 0.5, .i = 0.5, .j = 0.5, .k = 0.5, .is_normalized = true};
 
@@ -109,7 +109,7 @@ static char* testInverse() {
     return 0;
 }
 
-static char* testAdd() {
+static char* test_add() {
     Quat q1 = {.w = 1.0, .i = 2.0, .j = 3.0, .k = 4.0};
     Quat q2 = {.w = 1.1, .i = 1.2, .j = 1.3, .k = 1.4};
     Quat q_exp = {.w = 2.1, .i = 3.2, .j = 4.3, .k = 5.4};
@@ -120,7 +120,7 @@ static char* testAdd() {
     return 0;
 }
 
-static char* testSubtract() {
+static char* test_subtract() {
     Quat q1 = {.w = 1.0, .i = 2.0, .j = 3.0, .k = 4.0};
     Quat q2 = {.w = 1.1, .i = 1.2, .j = 1.3, .k = 1.4};
 
@@ -149,7 +149,7 @@ static char* testMultiply() {
     mu_assert("error, qmul(q1,q2) != q_exp", qcmp(&q_mul, &q_exp));
     mu_assert("error, qmul(q,qconjugate(q)) is not real", qisReal(&q_mul_conj));
     mu_assert("error, qmul(q1,qconjugate(q1)).w != qnormSquared(q)",
-              dcmp(q_mul_conj.w, qnormSquared(&q1)));
+              wtf_dcmp(q_mul_conj.w, qnormSquared(&q1)));
     return 0;
 }
 
@@ -181,7 +181,7 @@ static char* testRotate() {
 
     wtf_vec_t to_rotate;
     wtf_versor_y(&to_rotate);
-    wtf_scale_vec(&to_rotate, 2.0);
+    wtf_vec_scaled(&to_rotate, 2.0);
     // wtf_print_vec(&to_rotate);
     // printf("\n");
 
@@ -193,12 +193,12 @@ static char* testRotate() {
     mu_assert("error, qrotate(v,q) != v_exp", wtf_compare_vec(&rotated, &v_exp));
     mu_assert("error, norm(v) != norm(rotate(v,q))",
               to_rotate.is_normalized == rotated.is_normalized &&
-                  dcmp(wtf_vec_norm(&to_rotate), wtf_vec_norm(&rotated)));
+                  wtf_dcmp(wtf_vec_norm(&to_rotate), wtf_vec_norm(&rotated)));
 
     return 0;
 }
 
-static char* testNorm() {
+static char* test_norm() {
     Quat q = {.w = 1.0, .i = 2.0, .j = 3.0, .k = 4.0};
 
     double norm_exp = 5.477225575;
@@ -207,12 +207,12 @@ static char* testNorm() {
     double norm = qnorm(&q);
     double norm_sqrd = qnormSquared(&q);
 
-    mu_assert("error, qnorm(q) != norm_exp", dcmp(norm, norm_exp));
-    mu_assert("error, qnormSquared(q) != norm_exp", dcmp(norm_sqrd, norm_sqrd_exp));
+    mu_assert("error, qnorm(q) != norm_exp", wtf_dcmp(norm, norm_exp));
+    mu_assert("error, qnormSquared(q) != norm_exp", wtf_dcmp(norm_sqrd, norm_sqrd_exp));
     return 0;
 }
 
-static char* testCompare() {
+static char* test_compare() {
     Quat q1 = {.w = 1.0, .i = 2.0, .j = 3.0, .k = 4.0};
     Quat q2 = {.w = 1.0, .i = 2.0, .j = 3.0, .k = 4.0};
     Quat q3 = {.w = 1.0, .i = 1.0, .j = 1.0, .k = 1.0};
@@ -223,19 +223,19 @@ static char* testCompare() {
 }
 
 static char* all_tests() {
-    mu_run_test(testConstruction);
+    mu_run_test(test_construction);
     mu_run_test(testRotor);
     mu_run_test(testConjugate);
-    mu_run_test(testScale);
-    mu_run_test(testNormalize);
+    mu_run_test(test_scale);
+    mu_run_test(test_normalize);
     mu_run_test(testInverse);
-    mu_run_test(testAdd);
-    mu_run_test(testSubtract);
+    mu_run_test(test_add);
+    mu_run_test(test_subtract);
     mu_run_test(testMultiply);
     mu_run_test(testDivide);
     mu_run_test(testRotate);
-    mu_run_test(testNorm);
-    mu_run_test(testCompare);
+    mu_run_test(test_norm);
+    mu_run_test(test_compare);
     return 0;
 }
 

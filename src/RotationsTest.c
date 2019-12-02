@@ -6,13 +6,13 @@
 
 static int tests_run = 0;
 
-static char* testConstruction() {
+static char* test_construction() {
     mu_assert("error, ", true);
     return 0;
 }
 
 static char* all_tests() {
-    mu_run_test(testConstruction);
+    mu_run_test(test_construction);
     return 0;
 }
 
