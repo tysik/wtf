@@ -60,9 +60,8 @@ target_output_directory(vector_test "tests/")
 # target_output_directory(rotations_test "tests/")
 
 # Examples
-# add_executable(example 
-#     examples/main.c
-# )
-# target_link_libraries(example SDL2)
-# include_directories(example, "/usr/include/SDL2")
-# target_output_directory(example "examples/")
+add_executable(example 
+    examples/main.c
+)
+target_link_libraries(example SDL2)
+target_output_directory(example "examples/")
