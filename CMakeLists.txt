@@ -18,12 +18,12 @@ endfunction(target_output_directory)
 add_library(${LIB_NAME} SHARED 
     src/MathUtils.h
     src/MathUtils.c
-    src/Vectors.h
-    src/Vectors.c
+    src/Vector.h
+    src/Vector.c
     src/Quaternion.h
     src/Quaternion.c
-    src/Rotations.h
-    src/Rotations.c
+    # src/Rotations.h
+    # src/Rotations.c
 )
 target_link_libraries(${LIB_NAME} m)
 
@@ -31,25 +31,16 @@ target_link_libraries(${LIB_NAME} m)
 # TODO: Use ctest
 configure_file(scripts/do_tests.sh tests/do_tests.sh COPYONLY)
 
-add_executable(math_utils_test 
-    src/MinTest.h
-    src/MathUtilsTest.c
-)
+add_executable(math_utils_test src/MathUtilsTest.c)
 target_link_libraries(math_utils_test ${LIB_NAME})
 target_output_directory(math_utils_test "tests/")
 
-add_executable(vector_test 
-    src/MinTest.h
-    src/VectorTest.c
-)
+add_executable(vector_test src/VectorTest.c)
 target_link_libraries(vector_test ${LIB_NAME})
 target_output_directory(vector_test "tests/")
 
-add_executable(quaternion_test 
-    src/MinTest.h
-    src/QuaternionTest.c
-)
-target_link_libraries(quaternion_test ctf)
+add_executable(quaternion_test src/QuaternionTest.c)
+target_link_libraries(quaternion_test ${LIB_NAME})
 target_output_directory(quaternion_test "tests/")
 
 # add_executable(rotations_test 

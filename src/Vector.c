@@ -1,6 +1,7 @@
 #include "Vector.h"
 #include "MathUtils.h"
 
+#include <assert.h>
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
@@ -34,8 +35,9 @@ wtf_vec_t wtf_vec_scaled(const wtf_vec_t* v, double k) {
 }
 
 wtf_vec_t wtf_vec_normalized(const wtf_vec_t* v) {
-    double squared_norm = wtf_vec_squared_norm(v);
-    return (squared_norm > 0.0) ? wtf_vec_scaled(v, 1.0 / sqrt(squared_norm)) : wtf_versor_x();
+    assert(wtf_vec_squared_norm(v) > 0 && "Trying to normalize a zero-length vector");
+
+    return wtf_vec_scaled(v, 1.0 / wtf_vec_norm(v));
 }
 
 wtf_vec_t wtf_vec_add(const wtf_vec_t* v1, const wtf_vec_t* v2) {
@@ -73,5 +75,5 @@ bool wtf_compare_vec(const wtf_vec_t* v1, const wtf_vec_t* v2) {
 }
 
 void wtf_print_vec(const wtf_vec_t* v) {
-    printf("(% .3f,% .3f,% .3f)", v->x, v->y, v->z);
+    printf("[%.3f,% .3f,% .3f]", v->x, v->y, v->z);
 }

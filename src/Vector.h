@@ -14,7 +14,9 @@ typedef union wtf_vec_t {
     double array[3];
 } wtf_vec_t;
 
-// Vector constructors:
+// Constructors:
+//
+
 // Construct an empty vector (0, 0, 0)
 wtf_vec_t wtf_empty_vec();
 
@@ -30,7 +32,9 @@ wtf_vec_t wtf_versor_z();
 // Construct a vector from array of 3 doubles
 wtf_vec_t wtf_vec_from_array(double (*a)[3]);
 
-// Vector variations:
+// Variations:
+//
+
 // Negate a vector
 wtf_vec_t wtf_vec_negated(const wtf_vec_t* v);
 
@@ -38,11 +42,15 @@ wtf_vec_t wtf_vec_negated(const wtf_vec_t* v);
 wtf_vec_t wtf_vec_scaled(const wtf_vec_t* v, double k);
 
 // Get a normalized version of a vector
-// In case of vector of zeroth length an X versor will be returned.
+// The vector length must be greater than 0.
 wtf_vec_t wtf_vec_normalized(const wtf_vec_t* v);
+
 // TODO: Add reflected vector
+// TODO: Add LERP
 
 // Vector operations:
+//
+
 // Add vectors v1 and v2
 wtf_vec_t wtf_vec_add(const wtf_vec_t* v1, const wtf_vec_t* v2);
 
@@ -56,6 +64,8 @@ wtf_vec_t wtf_vec_cross(const wtf_vec_t* v1, const wtf_vec_t* v2);
 double wtf_vec_dot(const wtf_vec_t* v1, const wtf_vec_t* v2);
 
 // Vector traits:
+//
+
 // Get a norm of a vector
 double wtf_vec_norm(const wtf_vec_t* v);
 
@@ -66,6 +76,8 @@ double wtf_vec_squared_norm(const wtf_vec_t* v);
 bool wtf_vec_is_normalized(const wtf_vec_t* v);
 
 // Auxiliary:
+//
+
 // Compare two vectors by coordinates
 bool MUST_USE wtf_compare_vec(const wtf_vec_t* v1, const wtf_vec_t* v2);
 
