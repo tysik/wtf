@@ -1,7 +1,7 @@
 #ifndef WTF_ROTATIONS_H_
 #define WTF_ROTATIONS_H_
 
-#include "Quaternions.h"
+#include "Quaternion.h"
 
 // 3D rotation matrix
 typedef double Rot[3][3];
@@ -15,9 +15,9 @@ void rrotZ(Rot* r, double theta);
 
 // Construct rotation matrix from a quaternion
 // Q must be a proper (normalized) rotor 
-void rfromQuat(Rot* r, const Quat* q);
+void rfromQuat(Rot* r, const wtf_quat_t* q);
 
-void rtoQuat(Quat* q, const Rot* r);
+void rtoQuat(wtf_quat_t* q, const Rot* r);
 
 void rrand(Rot* R);
 

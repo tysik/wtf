@@ -18,12 +18,12 @@ endfunction(target_output_directory)
 add_library(${LIB_NAME} SHARED 
     src/MathUtils.h
     src/MathUtils.c
-    src/Vector.h
-    src/Vector.c
-    # src/Quaternions.h
-    # src/Quaternions.c
-    # src/Rotations.h
-    # src/Rotations.c
+    src/Vectors.h
+    src/Vectors.c
+    src/Quaternion.h
+    src/Quaternion.c
+    src/Rotations.h
+    src/Rotations.c
 )
 target_link_libraries(${LIB_NAME} m)
 
@@ -45,12 +45,12 @@ add_executable(vector_test
 target_link_libraries(vector_test ${LIB_NAME})
 target_output_directory(vector_test "tests/")
 
-# add_executable(quaternions_test 
-#     src/MinTest.h
-#     src/QuaternionsTest.c
-# )
-# target_link_libraries(quaternions_test ${LIB_NAME})
-# target_output_directory(quaternions_test "tests/")
+add_executable(quaternion_test 
+    src/MinTest.h
+    src/QuaternionTest.c
+)
+target_link_libraries(quaternion_test ctf)
+target_output_directory(quaternion_test "tests/")
 
 # add_executable(rotations_test 
 #     src/MinTest.h

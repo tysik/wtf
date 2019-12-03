@@ -40,7 +40,7 @@ void rrotZ(Rot* r, double theta) {
     (*r)[0][1] *= -1.0;
 }
 
-void rfromQuat(Rot* r, const Quat* q) {
+void rfromQuat(Rot* r, const wtf_quat_t* q) {
     assert(q->is_normalized && "Non-unit quaternion");
 
     // Diagonal
@@ -61,7 +61,7 @@ void rfromQuat(Rot* r, const Quat* q) {
     rscale(r, 2.0);
 }
 
-void rtoQuat(Quat* q, const Rot* r) {
+void rtoQuat(wtf_quat_t* q, const Rot* r) {
     // double trace = (*r)[0][0] + (*r)[1][1] + (*r)[2][2];
     // q->w = sqrt(trace + 1.0) / 2.0;
     // q->i =
