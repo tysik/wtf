@@ -13,14 +13,10 @@ static char* test_construction() {
     wtf_vec_t vy = wtf_versor_y();
     wtf_vec_t vz = wtf_versor_z();
 
-    double a[3] = {-3.0, 5.0, 0.7};
-    wtf_vec_t va = wtf_vec_from_array(&a);
-
     wtf_vec_t ve_exp = {.x = 0.0, .y = 0.0, .z = 0.0};
     wtf_vec_t vx_exp = {.x = 1.0, .y = 0.0, .z = 0.0};
     wtf_vec_t vy_exp = {.x = 0.0, .y = 1.0, .z = 0.0};
     wtf_vec_t vz_exp = {.x = 0.0, .y = 0.0, .z = 1.0};
-    wtf_vec_t va_exp = {.x = -3.0, .y = 5.0, .z = 0.7};
 
     mu_assert("error, wtf_empty_vec() != expected", wtf_compare_vec(&ve, &ve_exp));
     mu_assert("error, wtf_empty_vec() is normalized", !wtf_vec_is_normalized(&ve));
@@ -33,9 +29,6 @@ static char* test_construction() {
 
     mu_assert("error, wtf_versor_z(v) != expected", wtf_compare_vec(&vz, &vz_exp));
     mu_assert("error, wtf_versor_z(v) is not normalized", wtf_vec_is_normalized(&vz));
-
-    mu_assert("error, wtf_vec_from_array(a) != expected", wtf_compare_vec(&va, &va_exp));
-    mu_assert("error, wtf_vec_from_array(a) is normalized", !wtf_vec_is_normalized(&va));
 
     return 0;
 }
@@ -69,7 +62,7 @@ static char* test_scale() {
     wtf_vec_t v1_exp = {.x = 2.5, .y = 5.0, .z = 7.5};
     wtf_vec_t v2_exp = {.x = 2.5, .y = 0.0, .z = 0.0};
 
-    double k = 2.5;
+    wtf_scalar_t k = 2.5;
     v1 = wtf_vec_scaled(&v1, k);
     v2 = wtf_vec_scaled(&v2, k);
     bool equal_norms = wtf_vec_is_normalized(&v2) == wtf_vec_is_normalized(&v2_exp) &&
@@ -193,9 +186,9 @@ static char* test_dot() {
 
     wtf_vec_t v1 = {.x = 1.0, .y = 2.0, .z = 3.0};
     wtf_vec_t v2 = {.x = 1.0, .y = 1.0, .z = 1.0};
-    double dot_exp = 6.0;
+    wtf_scalar_t dot_exp = 6.0;
 
-    double dot = wtf_vec_dot(&v1, &v2);
+    wtf_scalar_t dot = wtf_vec_dot(&v1, &v2);
 
     mu_assert("error, wtf_vec_dot(v1,v2) != expected", wtf_dcmp(dot, dot_exp));
 
@@ -206,8 +199,8 @@ static char* test_norm() {
     wtf_vec_t v1 = {.x = 1.0, .y = 2.0, .z = 3.0};
     wtf_vec_t v2 = {.x = 0.1, .y = 0.2, .z = 0.3};
 
-    double n1_exp = 14.0;
-    double n2_exp = 0.14;
+    wtf_scalar_t n1_exp = 14.0;
+    wtf_scalar_t n2_exp = 0.14;
 
     mu_assert("error, wtf_vec_squared_norm(v1) != expected",
               wtf_dcmp(wtf_vec_squared_norm(&v1), n1_exp));

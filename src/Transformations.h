@@ -10,7 +10,7 @@ void ttranslation(Trans* t, const wtf_vec_t* v);
 
 void tscale(Trans* t, const wtf_vec_t* s);
 
-void trotation(Trans* t, const Rot* r);
+void trotation(Trans* t, const wtf_rot_t* r);
 
 void tconcat(Trans* t, const Trans* t_lhs, const Trans* t_rhs);
 //void tmul()

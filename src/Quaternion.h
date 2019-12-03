@@ -1,24 +1,13 @@
 #ifndef WTF_QUATERNION_H_
 #define WTF_QUATERNION_H_
 
-#include "Vector.h"
+#include "ScalarType.h"
+#include "VectorType.h"
+#include "QuaternionType.h"
 
 #include <stdbool.h>
 
-#define PACKED __attribute__((packed, aligned(1)))
 #define MUST_USE __attribute__((warn_unused_result))
-
-// Quaternion
-typedef union wtf_quat_t {
-    struct PACKED {
-        double w, i, j, k;
-    };
-    struct PACKED {
-        double s;
-        wtf_vec_t v;
-    };
-    double array[4];
-} wtf_quat_t;
 
 // Constructors:
 //
@@ -29,13 +18,13 @@ wtf_quat_t wtf_empty_quat();
 // Construct a pure quaternion from vector (0, x, y, z)
 wtf_quat_t wtf_pure_quat(const wtf_vec_t* v);
 
-// Construct a real quaternion from number (s, 0, 0, 0)
-wtf_quat_t wtf_real_quat(double s);
+// Construct a real quaternion from scalar (s, 0, 0, 0)
+wtf_quat_t wtf_real_quat(wtf_scalar_t s);
 
 // Construct a rotor about an axis
-// - theta must be given in radians
-// - axis must be a normalized vector
-wtf_quat_t wtf_rotor_quat(double theta, const wtf_vec_t* axis);
+// Axis must be a normalized vector.
+// Angle must be given in radians.
+wtf_quat_t wtf_rotor_quat(const wtf_vec_t* axis, wtf_scalar_t angle);
 
 // Variations:
 //
@@ -44,7 +33,7 @@ wtf_quat_t wtf_rotor_quat(double theta, const wtf_vec_t* axis);
 wtf_quat_t wtf_quat_conjugate(const wtf_quat_t* q);
 
 // Get a scaled quaternion
-wtf_quat_t wtf_quat_scaled(const wtf_quat_t* q, double k);
+wtf_quat_t wtf_quat_scaled(const wtf_quat_t* q, wtf_scalar_t k);
 
 // Get a normalized quaternion
 // The quaternion length must be greater than 0.
@@ -83,10 +72,10 @@ wtf_vec_t wtf_quat_rotate(const wtf_quat_t* q, const wtf_vec_t* v);
 //
 
 // Get a norm of a quaternion
-double wtf_quat_norm(const wtf_quat_t* q);
+wtf_scalar_t wtf_quat_norm(const wtf_quat_t* q);
 
 // Get a squared norm of a quaternion
-double wtf_quat_squared_norm(const wtf_quat_t* q);
+wtf_scalar_t wtf_quat_squared_norm(const wtf_quat_t* q);
 
 // Check if quaternion is normalized
 bool wtf_quat_is_normalized(const wtf_quat_t* q);
@@ -106,7 +95,6 @@ bool MUST_USE wtf_compare_quat(const wtf_quat_t* q1, const wtf_quat_t* q2);
 // Printf a quaterniong to stdout
 void wtf_print_quat(const wtf_quat_t* q);
 
-#undef PACKED
 #undef MUST_USE
 
 #endif // WTF_QUATERNION_H_

@@ -22,8 +22,8 @@ add_library(${LIB_NAME} SHARED
     src/Vector.c
     src/Quaternion.h
     src/Quaternion.c
-    # src/Rotations.h
-    # src/Rotations.c
+    src/Rotation.h
+    src/Rotation.c
 )
 target_link_libraries(${LIB_NAME} m)
 

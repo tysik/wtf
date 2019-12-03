@@ -1,6 +1,7 @@
 #include "Quaternion.h"
 #include "MathUtils.h"
 #include "MinTest.h"
+#include "Vector.h"
 
 #include <math.h>
 #include <stdio.h>
@@ -30,27 +31,27 @@ static char* test_construction() {
 }
 
 static char* test_rotor() {
-    double theta = M_PI / 2.0;
+    wtf_scalar_t angle = M_PI / 2.0;
 
     wtf_vec_t vi = wtf_versor_x();
     wtf_vec_t vj = wtf_versor_y();
     wtf_vec_t vk = wtf_versor_z();
 
-    wtf_quat_t qrx = wtf_rotor_quat(theta, &vi);
-    wtf_quat_t qry = wtf_rotor_quat(theta, &vj);
-    wtf_quat_t qrz = wtf_rotor_quat(theta, &vk);
+    wtf_quat_t qrx = wtf_rotor_quat(&vi, angle);
+    wtf_quat_t qry = wtf_rotor_quat(&vj, angle);
+    wtf_quat_t qrz = wtf_rotor_quat(&vk, angle);
 
     wtf_quat_t qrx_exp = {.w = 0.707106781, .i = 0.707106781, .j = 0.0, .k = 0.0};
     wtf_quat_t qry_exp = {.w = 0.707106781, .i = 0.0, .j = 0.707106781, .k = 0.0};
     wtf_quat_t qrz_exp = {.w = 0.707106781, .i = 0.0, .j = 0.0, .k = 0.707106781};
 
-    mu_assert("error, wtf_rotor_quat(q,theta,vi) != expected", wtf_compare_quat(&qrx, &qrx_exp));
-    mu_assert("error, wtf_rotor_quat(q,theta,vj) != expected", wtf_compare_quat(&qry, &qry_exp));
-    mu_assert("error, wtf_rotor_quat(q,theta,vk) != expected", wtf_compare_quat(&qrz, &qrz_exp));
+    mu_assert("error, wtf_rotor_quat(angle,vi) != expected", wtf_compare_quat(&qrx, &qrx_exp));
+    mu_assert("error, wtf_rotor_quat(angle,vj) != expected", wtf_compare_quat(&qry, &qry_exp));
+    mu_assert("error, wtf_rotor_quat(angle,vk) != expected", wtf_compare_quat(&qrz, &qrz_exp));
 
-    mu_assert("error, wtf_rotor_quat(q,theta,vi) is not normalized", wtf_quat_is_normalized(&qrx));
-    mu_assert("error, wtf_rotor_quat(q,theta,vj) is not normalized", wtf_quat_is_normalized(&qry));
-    mu_assert("error, wtf_rotor_quat(q,theta,vk) is not normalized", wtf_quat_is_normalized(&qrz));
+    mu_assert("error, wtf_rotor_quat(angle,vi) is not normalized", wtf_quat_is_normalized(&qrx));
+    mu_assert("error, wtf_rotor_quat(angle,vj) is not normalized", wtf_quat_is_normalized(&qry));
+    mu_assert("error, wtf_rotor_quat(angle,vk) is not normalized", wtf_quat_is_normalized(&qrz));
 
     return 0;
 }
@@ -76,7 +77,7 @@ static char* test_scale() {
     wtf_quat_t q = {.w = 1.0, .i = 2.0, .j = 3.0, .k = 4.0};
     wtf_quat_t q_exp = {.w = 2.5, .i = 5.0, .j = 7.5, .k = 10.0};
 
-    double k = 2.5;
+    wtf_scalar_t k = 2.5;
     q = wtf_quat_scaled(&q, k);
 
     mu_assert("error, wtf_quat_scaled(q,k) != expected", wtf_compare_quat(&q, &q_exp));
@@ -168,21 +169,12 @@ static char* test_rotate() {
     wtf_vec_t v_exp = {.x = 0.0, .y = 0.0, .z = 2.0};
 
     wtf_vec_t axis = wtf_versor_x();
-    wtf_quat_t rotor = wtf_rotor_quat(M_PI / 2.0, &axis);
-
-    wtf_print_quat(&rotor);
-    printf("\n");
+    wtf_quat_t rotor = wtf_rotor_quat(&axis, M_PI / 2.0);
 
     wtf_vec_t to_rotate = wtf_versor_y();
     to_rotate = wtf_vec_scaled(&to_rotate, 2.0);
 
-    wtf_print_vec(&to_rotate);
-    printf("\n");
-
     wtf_vec_t rotated = wtf_quat_rotate(&rotor, &to_rotate);
-
-    wtf_print_vec(&rotated);
-    printf("\n");
 
     mu_assert("error, wtf_quat_rotate(q,v) != expected", wtf_compare_vec(&rotated, &v_exp));
     mu_assert("error, norm(v) != norm(rotate(v,q))",
@@ -194,11 +186,11 @@ static char* test_rotate() {
 static char* test_norm() {
     wtf_quat_t q = {.w = 1.0, .i = 2.0, .j = 3.0, .k = 4.0};
 
-    double norm_exp = 5.477225575;
-    double norm_sqrd_exp = 30.0;
+    wtf_scalar_t norm_exp = 5.477225575;
+    wtf_scalar_t norm_sqrd_exp = 30.0;
 
-    double norm = wtf_quat_norm(&q);
-    double norm_sqrd = wtf_quat_squared_norm(&q);
+    wtf_scalar_t norm = wtf_quat_norm(&q);
+    wtf_scalar_t norm_sqrd = wtf_quat_squared_norm(&q);
 
     mu_assert("error, wtf_quat_norm(q) != expected", wtf_dcmp(norm, norm_exp));
     mu_assert("error, wtf_quat_squared_norm(q) != expected", wtf_dcmp(norm_sqrd, norm_sqrd_exp));
