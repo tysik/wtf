@@ -66,8 +66,11 @@ wtf_vec_t wtf_rot_rotate(const wtf_rot_t* r, const wtf_vec_t* v);
 // Get norms of each rotation matrix row
 wtf_vec_t wtf_rot_norms(const wtf_rot_t* r);
 
-// Check if matrix is orthonormal
-bool wtf_rot_is_orthonormal(const wtf_rot_t* r);
+// Get rotation matrix determinant
+wtf_scalar_t wtf_rot_determinant(const wtf_rot_t* r);
+
+// Check if matrix is orthogonal
+bool wtf_rot_is_orthogonal(const wtf_rot_t* r);
 
 // Auxiliary:
 //

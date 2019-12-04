@@ -43,12 +43,9 @@ add_executable(quaternion_test src/QuaternionTest.c)
 target_link_libraries(quaternion_test ${LIB_NAME})
 target_output_directory(quaternion_test "tests/")
 
-# add_executable(rotations_test 
-#     src/MinTest.h
-#     src/RotationsTest.c
-# )
-# target_link_libraries(rotations_test ${LIB_NAME})
-# target_output_directory(rotations_test "tests/")
+add_executable(rotations_test src/RotationTest.c)
+target_link_libraries(rotations_test ${LIB_NAME})
+target_output_directory(rotations_test "tests/")
 
 # Examples
 add_executable(example 

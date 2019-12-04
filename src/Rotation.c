@@ -16,7 +16,7 @@ wtf_rot_t wtf_rot_eye() {
 }
 
 wtf_rot_t wtf_rot_x(wtf_scalar_t angle) {
-    wtf_rot_t result;
+    wtf_rot_t result = wtf_rot_eye();
     result.matrix[1][1] = result.matrix[2][2] = cos(angle);
     result.matrix[1][2] = result.matrix[2][1] = sin(angle);
     result.matrix[1][2] *= -1.0;
@@ -24,7 +24,7 @@ wtf_rot_t wtf_rot_x(wtf_scalar_t angle) {
 }
 
 wtf_rot_t wtf_rot_y(wtf_scalar_t angle) {
-    wtf_rot_t result;
+    wtf_rot_t result = wtf_rot_eye();
     result.matrix[0][0] = result.matrix[2][2] = cos(angle);
     result.matrix[0][2] = result.matrix[2][0] = sin(angle);
     result.matrix[2][0] *= -1.0;
@@ -32,7 +32,7 @@ wtf_rot_t wtf_rot_y(wtf_scalar_t angle) {
 }
 
 wtf_rot_t wtf_rot_z(wtf_scalar_t angle) {
-    wtf_rot_t result;
+    wtf_rot_t result = wtf_rot_eye();
     result.matrix[0][0] = result.matrix[1][1] = cos(angle);
     result.matrix[0][1] = result.matrix[1][0] = sin(angle);
     result.matrix[0][1] *= -1.0;
@@ -70,7 +70,6 @@ wtf_rot_t wtf_from_axis_angle(wtf_vec_t axis, wtf_scalar_t angle) {
 //     // q->w = sqrt(trace + 1.0) / 2.0;
 //     // q->i =
 // }
-
 
 // void rscale(wtf_rot_t* r, double k) {
 //     int rows, cols;
@@ -118,6 +117,18 @@ wtf_vec_t wtf_rot_norms(const wtf_rot_t* r) {
         .y = wtf_vec_norm(&r->j),
         .z = wtf_vec_norm(&r->k),
     };
+}
+
+wtf_scalar_t wtf_rot_determinant(const wtf_rot_t* r) {
+    wtf_vec_t j_cross_k = wtf_vec_cross(&r->j, &r->k);
+    return wtf_vec_dot(&r->i, &j_cross_k);
+}
+
+bool wtf_rot_is_orthogonal(const wtf_rot_t* r) {
+    wtf_rot_t r_trans = wtf_rot_transposed(r);
+    wtf_rot_t identity = wtf_rot_eye();
+    wtf_rot_t mul = wtf_rot_multiply(r, &r_trans);
+    return wtf_compare_rot(&identity, &mul);
 }
 
 bool wtf_compare_rot(const wtf_rot_t* r1, const wtf_rot_t* r2) {
