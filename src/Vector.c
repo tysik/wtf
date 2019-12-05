@@ -26,19 +26,11 @@ wtf_vec_t wtf_custom_vec(wtf_scalar_t x, wtf_scalar_t y, wtf_scalar_t z) {
 }
 
 wtf_vec_t wtf_vec_negated(const wtf_vec_t* v) {
-    return (wtf_vec_t){
-        .x = -v->x,
-        .y = -v->y,
-        .z = -v->z,
-    };
+    return (wtf_vec_t){.x = -v->x, .y = -v->y, .z = -v->z};
 }
 
-wtf_vec_t wtf_vec_scaled(const wtf_vec_t* v, wtf_scalar_t k) {
-    return (wtf_vec_t){
-        .x = k * v->x,
-        .y = k * v->y,
-        .z = k * v->z,
-    };
+wtf_vec_t wtf_vec_scaled(const wtf_vec_t* v, wtf_scalar_t s) {
+    return (wtf_vec_t){.x = s * v->x, .y = s * v->y, .z = s * v->z};
 }
 
 wtf_vec_t wtf_vec_normalized(const wtf_vec_t* v) {

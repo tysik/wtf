@@ -6,8 +6,7 @@
 
 #define PACKED __attribute__((packed, aligned(1)))
 
-// Quaternion
-typedef union wtf_quat_t {
+typedef union {
     struct PACKED {
         wtf_scalar_t w, i, j, k;
     };
@@ -15,6 +14,7 @@ typedef union wtf_quat_t {
         wtf_scalar_t s;
         wtf_vec_t v;
     };
+    wtf_scalar_t data[4];
 } wtf_quat_t;
 
 #undef PACKED

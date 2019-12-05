@@ -33,7 +33,7 @@ wtf_vec_t wtf_custom_vec(wtf_scalar_t x, wtf_scalar_t y, wtf_scalar_t z);
 wtf_vec_t wtf_vec_negated(const wtf_vec_t* v);
 
 // Scale a vector by a scalar
-wtf_vec_t wtf_vec_scaled(const wtf_vec_t* v, wtf_scalar_t k);
+wtf_vec_t wtf_vec_scaled(const wtf_vec_t* v, wtf_scalar_t s);
 
 // Get a normalized version of a vector
 // The vector length must be greater than 0.

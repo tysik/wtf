@@ -1,5 +1,6 @@
 #include "Rotation.h"
 #include "MathUtils.h"
+#include "Matrix.h"
 #include "MinTest.h"
 #include "Vector.h"
 
@@ -9,46 +10,20 @@
 #define M_PI (3.14159265358979323846)
 #endif
 
-#define PREPARE_TEST_MATRICES()                                                                    \
-    wtf_rot_t r1 = wtf_rot_x(M_PI / 4.0);                                                          \
-    wtf_rot_t r2 = wtf_rot_y(M_PI / 6.0);                                                          \
-    wtf_rot_t r3 = wtf_rot_z(M_PI / 12.0);                                                         \
-    wtf_rot_t r4 = wtf_rot_multiply(&r1, &r2);                                                     \
-    wtf_rot_t r5 = wtf_rot_multiply(&r3, &r4)
-
 static int tests_run = 0;
 
 static char* test_construction() {
-    wtf_rot_t r_eye_expected = {.matrix = {{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}}};
-    wtf_rot_t r_x_expected = {.matrix = {{1.0, 0.0, 0.0}, {0.0, 0.0, -1.0}, {0.0, 1.0, 0.0}}};
-    wtf_rot_t r_y_expected = {.matrix = {{0.0, 0.0, 1.0}, {0.0, 1.0, 0.0}, {-1.0, 0.0, 0.0}}};
-    wtf_rot_t r_z_expected = {.matrix = {{0.0, -1.0, 0.0}, {1.0, 0.0, 0.0}, {0.0, 0.0, 1.0}}};
+    wtf_rot_t r_x_expected = {.m.m = {{1.0, 0.0, 0.0}, {0.0, 0.0, -1.0}, {0.0, 1.0, 0.0}}};
+    wtf_rot_t r_y_expected = {.m.m = {{0.0, 0.0, 1.0}, {0.0, 1.0, 0.0}, {-1.0, 0.0, 0.0}}};
+    wtf_rot_t r_z_expected = {.m.m = {{0.0, -1.0, 0.0}, {1.0, 0.0, 0.0}, {0.0, 0.0, 1.0}}};
 
-    wtf_rot_t r_eye = wtf_rot_eye();
     wtf_rot_t r_x = wtf_rot_x(M_PI / 2.0);
     wtf_rot_t r_y = wtf_rot_y(M_PI / 2.0);
     wtf_rot_t r_z = wtf_rot_z(M_PI / 2.0);
 
-    mu_assert("error, r_eye != expected", wtf_compare_rot(&r_eye, &r_eye_expected));
     mu_assert("error, r_x != expected", wtf_compare_rot(&r_x, &r_x_expected));
     mu_assert("error, r_y != expected", wtf_compare_rot(&r_y, &r_y_expected));
     mu_assert("error, r_z != expected", wtf_compare_rot(&r_z, &r_z_expected));
-
-    return 0;
-}
-
-static char* test_multiply() {
-    wtf_rot_t r_x = wtf_rot_x(M_PI / 2.0);
-    wtf_rot_t r_y = wtf_rot_y(M_PI / 2.0);
-    wtf_rot_t r_z = wtf_rot_z(M_PI / 2.0);
-    wtf_rot_t r_xy_expected = {.matrix = {{0.0, 0.0, 1.0}, {1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}}};
-    wtf_rot_t r_xyz_expected = {.matrix = {{0.0, 0.0, 1.0}, {0.0, -1.0, 0.0}, {1.0, 0.0, 0.0}}};
-
-    wtf_rot_t r_xy = wtf_rot_multiply(&r_x, &r_y);
-    wtf_rot_t r_xyz = wtf_rot_multiply(&r_xy, &r_z);
-
-    mu_assert("error, r_xy != expected", wtf_compare_rot(&r_xy, &r_xy_expected));
-    mu_assert("error, r_xyz != expected", wtf_compare_rot(&r_xyz, &r_xyz_expected));
 
     return 0;
 }
@@ -57,8 +32,8 @@ static char* test_rotate() {
     wtf_rot_t r_x = wtf_rot_x(M_PI / 2.0);
     wtf_rot_t r_y = wtf_rot_y(M_PI / 2.0);
     wtf_rot_t r_z = wtf_rot_z(M_PI / 2.0);
-    wtf_rot_t r_xy = wtf_rot_multiply(&r_x, &r_y);
-    wtf_rot_t r_xyz = wtf_rot_multiply(&r_xy, &r_z);
+    wtf_rot_t r_xy = {.m = wtf_mat_multiply(&r_x.m, &r_y.m)};
+    wtf_rot_t r_xyz = {.m = wtf_mat_multiply(&r_xy.m, &r_z.m)};
 
     wtf_vec_t v = wtf_versor_x();
     wtf_vec_t v1_expected = {.x = 1.0, .y = 0.0, .z = 0.0};
@@ -83,7 +58,11 @@ static char* test_rotate() {
 }
 
 static char* test_norms() {
-    PREPARE_TEST_MATRICES();
+    wtf_rot_t r1 = wtf_rot_x(M_PI / 4.0);
+    wtf_rot_t r2 = wtf_rot_y(M_PI / 6.0);
+    wtf_rot_t r3 = wtf_rot_z(M_PI / 12.0);
+    wtf_rot_t r4 = wtf_rot_multiply(&r1, &r2);
+    wtf_rot_t r5 = wtf_rot_multiply(&r3, &r4);
     wtf_vec_t expected_norms = {.x = 1.0, .y = 1.0, .z = 1.0};
 
     wtf_vec_t r1_norms = wtf_rot_norms(&r1);
@@ -101,43 +80,6 @@ static char* test_norms() {
     return 0;
 }
 
-// static char* test_determinant() {
-//     PREPARE_TEST_MATRICES();
-//     wtf_scalar_t det_expected = 1.0;
-
-//     wtf_scalar_t det_r1 = wtf_rot_determinant(&r1);
-//     wtf_scalar_t det_r2 = wtf_rot_determinant(&r2);
-//     wtf_scalar_t det_r3 = wtf_rot_determinant(&r3);
-//     wtf_scalar_t det_r4 = wtf_rot_determinant(&r4);
-//     wtf_scalar_t det_r5 = wtf_rot_determinant(&r5);
-
-//     mu_assert("error, det(r1) != 1", wtf_dcmp(det_r1, det_expected));
-//     mu_assert("error, det(r2) != 1", wtf_dcmp(det_r2, det_expected));
-//     mu_assert("error, det(r3) != 1", wtf_dcmp(det_r3, det_expected));
-//     mu_assert("error, det(r4) != 1", wtf_dcmp(det_r4, det_expected));
-//     mu_assert("error, det(r5) != 1", wtf_dcmp(det_r5, det_expected));
-
-//     return 0;
-// }
-
-static char* test_orthogonal() {
-    PREPARE_TEST_MATRICES();
-
-    bool r1_orthogonal = wtf_rot_is_orthogonal(&r1);
-    bool r2_orthogonal = wtf_rot_is_orthogonal(&r2);
-    bool r3_orthogonal = wtf_rot_is_orthogonal(&r3);
-    bool r4_orthogonal = wtf_rot_is_orthogonal(&r4);
-    bool r5_orthogonal = wtf_rot_is_orthogonal(&r5);
-
-    mu_assert("error, r1 is not ortogonal", r1_orthogonal);
-    mu_assert("error, r2 is not ortogonal", r2_orthogonal);
-    mu_assert("error, r3 is not ortogonal", r3_orthogonal);
-    mu_assert("error, r4 is not ortogonal", r4_orthogonal);
-    mu_assert("error, r5 is not ortogonal", r5_orthogonal);
-
-    return 0;
-}
-
 static char* test_compare() {
     wtf_rot_t r1 = wtf_rot_y(M_PI / 2.0);
     wtf_rot_t r2 = {.matrix = {{0.0, 0.0, 1.0}, {0.0, 1.0, 0.0}, {-1.0, 0.0, 0.0}}};
@@ -151,11 +93,8 @@ static char* test_compare() {
 
 static char* all_tests() {
     mu_run_test(test_construction);
-    mu_run_test(test_multiply);
     mu_run_test(test_rotate);
     mu_run_test(test_norms);
-    // mu_run_test(test_determinant);
-    mu_run_test(test_orthogonal);
     mu_run_test(test_compare);
 
     return 0;

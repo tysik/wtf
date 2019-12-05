@@ -4,10 +4,16 @@
 #include "ScalarType.h"
 #include "VectorType.h"
 
-// 3 x 3 matrix
-typedef union wtf_mat_t { 
-    wtf_scalar_t m[3][3]; 
-    wtf_vec_t v[3];
+#define PACKED __attribute__((packed, aligned(1)))
+
+typedef union {
+    struct PACKED {
+        wtf_vec_t i, j, k;
+    };
+    wtf_scalar_t data[3][3];
+    wtf_vec_t vectors[3];
 } wtf_mat_t;
+
+#undef PACKED
 
 #endif // WTF_MATRIX_TYPE_H

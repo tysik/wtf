@@ -30,9 +30,10 @@ endfunction()
 
 add_library(${LIB_NAME} SHARED 
     src/MathUtils.c
+    src/Matrix.c
+    # src/Quaternion.c
+    # src/Rotation.c
     src/Vector.c
-    src/Quaternion.c
-    src/Rotation.c
 )
 target_link_libraries(${LIB_NAME} m)
 # TODO: Extract public headers
@@ -42,8 +43,9 @@ enable_testing()
 if(BUILD_TESTING)
     add_new_test(math_utils_test src/MathUtilsTest.c)
     add_new_test(vector_test src/VectorTest.c)
-    add_new_test(quaternion_test src/QuaternionTest.c)
-    add_new_test(rotation_test src/RotationTest.c)
+    add_new_test(matrix_test src/MatrixTest.c)
+    # add_new_test(quaternion_test src/QuaternionTest.c)
+    # add_new_test(rotation_test src/RotationTest.c)
 endif()
 
 if(BUILD_EXAMPLES)

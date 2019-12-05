@@ -5,9 +5,11 @@
 
 #define PACKED __attribute__((packed, aligned(1)))
 
-// 3D cartesian vector
-typedef struct PACKED {
-    wtf_scalar_t x, y, z;
+typedef union {
+    struct PACKED {
+        wtf_scalar_t x, y, z;
+    };
+    wtf_scalar_t data[3];
 } wtf_vec_t;
 
 #undef PACKED

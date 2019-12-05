@@ -32,7 +32,19 @@ wtf_rot_t wtf_rot_z(wtf_scalar_t angle) {
     return result;
 }
 
-wtf_rot_t wtf_from_axis_angle(wtf_vec_t axis, wtf_scalar_t angle) {
+wtf_rot_t wtf_from_axis_angle(const wtf_vec_t* axis, wtf_scalar_t angle) {
+    assert(wtf_vec_is_normalized(axis) && "Trying to construct rotation matrix from non-unit axis");
+    wtf_scalar_t cos_angle = cos(angle);
+    
+    wtf_mat_t result = wtf_mat_eye();
+    result = wtf_mat_scaled(&result, cos_angle);
+
+    wtf_mat_t skew = wtf_mat_skew(axis);
+    skew = wtf_mat_scaled(&skew, sin(angle));
+
+    wtf_mat_t prod = wtf_mat_outer_product(axis, axis);
+    prod = wtf_mat_scaled(&prod, 1.0 - cos_angle);
+
     return wtf_rot_eye();
     // TODO:
 }
@@ -89,18 +101,10 @@ wtf_vec_t wtf_rot_norms(const wtf_rot_t* r) {
     };
 }
 
-bool wtf_rot_is_orthogonal(const wtf_rot_t* r) {
-    wtf_rot_t r_trans = wtf_rot_transposed(r);
-    wtf_rot_t identity = wtf_rot_eye();
-    wtf_rot_t mul = wtf_rot_multiply(r, &r_trans);
-    return wtf_compare_rot(&identity, &mul);
-}
-
 bool wtf_compare_rot(const wtf_rot_t* r1, const wtf_rot_t* r2) {
-    return wtf_compare_vec(&r1->i, &r2->i) && wtf_compare_vec(&r1->j, &r2->j) &&
-           wtf_compare_vec(&r1->k, &r2->k);
+    return wtf_compare_mat(&r1->m, &r2->m);
 }
 
 void wtf_print_rot(const wtf_rot_t* r) {
-    wtf_print_mat(&r->matrix);
+    wtf_print_mat(&r->m);
 }
