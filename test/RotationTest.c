@@ -13,17 +13,17 @@
 static int tests_run = 0;
 
 static char* test_construction() {
-    wtf_rot_t r_x_expected = {.m.m = {{1.0, 0.0, 0.0}, {0.0, 0.0, -1.0}, {0.0, 1.0, 0.0}}};
-    wtf_rot_t r_y_expected = {.m.m = {{0.0, 0.0, 1.0}, {0.0, 1.0, 0.0}, {-1.0, 0.0, 0.0}}};
-    wtf_rot_t r_z_expected = {.m.m = {{0.0, -1.0, 0.0}, {1.0, 0.0, 0.0}, {0.0, 0.0, 1.0}}};
+    wtf_rot_t r_x_expected = {.data = {{1.0, 0.0, 0.0}, {0.0, 0.0, -1.0}, {0.0, 1.0, 0.0}}};
+    wtf_rot_t r_y_expected = {.data = {{0.0, 0.0, 1.0}, {0.0, 1.0, 0.0}, {-1.0, 0.0, 0.0}}};
+    wtf_rot_t r_z_expected = {.data = {{0.0, -1.0, 0.0}, {1.0, 0.0, 0.0}, {0.0, 0.0, 1.0}}};
 
     wtf_rot_t r_x = wtf_rot_x(M_PI / 2.0);
     wtf_rot_t r_y = wtf_rot_y(M_PI / 2.0);
     wtf_rot_t r_z = wtf_rot_z(M_PI / 2.0);
 
-    mu_assert("error, r_x != expected", wtf_compare_rot(&r_x, &r_x_expected));
-    mu_assert("error, r_y != expected", wtf_compare_rot(&r_y, &r_y_expected));
-    mu_assert("error, r_z != expected", wtf_compare_rot(&r_z, &r_z_expected));
+    mu_assert("error, r_x != expected", wtf_compare_mat(&r_x, &r_x_expected));
+    mu_assert("error, r_y != expected", wtf_compare_mat(&r_y, &r_y_expected));
+    mu_assert("error, r_z != expected", wtf_compare_mat(&r_z, &r_z_expected));
 
     return 0;
 }
@@ -32,8 +32,8 @@ static char* test_rotate() {
     wtf_rot_t r_x = wtf_rot_x(M_PI / 2.0);
     wtf_rot_t r_y = wtf_rot_y(M_PI / 2.0);
     wtf_rot_t r_z = wtf_rot_z(M_PI / 2.0);
-    wtf_rot_t r_xy = {.m = wtf_mat_multiply(&r_x.m, &r_y.m)};
-    wtf_rot_t r_xyz = {.m = wtf_mat_multiply(&r_xy.m, &r_z.m)};
+    wtf_rot_t r_xy = wtf_mat_multiply(&r_x, &r_y);
+    wtf_rot_t r_xyz = wtf_mat_multiply(&r_xy, &r_z);
 
     wtf_vec_t v = wtf_versor_x();
     wtf_vec_t v1_expected = {.x = 1.0, .y = 0.0, .z = 0.0};
@@ -61,8 +61,8 @@ static char* test_norms() {
     wtf_rot_t r1 = wtf_rot_x(M_PI / 4.0);
     wtf_rot_t r2 = wtf_rot_y(M_PI / 6.0);
     wtf_rot_t r3 = wtf_rot_z(M_PI / 12.0);
-    wtf_rot_t r4 = wtf_rot_multiply(&r1, &r2);
-    wtf_rot_t r5 = wtf_rot_multiply(&r3, &r4);
+    wtf_rot_t r4 = wtf_mat_multiply(&r1, &r2);
+    wtf_rot_t r5 = wtf_mat_multiply(&r3, &r4);
     wtf_vec_t expected_norms = {.x = 1.0, .y = 1.0, .z = 1.0};
 
     wtf_vec_t r1_norms = wtf_rot_norms(&r1);
@@ -82,11 +82,11 @@ static char* test_norms() {
 
 static char* test_compare() {
     wtf_rot_t r1 = wtf_rot_y(M_PI / 2.0);
-    wtf_rot_t r2 = {.matrix = {{0.0, 0.0, 1.0}, {0.0, 1.0, 0.0}, {-1.0, 0.0, 0.0}}};
+    wtf_rot_t r2 = {.data = {{0.0, 0.0, 1.0}, {0.0, 1.0, 0.0}, {-1.0, 0.0, 0.0}}};
     wtf_rot_t r3 = wtf_rot_z(M_PI / 2.0);
 
-    mu_assert("error, r1 != r2", wtf_compare_rot(&r1, &r2) == true);
-    mu_assert("error, r1 == r3", wtf_compare_rot(&r1, &r3) == false);
+    mu_assert("error, r1 != r2", wtf_compare_mat(&r1, &r2) == true);
+    mu_assert("error, r1 == r3", wtf_compare_mat(&r1, &r3) == false);
 
     return 0;
 }
