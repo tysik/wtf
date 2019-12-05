@@ -40,7 +40,7 @@ wtf_vec_t wtf_vec_scaled(const wtf_vec_t* v, wtf_scalar_t s);
 wtf_vec_t wtf_vec_normalized(const wtf_vec_t* v);
 
 // TODO: Add reflected vector
-// TODO: Add LERP
+// TODO: Add LERP https://en.wikipedia.org/wiki/Linear_interpolation
 
 // Vector operations:
 //

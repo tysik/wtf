@@ -26,6 +26,8 @@ wtf_quat_t wtf_real_quat(wtf_scalar_t s);
 // Angle must be given in radians.
 wtf_quat_t wtf_rotor_quat(const wtf_vec_t* axis, wtf_scalar_t angle);
 
+// TODO: Add SLERP https://en.wikipedia.org/wiki/Slerp
+
 // Variations:
 //
 
@@ -42,8 +44,6 @@ wtf_quat_t wtf_quat_normalized(const wtf_quat_t* q);
 // Get an inverse of a quaternion
 // The quaternion length must be greater than 0.
 wtf_quat_t wtf_quat_inversed(const wtf_quat_t* q);
-
-// TODO: Add LERP
 
 // Operations:
 //
