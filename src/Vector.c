@@ -35,6 +35,7 @@ wtf_vec_t wtf_vec_scaled(const wtf_vec_t* v, wtf_scalar_t s) {
 
 wtf_vec_t wtf_vec_normalized(const wtf_vec_t* v) {
     assert(wtf_vec_squared_norm(v) > 0 && "Trying to normalize a zero-length vector");
+    
     return wtf_vec_scaled(v, 1.0 / wtf_vec_norm(v));
 }
 

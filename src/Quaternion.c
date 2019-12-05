@@ -29,6 +29,7 @@ wtf_quat_t wtf_real_quat(wtf_scalar_t s) {
 
 wtf_quat_t wtf_rotor_quat(const wtf_vec_t* axis, wtf_scalar_t angle) {
     assert(wtf_vec_is_normalized(axis) && "Using non-normalized axis for quaternion rotor");
+
     return (wtf_quat_t){
         .s = cos(angle / 2.0),
         .v = wtf_vec_scaled(axis, sin(angle / 2.0)),
@@ -51,11 +52,13 @@ wtf_quat_t wtf_quat_scaled(const wtf_quat_t* q, wtf_scalar_t k) {
 
 wtf_quat_t wtf_quat_normalized(const wtf_quat_t* q) {
     assert(wtf_quat_squared_norm(q) > 0 && "Trying to normalize a zero-length quaternion");
+
     return wtf_quat_scaled(q, 1.0 / wtf_quat_norm(q));
 }
 
 wtf_quat_t wtf_quat_inversed(const wtf_quat_t* q) {
     assert(wtf_quat_squared_norm(q) > 0 && "Trying to inverse a zero-length quaternion");
+    
     wtf_quat_t qc = wtf_quat_conjugate(q);
     return wtf_quat_scaled(&qc, 1.0 / wtf_quat_squared_norm(q));
 }
@@ -91,21 +94,19 @@ wtf_quat_t wtf_quat_multiply(const wtf_quat_t* q1, const wtf_quat_t* q2) {
 
 wtf_quat_t wtf_quat_divide(const wtf_quat_t* q1, const wtf_quat_t* q2) {
     assert(wtf_quat_squared_norm(q2) > 0 && "Trying to divide by a zero-length quaternion");
+
     wtf_quat_t q2i = wtf_quat_inversed(q2);
     return wtf_quat_multiply(q1, &q2i);
 }
 
 wtf_vec_t wtf_quat_rotate(const wtf_quat_t* q, const wtf_vec_t* v) {
-    // v' = q * v * q'
     assert(wtf_quat_is_normalized(q) && "Using non-unit quaternion for rotation");
 
+    // v' = q * v * q'
     wtf_quat_t qv = wtf_pure_quat(v);
     wtf_quat_t q_inv = wtf_quat_conjugate(q); // For unit quat. inverse is its conjugate.
-
     wtf_quat_t result = wtf_quat_multiply(q, &qv);
-    result = wtf_quat_multiply(&result, &q_inv);
-
-    return result.v;
+    return wtf_quat_multiply(&result, &q_inv).v;
 }
 
 wtf_scalar_t wtf_quat_norm(const wtf_quat_t* q) {
