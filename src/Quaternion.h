@@ -92,7 +92,7 @@ bool wtf_quat_is_real(const wtf_quat_t* q);
 // Compare two quaternions by components
 bool MUST_USE wtf_compare_quat(const wtf_quat_t* q1, const wtf_quat_t* q2);
 
-// Printf a quaterniong to stdout
+// Printf a quaternion to stdout
 void wtf_print_quat(const wtf_quat_t* q);
 
 #undef MUST_USE
