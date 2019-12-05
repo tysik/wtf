@@ -34,7 +34,7 @@ add_library(${LIB_NAME} SHARED
     src/MathUtils.c
     src/Matrix.c
     src/Quaternion.c
-    # src/Rotation.c
+    src/Rotation.c
     src/Vector.c
 )
 target_link_libraries(${LIB_NAME} m)
@@ -47,7 +47,7 @@ if(BUILD_TESTING)
     add_new_test(vector_test test/VectorTest.c)
     add_new_test(matrix_test test/MatrixTest.c)
     add_new_test(quaternion_test test/QuaternionTest.c)
-    # add_new_test(rotation_test test/RotationTest.c)
+    add_new_test(rotation_test test/RotationTest.c)
 endif()
 
 if(BUILD_EXAMPLES)
