@@ -1,4 +1,4 @@
-#include "MathUtils.c"
+#include "MathUtils.h"
 #include "MinTest.h"
 
 #include <stdio.h>
