@@ -1,4 +1,5 @@
 #include "Rotation.h"
+#include "Matrix.h"
 #include "Vector.h"
 
 #include <assert.h>
@@ -6,14 +7,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-wtf_rot_t wtf_rot_eye() {
-    return (wtf_rot_t){
-        .i = wtf_versor_x(),
-        .j = wtf_versor_y(),
-        .k = wtf_versor_z(),
-    };
-}
 
 wtf_rot_t wtf_rot_x(wtf_scalar_t angle) {
     wtf_rot_t result = wtf_rot_eye();
@@ -80,29 +73,6 @@ wtf_rot_t wtf_from_axis_angle(wtf_vec_t axis, wtf_scalar_t angle) {
 //     }
 // }
 
-wtf_rot_t wtf_rot_transposed(const wtf_rot_t* r) {
-    wtf_rot_t result = *r;
-    result.i.y = r->j.x;
-    result.i.z = r->k.x;
-    result.j.z = r->k.y;
-
-    result.j.x = r->i.y;
-    result.k.x = r->i.z;
-    result.k.y = r->j.z;
-    return result;
-}
-
-wtf_rot_t wtf_rot_multiply(const wtf_rot_t* r1, const wtf_rot_t* r2) {
-    wtf_rot_t result;
-    wtf_rot_t r2_trans = wtf_rot_transposed(r2);
-    for (int rows = 0; rows < 3; ++rows) {
-        for (int cols = 0; cols < 3; ++cols) {
-            result.matrix[rows][cols] = wtf_vec_dot(&r1->vectors[rows], &r2_trans.vectors[cols]);
-        }
-    }
-    return result;
-}
-
 wtf_vec_t wtf_rot_rotate(const wtf_rot_t* r, const wtf_vec_t* v) {
     return (wtf_vec_t){
         .x = wtf_vec_dot(&r->i, v),
@@ -119,11 +89,6 @@ wtf_vec_t wtf_rot_norms(const wtf_rot_t* r) {
     };
 }
 
-wtf_scalar_t wtf_rot_determinant(const wtf_rot_t* r) {
-    wtf_vec_t j_cross_k = wtf_vec_cross(&r->j, &r->k);
-    return wtf_vec_dot(&r->i, &j_cross_k);
-}
-
 bool wtf_rot_is_orthogonal(const wtf_rot_t* r) {
     wtf_rot_t r_trans = wtf_rot_transposed(r);
     wtf_rot_t identity = wtf_rot_eye();
@@ -137,8 +102,5 @@ bool wtf_compare_rot(const wtf_rot_t* r1, const wtf_rot_t* r2) {
 }
 
 void wtf_print_rot(const wtf_rot_t* r) {
-    for (int i = 0; i < 3; ++i) {
-        wtf_print_vec(&r->vectors[i]);
-        printf("\n");
-    }
+    wtf_print_mat(&r->matrix);
 }

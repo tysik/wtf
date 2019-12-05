@@ -74,6 +74,14 @@ wtf_scalar_t wtf_vec_dot(const wtf_vec_t* v1, const wtf_vec_t* v2) {
     return v1->x * v2->x + v1->y * v2->y + v1->z * v2->z;
 }
 
+wtf_mat_t wtf_vec_outer_product(const wtf_vec_t* v1, const wtf_vec_t* v2) {
+    return (wtf_mat_t){
+        .v[0] = wtf_vec_scaled(v2, v1->x),
+        .v[1] = wtf_vec_scaled(v2, v1->y),
+        .v[2] = wtf_vec_scaled(v2, v1->z),
+    };
+}
+
 wtf_scalar_t wtf_vec_norm(const wtf_vec_t* v) {
     return sqrt(wtf_vec_squared_norm(v));
 }

@@ -3,6 +3,7 @@
 
 #include "types/ScalarType.h"
 #include "types/VectorType.h"
+#include "types/MatrixType.h"
 
 #include <stdbool.h>
 
@@ -56,6 +57,9 @@ wtf_vec_t wtf_vec_cross(const wtf_vec_t* v1, const wtf_vec_t* v2);
 
 // Get a dot product of two vectors: v1 * v2
 wtf_scalar_t wtf_vec_dot(const wtf_vec_t* v1, const wtf_vec_t* v2);
+
+// Get an outer product of two vectors v1 (x) v2
+wtf_mat_t wtf_vec_outer_product(const wtf_vec_t* v1, const wtf_vec_t* v2);
 
 // Vector traits:
 //

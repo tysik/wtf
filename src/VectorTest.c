@@ -195,6 +195,20 @@ static char* test_dot() {
     return 0;
 }
 
+static char* test_outer_product() {
+    wtf_vec_t v1 = {.x = 1.0, .y = 2.0, .z = 3.0};
+    wtf_vec_t v2 = {.x = 5.0, .y = 10.0, .z = 15.0};
+    wtf_mat_t mat_expected = {.m = {{5.0, 10.0, 15.0}, {10.0, 20.0, 30.0}, {15.0, 30.0, 45.0}}};
+
+    wtf_mat_t mat = wtf_vec_outer_product(&v1, &v2);
+
+    mu_assert("error, mat.v[0] != expected", wtf_compare_vec(&mat.v[0], &mat_expected.v[0]));
+    mu_assert("error, mat.v[1] != expected", wtf_compare_vec(&mat.v[1], &mat_expected.v[1]));
+    mu_assert("error, mat.v[2] != expected", wtf_compare_vec(&mat.v[2], &mat_expected.v[2]));
+
+    return 0;
+}
+
 static char* test_norm() {
     wtf_vec_t v1 = {.x = 1.0, .y = 2.0, .z = 3.0};
     wtf_vec_t v2 = {.x = 0.1, .y = 0.2, .z = 0.3};
@@ -254,6 +268,7 @@ static char* all_tests() {
     mu_run_test(test_subtract);
     mu_run_test(test_cross);
     mu_run_test(test_dot);
+    mu_run_test(test_outer_product);
     mu_run_test(test_norm);
     mu_run_test(test_normalize);
     mu_run_test(test_compare);
