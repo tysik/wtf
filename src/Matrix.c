@@ -65,8 +65,9 @@ wtf_mat_t wtf_mat_transposed(const wtf_mat_t* m) {
 
 wtf_mat_t wtf_mat_inversed(const wtf_mat_t* m) {
     assert(!wtf_dcmp(wtf_mat_determinant(m), 0.0) && "Trying to inverse singular matrix");
-    wtf_scalar_t det_inv = 1.0 / wtf_mat_determinant(m);
 
+    // M_inv = |j x k   k x i   i x j| / det(M)
+    wtf_scalar_t det_inv = 1.0 / wtf_mat_determinant(m);
     wtf_vec_t v_01 = wtf_vec_cross(&m->i, &m->j);
     wtf_vec_t v_20 = wtf_vec_cross(&m->k, &m->i);
     wtf_vec_t v_12 = wtf_vec_cross(&m->j, &m->k);
