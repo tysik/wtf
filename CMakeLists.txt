@@ -29,16 +29,13 @@ function(add_new_example target)
 endfunction()
 
 add_library(${LIB_NAME} SHARED 
-    src/MathUtils.h
     src/MathUtils.c
-    src/Vector.h
     src/Vector.c
-    src/Quaternion.h
     src/Quaternion.c
-    src/Rotation.h
     src/Rotation.c
 )
 target_link_libraries(${LIB_NAME} m)
+# TODO: Extract public headers
 
 include(CTest)
 enable_testing()
