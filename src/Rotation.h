@@ -1,10 +1,10 @@
 #ifndef WTF_ROTATION_H_
 #define WTF_ROTATION_H_
 
-#include "QuaternionType.h"
-#include "RotationType.h"
-#include "ScalarType.h"
-#include "VectorType.h"
+#include "types/QuaternionType.h"
+#include "types/RotationType.h"
+#include "types/ScalarType.h"
+#include "types/VectorType.h"
 
 #include <stdbool.h>
 

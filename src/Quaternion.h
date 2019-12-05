@@ -1,9 +1,9 @@
 #ifndef WTF_QUATERNION_H_
 #define WTF_QUATERNION_H_
 
-#include "ScalarType.h"
-#include "VectorType.h"
-#include "QuaternionType.h"
+#include "types/ScalarType.h"
+#include "types/VectorType.h"
+#include "types/QuaternionType.h"
 
 #include <stdbool.h>
 

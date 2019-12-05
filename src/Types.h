@@ -1,9 +1,10 @@
 #ifndef WTF_TYPES_H
 #define WTF_TYPES_H
 
-#include "ScalarType.h"
-#include "VectorType.h"
-#include "QuaternionType.h"
-#include "RotationType.h"
+#include "types/ScalarType.h"
+#include "types/VectorType.h"
+#include "types/QuaternionType.h"
+#include "types/RotationType.h"
+#include "types/TransformationType.h"
 
 #endif // WTF_TYPES_H

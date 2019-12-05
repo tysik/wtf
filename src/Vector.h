@@ -1,8 +1,8 @@
 #ifndef WTF_VECTOR_H_
 #define WTF_VECTOR_H_
 
-#include "ScalarType.h"
-#include "VectorType.h"
+#include "types/ScalarType.h"
+#include "types/VectorType.h"
 
 #include <stdbool.h>
 
