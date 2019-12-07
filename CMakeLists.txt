@@ -30,6 +30,8 @@ endfunction()
 
 include_directories(include)
 
+# Build
+
 add_library(${LIB_NAME} SHARED 
     src/MathUtils.c
     src/Matrix.c
@@ -38,7 +40,8 @@ add_library(${LIB_NAME} SHARED
     src/Vector.c
 )
 target_link_libraries(${LIB_NAME} m)
-# TODO: Extract public headers
+
+# Test
 
 include(CTest)
 enable_testing()
@@ -53,3 +56,21 @@ endif()
 if(BUILD_EXAMPLES)
     add_new_example(example examples/main.c)
 endif()
+
+install(TARGETS ${LIB_NAME}
+    LIBRARY DESTINATION lib
+)
+
+# Install
+
+install(FILES 
+    include/Wtf.h
+    include/Types.h
+    include/Vector.h
+    include/Matrix.h
+    include/Rotation.h
+    include/Quaternion.h
+    DESTINATION include/${LIB_NAME}
+)
+
+install(DIRECTORY include/types DESTINATION include/${LIB_NAME})
