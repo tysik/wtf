@@ -23,7 +23,7 @@ wtf_vec_t wtf_vec_versor_y();
 // Construct a Z axis versor (0, 0, 1)
 wtf_vec_t wtf_vec_versor_z();
 
-// Construct a custom vector 
+// Construct a custom vector
 wtf_vec_t wtf_vec_custom(wtf_scalar_t x, wtf_scalar_t y, wtf_scalar_t z);
 
 // Variations:

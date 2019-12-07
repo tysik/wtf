@@ -2,8 +2,8 @@
 #define WTF_TRANSFORMATION_H
 
 #include "types/ScalarType.h"
-#include "types/VectorType.h"
 #include "types/TransformationType.h"
+#include "types/VectorType.h"
 
 wtf_tf_t wtf_identity();
 wtf_tf_t wtf_scale(wtf_scalar_t s);

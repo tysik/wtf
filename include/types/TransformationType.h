@@ -1,9 +1,9 @@
 #ifndef WTF_TF_TYPE_H
 #define WTF_TF_TYPE_H
 
+#include "RotationType.h"
 #include "ScalarType.h"
 #include "VectorType.h"
-#include "RotationType.h"
 
 #define PACKED __attribute__((packed, aligned(1)))
 
