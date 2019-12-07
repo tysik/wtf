@@ -1,6 +1,7 @@
 #ifndef WTF_ROTATION_H_
 #define WTF_ROTATION_H_
 
+#include "types/QuaternionType.h"
 #include "types/RotationType.h"
 #include "types/ScalarType.h"
 #include "types/VectorType.h"
@@ -32,6 +33,11 @@ wtf_rot_t wtf_rot_extrinsic_rpy(wtf_scalar_t roll, wtf_scalar_t pitch, wtf_scala
 // Axis must be a normalized vector.
 // Angle must be given in radians.
 wtf_rot_t wtf_rot_from_axis_angle(const wtf_vec_t* axis, wtf_scalar_t angle);
+
+// Construct a rotation matrix from a quaternion
+// Quaternion must be normalized.
+// TODO: Test
+wtf_rot_t wtf_rot_from_quaternion(const wtf_quat_t* q);
 
 // Methods:
 //

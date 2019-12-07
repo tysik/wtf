@@ -1,5 +1,6 @@
 #include "Rotation.h"
 #include "Matrix.h"
+#include "Quaternion.h"
 #include "Vector.h"
 
 #include <assert.h>
@@ -63,11 +64,15 @@ wtf_rot_t wtf_rot_from_axis_angle(const wtf_vec_t* axis, wtf_scalar_t angle) {
     return wtf_mat_add(&result, &prod);
 }
 
-// void rtoQuat(wtf_quat_t* q, const wtf_rot_t* r) {
-//     // double trace = (*r)[0][0] + (*r)[1][1] + (*r)[2][2];
-//     // q->w = sqrt(trace + 1.0) / 2.0;
-//     // q->i =
-// }
+wtf_rot_t wtf_rot_from_quaternion(const wtf_quat_t* q) {
+    wtf_mat_t diag = wtf_mat_diag(q->w * q->w - wtf_vec_squared_norm(&q->v));
+    wtf_vec_t aux = wtf_vec_scaled(&q->v, 2.0 * q->w);
+    wtf_mat_t skew = wtf_mat_skew(&aux);
+    wtf_mat_t prod = wtf_mat_outer_product(&q->v, &q->v);
+    prod = wtf_mat_scaled(&prod, 2.0);
+    wtf_mat_t result = wtf_mat_add(&diag, &skew);
+    return wtf_mat_add(&result, &prod);
+}
 
 wtf_vec_t wtf_rot_rotate(const wtf_rot_t* r, const wtf_vec_t* v) {
     return (wtf_vec_t){
