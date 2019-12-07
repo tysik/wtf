@@ -29,11 +29,27 @@ wtf_rot_t wtf_rot_z(wtf_scalar_t angle) {
     return result;
 }
 
+wtf_rot_t wtf_rot_intrinsic_rpy(wtf_scalar_t roll, wtf_scalar_t pitch, wtf_scalar_t yaw) {
+    wtf_rot_t rot_x = wtf_rot_x(roll);
+    wtf_rot_t rot_y = wtf_rot_y(pitch);
+    wtf_rot_t rot_z = wtf_rot_z(yaw);
+    wtf_rot_t result = wtf_mat_multiply(&rot_x, &rot_y);
+    return wtf_mat_multiply(&result, &rot_z);
+}
+
+wtf_rot_t wtf_rot_extrinsic_rpy(wtf_scalar_t roll, wtf_scalar_t pitch, wtf_scalar_t yaw) {
+    wtf_rot_t rot_x = wtf_rot_x(roll);
+    wtf_rot_t rot_y = wtf_rot_y(pitch);
+    wtf_rot_t rot_z = wtf_rot_z(yaw);
+    wtf_rot_t result = wtf_mat_multiply(&rot_z, &rot_y);
+    return wtf_mat_multiply(&result, &rot_x);
+}
+
 wtf_rot_t wtf_rot_from_axis_angle(const wtf_vec_t* axis, wtf_scalar_t angle) {
     assert(wtf_vec_is_normalized(axis) && "Trying to construct rotation matrix from non-unit axis");
-    
+
     // R = cos(a) * I + sin(a) * skew(axis) + (1 - cos(a)) * (axis (x) axis)
-    wtf_scalar_t cos_angle = cos(angle);    
+    wtf_scalar_t cos_angle = cos(angle);
     wtf_mat_t result = wtf_mat_eye();
     result = wtf_mat_scaled(&result, cos_angle);
 

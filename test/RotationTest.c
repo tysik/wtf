@@ -17,13 +17,25 @@ static char* test_construction() {
     wtf_rot_t r_y_expected = {.data = {{0.0, 0.0, 1.0}, {0.0, 1.0, 0.0}, {-1.0, 0.0, 0.0}}};
     wtf_rot_t r_z_expected = {.data = {{0.0, -1.0, 0.0}, {1.0, 0.0, 0.0}, {0.0, 0.0, 1.0}}};
 
+    wtf_rot_t r_rpyi_expected = {.data = {{0.0, 0.0, 1.0}, {0.0, -1.0, 0.0}, {1.0, 0.0, 0.0}}};
+    wtf_rot_t r_rpye_expected = {.data = {{0.0, 0.0, 1.0}, {0.0, 1.0, 0.0}, {-1.0, 0.0, 0.0}}};
+
+    wtf_vec_t axis = wtf_custom_vec(0.0, 0.0, -1.0);
+    wtf_rot_t r_axis_expected = {.data = {{-1.0, 0.0, 0.0}, {0.0, -1.0, 0.0}, {0.0, 0.0, 1.0}}};
+
     wtf_rot_t r_x = wtf_rot_x(M_PI / 2.0);
     wtf_rot_t r_y = wtf_rot_y(M_PI / 2.0);
     wtf_rot_t r_z = wtf_rot_z(M_PI / 2.0);
+    wtf_rot_t r_axis = wtf_rot_from_axis_angle(&axis, M_PI);
+    wtf_rot_t r_rpyi = wtf_rot_intrinsic_rpy(M_PI / 2.0, M_PI / 2.0, M_PI / 2.0);
+    wtf_rot_t r_rpye = wtf_rot_extrinsic_rpy(M_PI / 2.0, M_PI / 2.0, M_PI / 2.0);
 
     mu_assert("error, r_x != expected", wtf_compare_mat(&r_x, &r_x_expected));
     mu_assert("error, r_y != expected", wtf_compare_mat(&r_y, &r_y_expected));
     mu_assert("error, r_z != expected", wtf_compare_mat(&r_z, &r_z_expected));
+    mu_assert("error, r_rpyi != expected", wtf_compare_mat(&r_rpyi, &r_rpyi_expected));
+    mu_assert("error, r_rpye != expected", wtf_compare_mat(&r_rpye, &r_rpye_expected));
+    mu_assert("error, r_axis != expected", wtf_compare_mat(&r_axis, &r_axis_expected));
 
     return 0;
 }

@@ -20,16 +20,17 @@ wtf_rot_t wtf_rot_y(wtf_scalar_t angle);
 // Angle must be given in radians.
 wtf_rot_t wtf_rot_z(wtf_scalar_t angle);
 
-// TODO:
-wtf_rot_t wtf_rot_extrinsic_rpy(wtf_scalar_t roll, wtf_scalar_t pitch, wtf_scalar_t yaw);
-
-// TODO:
+// Construct a rotation matrix from RPY angles in a local coordinate frame
+// Angles roll, pitch and yaw must be given in radians.
 wtf_rot_t wtf_rot_intrinsic_rpy(wtf_scalar_t roll, wtf_scalar_t pitch, wtf_scalar_t yaw);
+
+// Construct a rotation matrix from RPY angles in a global coordinate frame
+// Angles roll, pitch and yaw must be given in radians.
+wtf_rot_t wtf_rot_extrinsic_rpy(wtf_scalar_t roll, wtf_scalar_t pitch, wtf_scalar_t yaw);
 
 // Construct a rotation matrix about custom axis
 // Axis must be a normalized vector.
 // Angle must be given in radians.
-// TODO: Test
 wtf_rot_t wtf_rot_from_axis_angle(const wtf_vec_t* axis, wtf_scalar_t angle);
 
 // Methods:
