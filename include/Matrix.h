@@ -64,10 +64,10 @@ bool wtf_mat_is_orthogonal(const wtf_mat_t* m);
 //
 
 // Compare two matrices
-bool MUST_USE wtf_compare_mat(const wtf_mat_t* m1, const wtf_mat_t* m2);
+bool MUST_USE wtf_mat_compare(const wtf_mat_t* m1, const wtf_mat_t* m2);
 
 // Print a matrix to stdout
-void wtf_print_mat(const wtf_mat_t* m);
+void wtf_mat_print(const wtf_mat_t* m);
 
 #undef MUST_USE
 

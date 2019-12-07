@@ -5,8 +5,8 @@
 #include <stdio.h>
 #include <unistd.h>
 
-int WINDOWS_HEIGHT = 500;
-int WINDOWS_WIDTH = 500;
+static const int WINDOWS_HEIGHT = 500;
+static const int WINDOWS_WIDTH = 500;
 
 void draw_wtf_point(SDL_Renderer* r, const wtf_vec_t* p) {
     int x = (p->x + 1.0) * WINDOWS_WIDTH / 2.0;
@@ -16,16 +16,17 @@ void draw_wtf_point(SDL_Renderer* r, const wtf_vec_t* p) {
 
 int main() {
     SDL_Init(SDL_INIT_VIDEO);
-    SDL_Window* win = SDL_CreateWindow("WTF?", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                                       WINDOWS_WIDTH, WINDOWS_HEIGHT, SDL_WINDOW_SHOWN);
+    SDL_Window* win =
+        SDL_CreateWindow("WTF Example", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                         WINDOWS_WIDTH, WINDOWS_HEIGHT, SDL_WINDOW_SHOWN);
     SDL_Renderer* ren =
         SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
     wtf_vec_t cube[8] = {
-        wtf_custom_vec(1.0, -1.0, 1.0),  wtf_custom_vec(1.0, 1.0, 1.0),
-        wtf_custom_vec(-1.0, 1.0, 1.0),  wtf_custom_vec(-1.0, -1.0, 1.0),
-        wtf_custom_vec(1.0, -1.0, -1.0), wtf_custom_vec(1.0, 1.0, -1.0),
-        wtf_custom_vec(-1.0, 1.0, -1.0), wtf_custom_vec(-1.0, -1.0, -1.0),
+        wtf_vec_custom(1.0, -1.0, 1.0),  wtf_vec_custom(1.0, 1.0, 1.0),
+        wtf_vec_custom(-1.0, 1.0, 1.0),  wtf_vec_custom(-1.0, -1.0, 1.0),
+        wtf_vec_custom(1.0, -1.0, -1.0), wtf_vec_custom(1.0, 1.0, -1.0),
+        wtf_vec_custom(-1.0, 1.0, -1.0), wtf_vec_custom(-1.0, -1.0, -1.0),
     };
 
     wtf_scalar_t scaling_factor = 0.25;
@@ -34,9 +35,9 @@ int main() {
     }
 
     wtf_scalar_t angle = 0.01;
-    wtf_vec_t axis = wtf_custom_vec(1.0, 1.0, 1.0);
+    wtf_vec_t axis = wtf_vec_custom(1.0, 1.0, 1.0);
     axis = wtf_vec_normalized(&axis);
-    wtf_quat_t rotor = wtf_rotor_quat(&axis, angle);
+    wtf_quat_t rotor = wtf_quat_rotor(&axis, angle);
 
     while (true) {
         SDL_Event e;

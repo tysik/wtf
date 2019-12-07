@@ -30,7 +30,7 @@ wtf_rot_t wtf_rot_z(wtf_scalar_t angle) {
     return result;
 }
 
-wtf_rot_t wtf_rot_intrinsic_rpy(wtf_scalar_t roll, wtf_scalar_t pitch, wtf_scalar_t yaw) {
+wtf_rot_t wtf_rot_local_rpy(wtf_scalar_t roll, wtf_scalar_t pitch, wtf_scalar_t yaw) {
     wtf_rot_t rot_x = wtf_rot_x(roll);
     wtf_rot_t rot_y = wtf_rot_y(pitch);
     wtf_rot_t rot_z = wtf_rot_z(yaw);
@@ -38,7 +38,7 @@ wtf_rot_t wtf_rot_intrinsic_rpy(wtf_scalar_t roll, wtf_scalar_t pitch, wtf_scala
     return wtf_mat_multiply(&result, &rot_z);
 }
 
-wtf_rot_t wtf_rot_extrinsic_rpy(wtf_scalar_t roll, wtf_scalar_t pitch, wtf_scalar_t yaw) {
+wtf_rot_t wtf_rot_global_rpy(wtf_scalar_t roll, wtf_scalar_t pitch, wtf_scalar_t yaw) {
     wtf_rot_t rot_x = wtf_rot_x(roll);
     wtf_rot_t rot_y = wtf_rot_y(pitch);
     wtf_rot_t rot_z = wtf_rot_z(yaw);

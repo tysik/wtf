@@ -13,18 +13,18 @@
 //
 
 // Construct an empty quaternion (0, 0, 0, 0)
-wtf_quat_t wtf_empty_quat();
+wtf_quat_t wtf_quat_empty();
 
 // Construct a pure quaternion from vector (0, x, y, z)
-wtf_quat_t wtf_pure_quat(const wtf_vec_t* v);
+wtf_quat_t wtf_quat_pure(const wtf_vec_t* v);
 
 // Construct a real quaternion from scalar (s, 0, 0, 0)
-wtf_quat_t wtf_real_quat(wtf_scalar_t s);
+wtf_quat_t wtf_quat_real(wtf_scalar_t s);
 
 // Construct a rotor about an axis
 // Axis must be a normalized vector.
 // Angle must be given in radians.
-wtf_quat_t wtf_rotor_quat(const wtf_vec_t* axis, wtf_scalar_t angle);
+wtf_quat_t wtf_quat_rotor(const wtf_vec_t* axis, wtf_scalar_t angle);
 
 // TODO: Add SLERP https://en.wikipedia.org/wiki/Slerp
 
@@ -90,10 +90,10 @@ bool wtf_quat_is_real(const wtf_quat_t* q);
 //
 
 // Compare two quaternions by components
-bool MUST_USE wtf_compare_quat(const wtf_quat_t* q1, const wtf_quat_t* q2);
+bool MUST_USE wtf_quat_compare(const wtf_quat_t* q1, const wtf_quat_t* q2);
 
 // Printf a quaternion to stdout
-void wtf_print_quat(const wtf_quat_t* q);
+void wtf_quat_print(const wtf_quat_t* q);
 
 #undef MUST_USE
 

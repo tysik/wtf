@@ -5,23 +5,23 @@
 #include <math.h>
 #include <stdio.h>
 
-wtf_vec_t wtf_empty_vec() {
+wtf_vec_t wtf_vec_empty() {
     return (wtf_vec_t){.x = 0.0, .y = 0.0, .z = 0.0};
 }
 
-wtf_vec_t wtf_versor_x() {
+wtf_vec_t wtf_vec_versor_x() {
     return (wtf_vec_t){.x = 1.0, .y = 0.0, .z = 0.0};
 }
 
-wtf_vec_t wtf_versor_y() {
+wtf_vec_t wtf_vec_versor_y() {
     return (wtf_vec_t){.x = 0.0, .y = 1.0, .z = 0.0};
 }
 
-wtf_vec_t wtf_versor_z() {
+wtf_vec_t wtf_vec_versor_z() {
     return (wtf_vec_t){.x = 0.0, .y = 0.0, .z = 1.0};
 }
 
-wtf_vec_t wtf_custom_vec(wtf_scalar_t x, wtf_scalar_t y, wtf_scalar_t z) {
+wtf_vec_t wtf_vec_custom(wtf_scalar_t x, wtf_scalar_t y, wtf_scalar_t z) {
     return (wtf_vec_t){.x = x, .y = y, .z = z};
 }
 
@@ -79,10 +79,10 @@ bool wtf_vec_is_normalized(const wtf_vec_t* v) {
     return wtf_dcmp(wtf_vec_squared_norm(v), 1.0);
 }
 
-bool wtf_compare_vec(const wtf_vec_t* v1, const wtf_vec_t* v2) {
+bool wtf_vec_compare(const wtf_vec_t* v1, const wtf_vec_t* v2) {
     return wtf_dcmp(v1->x, v2->x) && wtf_dcmp(v1->y, v2->y) && wtf_dcmp(v1->z, v2->z);
 }
 
-void wtf_print_vec(const wtf_vec_t* v) {
+void wtf_vec_print(const wtf_vec_t* v) {
     printf("[%.3f,% .3f,% .3f]", v->x, v->y, v->z);
 }

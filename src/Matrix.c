@@ -7,9 +7,9 @@
 
 wtf_mat_t wtf_mat_eye() {
     return (wtf_mat_t){
-        .i = wtf_versor_x(),
-        .j = wtf_versor_y(),
-        .k = wtf_versor_z(),
+        .i = wtf_vec_versor_x(),
+        .j = wtf_vec_versor_y(),
+        .k = wtf_vec_versor_z(),
     };
 }
 
@@ -20,17 +20,17 @@ wtf_mat_t wtf_mat_diag(wtf_scalar_t s) {
 
 wtf_mat_t wtf_mat_diag_vec(const wtf_vec_t* v) {
     return (wtf_mat_t){
-        .i = wtf_custom_vec(v->x, 0.0, 0.0),
-        .j = wtf_custom_vec(0.0, v->y, 0.0),
-        .k = wtf_custom_vec(0.0, 0.0, v->z),
+        .i = wtf_vec_custom(v->x, 0.0, 0.0),
+        .j = wtf_vec_custom(0.0, v->y, 0.0),
+        .k = wtf_vec_custom(0.0, 0.0, v->z),
     };
 }
 
 wtf_mat_t wtf_mat_skew(const wtf_vec_t* v) {
     return (wtf_mat_t){
-        .i = wtf_custom_vec(0.0, -v->z, v->y),
-        .j = wtf_custom_vec(v->z, 0.0, -v->x),
-        .k = wtf_custom_vec(-v->y, v->x, 0.0),
+        .i = wtf_vec_custom(0.0, -v->z, v->y),
+        .j = wtf_vec_custom(v->z, 0.0, -v->x),
+        .k = wtf_vec_custom(-v->y, v->x, 0.0),
     };
 }
 
@@ -77,9 +77,9 @@ wtf_mat_t wtf_mat_inversed(const wtf_mat_t* m) {
     v_12 = wtf_vec_scaled(&v_12, det_inv);
 
     return (wtf_mat_t){
-        .i = wtf_custom_vec(v_12.x, v_20.x, v_01.x),
-        .j = wtf_custom_vec(v_12.y, v_20.y, v_01.y),
-        .k = wtf_custom_vec(v_12.z, v_20.z, v_01.y),
+        .i = wtf_vec_custom(v_12.x, v_20.x, v_01.x),
+        .j = wtf_vec_custom(v_12.y, v_20.y, v_01.y),
+        .k = wtf_vec_custom(v_12.z, v_20.z, v_01.y),
     };
 }
 
@@ -115,17 +115,17 @@ bool wtf_mat_is_orthogonal(const wtf_mat_t* m) {
     wtf_mat_t m_trans = wtf_mat_transposed(m);
     wtf_mat_t identity = wtf_mat_eye();
     wtf_mat_t mul = wtf_mat_multiply(m, &m_trans);
-    return wtf_compare_mat(&identity, &mul);
+    return wtf_mat_compare(&identity, &mul);
 }
 
-bool wtf_compare_mat(const wtf_mat_t* m1, const wtf_mat_t* m2) {
-    return wtf_compare_vec(&m1->i, &m2->i) && wtf_compare_vec(&m1->j, &m2->j) &&
-           wtf_compare_vec(&m1->k, &m2->k);
+bool wtf_mat_compare(const wtf_mat_t* m1, const wtf_mat_t* m2) {
+    return wtf_vec_compare(&m1->i, &m2->i) && wtf_vec_compare(&m1->j, &m2->j) &&
+           wtf_vec_compare(&m1->k, &m2->k);
 }
 
-void wtf_print_mat(const wtf_mat_t* m) {
+void wtf_mat_print(const wtf_mat_t* m) {
     for (int i = 0; i < 3; ++i) {
-        wtf_print_vec(&m->vectors[i]);
+        wtf_vec_print(&m->vectors[i]);
         printf("\n");
     }
 }

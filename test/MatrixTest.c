@@ -25,11 +25,11 @@ static char* test_constructors() {
     wtf_mat_t skew = wtf_mat_skew(&v2);
     wtf_mat_t outer_prod = wtf_mat_outer_product(&v1, &v2);
 
-    mu_assert("error, eye != expected", wtf_compare_mat(&eye, &eye_expected));
-    mu_assert("error, diag != expected", wtf_compare_mat(&diag, &diag_expected));
-    mu_assert("error, diag_vec != expected", wtf_compare_mat(&diag_vec, &diag_vec_expected));
-    mu_assert("error, skew != expected", wtf_compare_mat(&skew, &skew_expected));
-    mu_assert("error, outer_prod != expected", wtf_compare_mat(&outer_prod, &outer_prod_expected));
+    mu_assert("error, eye != expected", wtf_mat_compare(&eye, &eye_expected));
+    mu_assert("error, diag != expected", wtf_mat_compare(&diag, &diag_expected));
+    mu_assert("error, diag_vec != expected", wtf_mat_compare(&diag_vec, &diag_vec_expected));
+    mu_assert("error, skew != expected", wtf_mat_compare(&skew, &skew_expected));
+    mu_assert("error, outer_prod != expected", wtf_mat_compare(&outer_prod, &outer_prod_expected));
 
     return 0;
 }

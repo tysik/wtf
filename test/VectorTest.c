@@ -14,17 +14,17 @@ static char* test_construction() {
     wtf_vec_t vz_expected = {.x = 0.0, .y = 0.0, .z = 1.0};
     wtf_vec_t vc_expected = {.x = 1.0, .y = 2.0, .z = 3.0};
 
-    wtf_vec_t ve = wtf_empty_vec();
-    wtf_vec_t vx = wtf_versor_x();
-    wtf_vec_t vy = wtf_versor_y();
-    wtf_vec_t vz = wtf_versor_z();
-    wtf_vec_t vc = wtf_custom_vec(1.0, 2.0, 3.0);
+    wtf_vec_t ve = wtf_vec_empty();
+    wtf_vec_t vx = wtf_vec_versor_x();
+    wtf_vec_t vy = wtf_vec_versor_y();
+    wtf_vec_t vz = wtf_vec_versor_z();
+    wtf_vec_t vc = wtf_vec_custom(1.0, 2.0, 3.0);
 
-    mu_assert("error, wtf_empty_vec() != expected", wtf_compare_vec(&ve, &ve_expected));
-    mu_assert("error, wtf_versor_x(v) != expected", wtf_compare_vec(&vx, &vx_expected));
-    mu_assert("error, wtf_versor_y(v) != expected", wtf_compare_vec(&vy, &vy_expected));
-    mu_assert("error, wtf_versor_z(v) != expected", wtf_compare_vec(&vz, &vz_expected));
-    mu_assert("error, wtf_custom_vec() != expected", wtf_compare_vec(&vc, &vc_expected));
+    mu_assert("error, wtf_vec_empty() != expected", wtf_vec_compare(&ve, &ve_expected));
+    mu_assert("error, wtf_vec_versor_x(v) != expected", wtf_vec_compare(&vx, &vx_expected));
+    mu_assert("error, wtf_vec_versor_y(v) != expected", wtf_vec_compare(&vy, &vy_expected));
+    mu_assert("error, wtf_vec_versor_z(v) != expected", wtf_vec_compare(&vz, &vz_expected));
+    mu_assert("error, wtf_vec_custom() != expected", wtf_vec_compare(&vc, &vc_expected));
 
     return 0;
 }
@@ -44,9 +44,9 @@ static char* test_negate() {
 
     bool both_normalized = wtf_vec_is_normalized(&v3) && wtf_vec_is_normalized(&v3_exp);
 
-    mu_assert("error, wtf_vec_negated(v) != expected", wtf_compare_vec(&v1, &v1_exp));
-    mu_assert("error, wtf_vec_negated(v) != expected", wtf_compare_vec(&v2, &v2_exp));
-    mu_assert("error, wtf_vec_negated(v) != expected", wtf_compare_vec(&v3, &v3_exp));
+    mu_assert("error, wtf_vec_negated(v) != expected", wtf_vec_compare(&v1, &v1_exp));
+    mu_assert("error, wtf_vec_negated(v) != expected", wtf_vec_compare(&v2, &v2_exp));
+    mu_assert("error, wtf_vec_negated(v) != expected", wtf_vec_compare(&v3, &v3_exp));
     mu_assert("error, norm(wtf_vec_negated(v)) != norm(v)", both_normalized);
 
     return 0;
@@ -66,8 +66,8 @@ static char* test_scale() {
     bool equal_norms = wtf_vec_is_normalized(&v2) == wtf_vec_is_normalized(&v2_expected) &&
                        wtf_dcmp(wtf_vec_norm(&v2), wtf_vec_norm(&v2_expected));
 
-    mu_assert("error, wtf_vec_scaled(v,k) != expected", wtf_compare_vec(&v1, &v1_expected));
-    mu_assert("error, wtf_vec_scaled(v,k) != expected", wtf_compare_vec(&v2, &v2_expected));
+    mu_assert("error, wtf_vec_scaled(v,k) != expected", wtf_vec_compare(&v1, &v1_expected));
+    mu_assert("error, wtf_vec_scaled(v,k) != expected", wtf_vec_compare(&v2, &v2_expected));
     mu_assert("error, norm(wtf_vec_scaled(v,k)) != norm(expected)", equal_norms);
 
     return 0;
@@ -86,9 +86,9 @@ static char* test_add() {
     wtf_vec_t v23 = wtf_vec_add(&v2, &v3);
     wtf_vec_t v33 = wtf_vec_add(&v3, &v3);
 
-    mu_assert("error, wtf_vec_add(v1,v2) != expected", wtf_compare_vec(&v12, &v12_expected));
-    mu_assert("error, wtf_vec_add(v2,v3) != expected", wtf_compare_vec(&v23, &v23_expected));
-    mu_assert("error, wtf_vec_add(v3,v3) != expected", wtf_compare_vec(&v33, &v33_expected));
+    mu_assert("error, wtf_vec_add(v1,v2) != expected", wtf_vec_compare(&v12, &v12_expected));
+    mu_assert("error, wtf_vec_add(v2,v3) != expected", wtf_vec_compare(&v23, &v23_expected));
+    mu_assert("error, wtf_vec_add(v3,v3) != expected", wtf_vec_compare(&v33, &v33_expected));
 
     return 0;
 }
@@ -108,23 +108,23 @@ static char* test_subtract() {
 
     bool norm_zero = wtf_vec_norm(&v33);
 
-    mu_assert("error, wtf_vec_subtract(v1,v2) != expected", wtf_compare_vec(&v12, &v12_expected));
-    mu_assert("error, wtf_vec_subtract(v2,v3) != expected", wtf_compare_vec(&v23, &v23_expected));
-    mu_assert("error, wtf_vec_subtract(v3,v3) != expected", wtf_compare_vec(&v33, &v33_expected));
+    mu_assert("error, wtf_vec_subtract(v1,v2) != expected", wtf_vec_compare(&v12, &v12_expected));
+    mu_assert("error, wtf_vec_subtract(v2,v3) != expected", wtf_vec_compare(&v23, &v23_expected));
+    mu_assert("error, wtf_vec_subtract(v3,v3) != expected", wtf_vec_compare(&v33, &v33_expected));
     mu_assert("error, norm(wtf_vec_subtract(v3,v3)) != 0", wtf_dcmp(norm_zero, 0));
 
     return 0;
 }
 
 static char* test_cross() {
-    wtf_vec_t v0 = wtf_empty_vec();
+    wtf_vec_t v0 = wtf_vec_empty();
     wtf_vec_t v1 = {.x = 1.0, .y = 2.0, .z = 3.0};
     wtf_vec_t v2 = {.x = 1.0, .y = 1.0, .z = 1.0};
     wtf_vec_t v_expected = {.x = -1.0, .y = 2.0, .z = -1.0};
 
-    wtf_vec_t vi = wtf_versor_x();
-    wtf_vec_t vj = wtf_versor_y();
-    wtf_vec_t vk = wtf_versor_z();
+    wtf_vec_t vi = wtf_vec_versor_x();
+    wtf_vec_t vj = wtf_vec_versor_y();
+    wtf_vec_t vk = wtf_vec_versor_z();
 
     wtf_vec_t vni = wtf_vec_negated(&vi);
     wtf_vec_t vnj = wtf_vec_negated(&vj);
@@ -146,29 +146,29 @@ static char* test_cross() {
     wtf_vec_t v_cross_inv = wtf_vec_cross(&v2, &v1);
     wtf_vec_t v_cross_inv_neg = wtf_vec_negated(&v_cross_inv);
 
-    mu_assert("error, wtf_vec_cross(vi,vi) != 0", wtf_compare_vec(&vii, &v0));
-    mu_assert("error, wtf_vec_cross(vi,vj) != vk", wtf_compare_vec(&vij, &vk));
-    mu_assert("error, wtf_vec_cross(vi,vk) != -vj", wtf_compare_vec(&vik, &vnj));
+    mu_assert("error, wtf_vec_cross(vi,vi) != 0", wtf_vec_compare(&vii, &v0));
+    mu_assert("error, wtf_vec_cross(vi,vj) != vk", wtf_vec_compare(&vij, &vk));
+    mu_assert("error, wtf_vec_cross(vi,vk) != -vj", wtf_vec_compare(&vik, &vnj));
 
-    mu_assert("error, wtf_vec_cross(vj,vi) != -vk", wtf_compare_vec(&vji, &vnk));
-    mu_assert("error, wtf_vec_cross(vj,vj) != 0", wtf_compare_vec(&vjj, &v0));
-    mu_assert("error, wtf_vec_cross(vj,vk) != vi", wtf_compare_vec(&vjk, &vi));
+    mu_assert("error, wtf_vec_cross(vj,vi) != -vk", wtf_vec_compare(&vji, &vnk));
+    mu_assert("error, wtf_vec_cross(vj,vj) != 0", wtf_vec_compare(&vjj, &v0));
+    mu_assert("error, wtf_vec_cross(vj,vk) != vi", wtf_vec_compare(&vjk, &vi));
 
-    mu_assert("error, wtf_vec_cross(vk,vi) != vj", wtf_compare_vec(&vki, &vj));
-    mu_assert("error, wtf_vec_cross(vk,vj) != -vi", wtf_compare_vec(&vkj, &vni));
-    mu_assert("error, wtf_vec_cross(vk,vk) != 0", wtf_compare_vec(&vkk, &v0));
+    mu_assert("error, wtf_vec_cross(vk,vi) != vj", wtf_vec_compare(&vki, &vj));
+    mu_assert("error, wtf_vec_cross(vk,vj) != -vi", wtf_vec_compare(&vkj, &vni));
+    mu_assert("error, wtf_vec_cross(vk,vk) != 0", wtf_vec_compare(&vkk, &v0));
 
-    mu_assert("error, wtf_vec_cross(v1,v2) != expected", wtf_compare_vec(&v_cross, &v_expected));
+    mu_assert("error, wtf_vec_cross(v1,v2) != expected", wtf_vec_compare(&v_cross, &v_expected));
     mu_assert("error, wtf_vec_cross(v1,v2) != wtf_vec_negated(wtf_vec_cross(v2,v1))",
-              wtf_compare_vec(&v_cross, &v_cross_inv_neg));
+              wtf_vec_compare(&v_cross, &v_cross_inv_neg));
 
     return 0;
 }
 
 static char* test_dot() {
-    wtf_vec_t vi = wtf_versor_x();
-    wtf_vec_t vj = wtf_versor_y();
-    wtf_vec_t vk = wtf_versor_z();
+    wtf_vec_t vi = wtf_vec_versor_x();
+    wtf_vec_t vj = wtf_vec_versor_y();
+    wtf_vec_t vk = wtf_vec_versor_z();
 
     wtf_vec_t v1 = {.x = 1.0, .y = 2.0, .z = 3.0};
     wtf_vec_t v2 = {.x = 1.0, .y = 1.0, .z = 1.0};
@@ -240,10 +240,10 @@ static char* test_normalize() {
     v1 = wtf_vec_normalized(&v1);
     v2 = wtf_vec_normalized(&v2);
 
-    mu_assert("error, wtf_vec_normalized(v) != expected", wtf_compare_vec(&v1, &v1_expected));
+    mu_assert("error, wtf_vec_normalized(v) != expected", wtf_vec_compare(&v1, &v1_expected));
     mu_assert("error, norm(v) != 1.0", wtf_vec_is_normalized(&v1));
 
-    mu_assert("error, wtf_vec_normalized(v) != expected", wtf_compare_vec(&v2, &v2_expected));
+    mu_assert("error, wtf_vec_normalized(v) != expected", wtf_vec_compare(&v2, &v2_expected));
     mu_assert("error, norm(v) != 1.0", wtf_vec_is_normalized(&v2));
 
     return 0;
@@ -254,8 +254,8 @@ static char* test_compare() {
     wtf_vec_t v2 = {.x = 1.0, .y = 2.0, .z = 3.0};
     wtf_vec_t v3 = {.x = 1.0, .y = 1.0, .z = 1.0};
 
-    mu_assert("error, v1 != v2", wtf_compare_vec(&v1, &v2));
-    mu_assert("error, v1 == v3", !wtf_compare_vec(&v1, &v3));
+    mu_assert("error, v1 != v2", wtf_vec_compare(&v1, &v2));
+    mu_assert("error, v1 == v3", !wtf_vec_compare(&v1, &v3));
 
     return 0;
 }

@@ -19,13 +19,13 @@ static char* test_construction() {
     wtf_quat_t qp_expected = {.w = 0.0, .i = 1.0, .j = 2.0, .k = 3.0};
     wtf_quat_t qr_expected = {.w = 1.0, .i = 0.0, .j = 0.0, .k = 0.0};
 
-    wtf_quat_t qe = wtf_empty_quat();
-    wtf_quat_t qp = wtf_pure_quat(&v);
-    wtf_quat_t qr = wtf_real_quat(1.0);
+    wtf_quat_t qe = wtf_quat_empty();
+    wtf_quat_t qp = wtf_quat_pure(&v);
+    wtf_quat_t qr = wtf_quat_real(1.0);
 
-    mu_assert("error, wtf_empty_quat(q) != expected", wtf_compare_quat(&qe, &qe_expected));
-    mu_assert("error, wtf_pure_quat(q) != expected", wtf_compare_quat(&qp, &qp_expected));
-    mu_assert("error, wtf_real_quat(q) != expected", wtf_compare_quat(&qr, &qr_expected));
+    mu_assert("error, wtf_quat_empty(q) != expected", wtf_quat_compare(&qe, &qe_expected));
+    mu_assert("error, wtf_quat_pure(q) != expected", wtf_quat_compare(&qp, &qp_expected));
+    mu_assert("error, wtf_quat_real(q) != expected", wtf_quat_compare(&qr, &qr_expected));
 
     return 0;
 }
@@ -33,25 +33,25 @@ static char* test_construction() {
 static char* test_rotor() {
     wtf_scalar_t angle = M_PI / 2.0;
 
-    wtf_vec_t vi = wtf_versor_x();
-    wtf_vec_t vj = wtf_versor_y();
-    wtf_vec_t vk = wtf_versor_z();
+    wtf_vec_t vi = wtf_vec_versor_x();
+    wtf_vec_t vj = wtf_vec_versor_y();
+    wtf_vec_t vk = wtf_vec_versor_z();
 
     wtf_quat_t qrx_expected = {.w = 0.707106781, .i = 0.707106781, .j = 0.0, .k = 0.0};
     wtf_quat_t qry_expected = {.w = 0.707106781, .i = 0.0, .j = 0.707106781, .k = 0.0};
     wtf_quat_t qrz_expected = {.w = 0.707106781, .i = 0.0, .j = 0.0, .k = 0.707106781};
 
-    wtf_quat_t qrx = wtf_rotor_quat(&vi, angle);
-    wtf_quat_t qry = wtf_rotor_quat(&vj, angle);
-    wtf_quat_t qrz = wtf_rotor_quat(&vk, angle);
+    wtf_quat_t qrx = wtf_quat_rotor(&vi, angle);
+    wtf_quat_t qry = wtf_quat_rotor(&vj, angle);
+    wtf_quat_t qrz = wtf_quat_rotor(&vk, angle);
 
-    mu_assert("error, wtf_rotor_quat(angle,vi) != expected", wtf_compare_quat(&qrx, &qrx_expected));
-    mu_assert("error, wtf_rotor_quat(angle,vj) != expected", wtf_compare_quat(&qry, &qry_expected));
-    mu_assert("error, wtf_rotor_quat(angle,vk) != expected", wtf_compare_quat(&qrz, &qrz_expected));
+    mu_assert("error, wtf_quat_rotor(angle,vi) != expected", wtf_quat_compare(&qrx, &qrx_expected));
+    mu_assert("error, wtf_quat_rotor(angle,vj) != expected", wtf_quat_compare(&qry, &qry_expected));
+    mu_assert("error, wtf_quat_rotor(angle,vk) != expected", wtf_quat_compare(&qrz, &qrz_expected));
 
-    mu_assert("error, wtf_rotor_quat(angle,vi) is not normalized", wtf_quat_is_normalized(&qrx));
-    mu_assert("error, wtf_rotor_quat(angle,vj) is not normalized", wtf_quat_is_normalized(&qry));
-    mu_assert("error, wtf_rotor_quat(angle,vk) is not normalized", wtf_quat_is_normalized(&qrz));
+    mu_assert("error, wtf_quat_rotor(angle,vi) is not normalized", wtf_quat_is_normalized(&qrx));
+    mu_assert("error, wtf_quat_rotor(angle,vj) is not normalized", wtf_quat_is_normalized(&qry));
+    mu_assert("error, wtf_quat_rotor(angle,vk) is not normalized", wtf_quat_is_normalized(&qrz));
 
     return 0;
 }
@@ -64,9 +64,9 @@ static char* test_conjugate() {
     wtf_quat_t qc = wtf_quat_conjugate(&q);
     wtf_quat_t q_x_qc = wtf_quat_multiply(&q, &qc);
 
-    mu_assert("error, wtf_quat_conjugate(q) != expected", wtf_compare_quat(&qc, &qc_expected));
+    mu_assert("error, wtf_quat_conjugate(q) != expected", wtf_quat_compare(&qc, &qc_expected));
     mu_assert("error, wtf_quat_multiply(q, wtf_quat_conjugate(q)) != expected",
-              wtf_compare_quat(&q_x_qc, &q_x_qc_expected));
+              wtf_quat_compare(&q_x_qc, &q_x_qc_expected));
     mu_assert("error, wtf_quat_multiply(q, wtf_quat_conjugate(q)) is not real",
               wtf_quat_is_real(&q_x_qc));
 
@@ -80,7 +80,7 @@ static char* test_scale() {
 
     q = wtf_quat_scaled(&q, k);
 
-    mu_assert("error, wtf_quat_scaled(q,k) != expected", wtf_compare_quat(&q, &q_expected));
+    mu_assert("error, wtf_quat_scaled(q,k) != expected", wtf_quat_compare(&q, &q_expected));
 
     return 0;
 }
@@ -91,7 +91,7 @@ static char* test_normalize() {
 
     q = wtf_quat_normalized(&q);
 
-    mu_assert("error, wtf_quat_normalized(q) != expected", wtf_compare_quat(&q, &q_expected));
+    mu_assert("error, wtf_quat_normalized(q) != expected", wtf_quat_compare(&q, &q_expected));
     mu_assert("error, wtf_quat_normalized(q) is not normalized", wtf_quat_is_normalized(&q));
 
     return 0;
@@ -100,14 +100,14 @@ static char* test_normalize() {
 static char* test_inverse() {
     wtf_quat_t q = {.w = 1.0, .i = 1.0, .j = 1.0, .k = 1.0};
     wtf_quat_t q_inv_expected = {.w = 0.25, .i = -0.25, .j = -0.25, .k = -0.25};
-    wtf_quat_t q_x_q_inv_expected = wtf_real_quat(1.0);
+    wtf_quat_t q_x_q_inv_expected = wtf_quat_real(1.0);
 
     wtf_quat_t q_inv = wtf_quat_inversed(&q);
     wtf_quat_t q_x_q_inv = wtf_quat_multiply(&q, &q_inv);
 
-    mu_assert("error, wtf_quat_inversed(q) != expected", wtf_compare_quat(&q_inv, &q_inv_expected));
+    mu_assert("error, wtf_quat_inversed(q) != expected", wtf_quat_compare(&q_inv, &q_inv_expected));
     mu_assert("error, wtf_quat_multiply(q,wtf_quat_inversed(q)) != expected",
-              wtf_compare_quat(&q_x_q_inv, &q_x_q_inv_expected));
+              wtf_quat_compare(&q_x_q_inv, &q_x_q_inv_expected));
 
     return 0;
 }
@@ -119,7 +119,7 @@ static char* test_add() {
 
     q1 = wtf_quat_add(&q1, &q2);
 
-    mu_assert("error, wtf_quat_add(q1,q2) != expected", wtf_compare_quat(&q1, &q_expected));
+    mu_assert("error, wtf_quat_add(q1,q2) != expected", wtf_quat_compare(&q1, &q_expected));
 
     return 0;
 }
@@ -131,7 +131,7 @@ static char* test_subtract() {
 
     q1 = wtf_quat_subtract(&q1, &q2);
 
-    mu_assert("error, wtf_quat_subtract(q1,q2) != expected", wtf_compare_quat(&q1, &q_exp));
+    mu_assert("error, wtf_quat_subtract(q1,q2) != expected", wtf_quat_compare(&q1, &q_exp));
 
     return 0;
 }
@@ -146,7 +146,7 @@ static char* test_multiply() {
     wtf_quat_t q_mul_conj = wtf_quat_multiply(&q1, &q1_conj);
 
     mu_assert("error, wtf_quat_multiply(q1,q2) != expected",
-              wtf_compare_quat(&q_mul, &q_mul_expected));
+              wtf_quat_compare(&q_mul, &q_mul_expected));
     mu_assert("error, wtf_quat_multiply(q,wtf_quat_conjugate(q)) is not real",
               wtf_quat_is_real(&q_mul_conj));
     mu_assert("error, wtf_quat_multiply(q1,wtf_quat_conjugate(q1)).w != wtf_quat_squared_norm(q) ",
@@ -157,18 +157,18 @@ static char* test_multiply() {
 
 static char* test_divide() {
     wtf_quat_t q = {.w = 1.0, .i = 1.0, .j = 1.0, .k = 1.0};
-    wtf_quat_t q_expected = wtf_real_quat(1.0);
+    wtf_quat_t q_expected = wtf_quat_real(1.0);
 
     q = wtf_quat_divide(&q, &q);
 
-    mu_assert("error, wtf_quat_divide(q,q) != wtf_real_quat(1)", wtf_compare_quat(&q, &q_expected));
+    mu_assert("error, wtf_quat_divide(q,q) != wtf_quat_real(1)", wtf_quat_compare(&q, &q_expected));
 
     return 0;
 }
 
 static char* test_rotate() {
-    wtf_vec_t axis = wtf_versor_x();
-    wtf_quat_t rotor = wtf_rotor_quat(&axis, M_PI / 2.0);
+    wtf_vec_t axis = wtf_vec_versor_x();
+    wtf_quat_t rotor = wtf_quat_rotor(&axis, M_PI / 2.0);
     wtf_vec_t to_rotate = {.x = 0.0, .y = 2.0, .z = 0.0};
     wtf_vec_t rotated_expected = {.x = 0.0, .y = 0.0, .z = 2.0};
 
@@ -176,7 +176,7 @@ static char* test_rotate() {
     bool equal_norms = wtf_dcmp(wtf_vec_norm(&to_rotate), wtf_vec_norm(&rotated));
 
     mu_assert("error, wtf_quat_rotate(q,v) != expected",
-              wtf_compare_vec(&rotated, &rotated_expected));
+              wtf_vec_compare(&rotated, &rotated_expected));
     mu_assert("error, norm(v) != norm(rotate(v,q))", equal_norms);
 
     return 0;
@@ -202,8 +202,8 @@ static char* test_compare() {
     wtf_quat_t q2 = {.w = 1.0, .i = 2.0, .j = 3.0, .k = 4.0};
     wtf_quat_t q3 = {.w = 1.0, .i = 1.0, .j = 1.0, .k = 1.0};
 
-    mu_assert("error, q1 != q2", wtf_compare_quat(&q1, &q2) == true);
-    mu_assert("error, q1 == q3", wtf_compare_quat(&q1, &q3) == false);
+    mu_assert("error, q1 != q2", wtf_quat_compare(&q1, &q2) == true);
+    mu_assert("error, q1 == q3", wtf_quat_compare(&q1, &q3) == false);
 
     return 0;
 }

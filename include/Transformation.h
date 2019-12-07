@@ -5,6 +5,7 @@
 #include "types/VectorType.h"
 #include "types/TransformationType.h"
 
+wtf_tf_t wtf_identity();
 wtf_tf_t wtf_scale(wtf_scalar_t s);
 wtf_tf_t wtf_scale_v(const wtf_vec_t* v);
 wtf_tf_t wtf_translate(const wtf_vec_t* v);
