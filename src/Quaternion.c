@@ -58,7 +58,7 @@ wtf_quat_t wtf_quat_normalized(const wtf_quat_t* q) {
 
 wtf_quat_t wtf_quat_inversed(const wtf_quat_t* q) {
     assert(wtf_quat_squared_norm(q) > 0 && "Trying to inverse a zero-length quaternion");
-    
+
     wtf_quat_t qc = wtf_quat_conjugate(q);
     return wtf_quat_scaled(&qc, 1.0 / wtf_quat_squared_norm(q));
 }
@@ -102,9 +102,10 @@ wtf_quat_t wtf_quat_divide(const wtf_quat_t* q1, const wtf_quat_t* q2) {
 wtf_vec_t wtf_quat_rotate(const wtf_quat_t* q, const wtf_vec_t* v) {
     assert(wtf_quat_is_normalized(q) && "Using non-unit quaternion for rotation");
 
-    // v' = q * v * q'
+    // For unit quat. inverse is its conjugate.
+    // v' = q * v * q*
     wtf_quat_t qv = wtf_pure_quat(v);
-    wtf_quat_t q_inv = wtf_quat_conjugate(q); // For unit quat. inverse is its conjugate.
+    wtf_quat_t q_inv = wtf_quat_conjugate(q);
     wtf_quat_t result = wtf_quat_multiply(q, &qv);
     return wtf_quat_multiply(&result, &q_inv).v;
 }
