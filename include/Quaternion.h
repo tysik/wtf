@@ -1,13 +1,17 @@
 #ifndef WTF_QUATERNION_H_
 #define WTF_QUATERNION_H_
 
-#include "types/QuaternionType.h"
 #include "types/ScalarType.h"
-#include "types/VectorType.h"
 
 #include <stdbool.h>
 
 #define MUST_USE __attribute__((warn_unused_result))
+
+// Forward declarations:
+//
+
+typedef union wtf_vec_t wtf_vec_t;
+typedef union wtf_quat_t wtf_quat_t;
 
 // Constructors:
 //

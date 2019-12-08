@@ -2,11 +2,15 @@
 #define WTF_VECTOR_H_
 
 #include "types/ScalarType.h"
-#include "types/VectorType.h"
 
 #include <stdbool.h>
 
 #define MUST_USE __attribute__((warn_unused_result))
+
+// Forward declarations:
+//
+
+typedef union wtf_vec_t wtf_vec_t;
 
 // Constructors:
 //

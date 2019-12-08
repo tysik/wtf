@@ -2,8 +2,15 @@
 #define WTF_TRANSFORMATION_H
 
 #include "types/ScalarType.h"
-#include "types/TransformationType.h"
-#include "types/VectorType.h"
+
+// Forward declarations:
+//
+
+typedef union wtf_vec_t wtf_vec_t;
+typedef union wtf_quat_t wtf_quat_t;
+typedef union wtf_mat_t wtf_mat_t;
+typedef wtf_mat_t wtf_rot_t;
+typedef union wtf_tf_t wtf_tf_t;
 
 wtf_tf_t wtf_identity();
 wtf_tf_t wtf_scale(wtf_scalar_t s);

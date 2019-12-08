@@ -4,6 +4,10 @@
 #include "MinTest.h"
 #include "Vector.h"
 
+#include "types/QuaternionType.h"
+#include "types/RotationType.h"
+#include "types/VectorType.h"
+
 #include <stdio.h>
 
 #ifndef M_PI

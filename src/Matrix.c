@@ -2,6 +2,9 @@
 #include "MathUtils.h"
 #include "Vector.h"
 
+#include "types/MatrixType.h"
+#include "types/VectorType.h"
+
 #include <assert.h>
 #include <stdio.h>
 

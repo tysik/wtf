@@ -2,6 +2,8 @@
 #include "MathUtils.h"
 #include "MinTest.h"
 
+#include "types/VectorType.h"
+
 #include <stdio.h>
 #include <string.h>
 

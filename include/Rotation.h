@@ -1,10 +1,15 @@
 #ifndef WTF_ROTATION_H_
 #define WTF_ROTATION_H_
 
-#include "types/QuaternionType.h"
-#include "types/RotationType.h"
 #include "types/ScalarType.h"
-#include "types/VectorType.h"
+
+// Forward declarations:
+//
+
+typedef union wtf_vec_t wtf_vec_t;
+typedef union wtf_quat_t wtf_quat_t;
+typedef union wtf_mat_t wtf_mat_t;
+typedef wtf_mat_t wtf_rot_t;
 
 // Constructors:
 //

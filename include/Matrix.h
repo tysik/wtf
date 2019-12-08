@@ -1,13 +1,17 @@
 #ifndef WTF_MATRIX_H_
 #define WTF_MATRIX_H_
 
-#include "types/MatrixType.h"
 #include "types/ScalarType.h"
-#include "types/VectorType.h"
 
 #include <stdbool.h>
 
 #define MUST_USE __attribute__((warn_unused_result))
+
+// Forward declarations:
+//
+
+typedef union wtf_vec_t wtf_vec_t;
+typedef union wtf_mat_t wtf_mat_t;
 
 // Constructors:
 //

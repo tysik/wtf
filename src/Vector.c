@@ -1,6 +1,8 @@
 #include "Vector.h"
 #include "MathUtils.h"
 
+#include "types/VectorType.h"
+
 #include <assert.h>
 #include <math.h>
 #include <stdio.h>

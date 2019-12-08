@@ -6,7 +6,7 @@
 
 #define PACKED __attribute__((packed, aligned(1)))
 
-typedef union {
+typedef union wtf_quat_t {
     struct PACKED {
         wtf_scalar_t w, i, j, k;
     };

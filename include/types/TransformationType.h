@@ -7,7 +7,7 @@
 
 #define PACKED __attribute__((packed, aligned(1)))
 
-typedef union {
+typedef union wtf_tf_t {
     struct PACKED {
         wtf_rot_t rotation;
         wtf_vec_t translation;

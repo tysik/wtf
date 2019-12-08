@@ -3,6 +3,9 @@
 #include "MinTest.h"
 #include "Vector.h"
 
+#include "types/QuaternionType.h"
+#include "types/VectorType.h"
+
 #include <math.h>
 #include <stdio.h>
 

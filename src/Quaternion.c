@@ -2,6 +2,9 @@
 #include "MathUtils.h"
 #include "Vector.h"
 
+#include "types/QuaternionType.h"
+#include "types/VectorType.h"
+
 #include <assert.h>
 #include <math.h>
 #include <stdio.h>
