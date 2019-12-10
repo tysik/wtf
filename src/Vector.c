@@ -6,6 +6,7 @@
 #include <assert.h>
 #include <math.h>
 #include <stdio.h>
+// TODO: #include <immintrin.h>
 
 wtf_vec_t wtf_vec_empty() {
     return (wtf_vec_t){.x = 0.0, .y = 0.0, .z = 0.0};

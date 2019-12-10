@@ -6,5 +6,6 @@
 #include "types/ScalarType.h"
 #include "types/TransformationType.h"
 #include "types/VectorType.h"
+#include "types/PointType.h"
 
 #endif // WTF_TYPES_H

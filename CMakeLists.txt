@@ -6,7 +6,7 @@ set(LIB_NAME "wtf")
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -pedantic")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -flto -Wall -Werror -pedantic")
 
 option(BUILD_TESTING "Build unit tests" ON)
 option(BUILD_EXAMPLES "Build examples" ON)
@@ -37,6 +37,7 @@ add_library(${LIB_NAME} SHARED
     src/Matrix.c
     src/Quaternion.c
     src/Rotation.c
+    src/Transformation.c
     src/Vector.c
 )
 target_link_libraries(${LIB_NAME} m)
@@ -70,6 +71,7 @@ install(FILES
     include/Matrix.h
     include/Rotation.h
     include/Quaternion.h
+    include/Transformation.h
     DESTINATION include/${LIB_NAME}
 )
 
