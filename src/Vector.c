@@ -1,6 +1,6 @@
 #include "Vector.h"
-#include "VectorImpl.h"
 #include "MathUtils.h"
+#include "VectorImpl.h"
 
 #include "types/VectorType.h"
 
@@ -137,7 +137,7 @@ bool _wtf_vec_is_normalized_ptr(const wtf_vec_t* v) {
     return wtf_dcmp(wtf_vec_squared_norm(v), 1.0);
 }
 
-bool _wtf_vec_compare_val(wtf_vec_t v1, wtf_vec_t v2) { 
+bool _wtf_vec_compare_val(wtf_vec_t v1, wtf_vec_t v2) {
     return wtf_dcmp(v1.x, v2.x) && wtf_dcmp(v1.y, v2.y) && wtf_dcmp(v1.z, v2.z);
 }
 

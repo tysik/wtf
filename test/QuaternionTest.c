@@ -16,14 +16,12 @@
 static int tests_run = 0;
 
 static char* test_construction() {
-    // wtf_vec_t v = {.x = 1.0, .y = 2.0, .z = 3.0};
-
     wtf_quat_t qe_expected = {.w = 0.0, .i = 0.0, .j = 0.0, .k = 0.0};
     wtf_quat_t qp_expected = {.w = 0.0, .i = 1.0, .j = 2.0, .k = 3.0};
     wtf_quat_t qr_expected = {.w = 1.0, .i = 0.0, .j = 0.0, .k = 0.0};
 
     wtf_quat_t qe = wtf_quat_empty();
-    wtf_quat_t qp = wtf_quat_pure(&(wtf_vec_t){.x = 1.0, .y = 2.0, .z = 3.0});
+    wtf_quat_t qp = wtf_quat_pure(wtf_vec_custom(1.0, 2.0, 3.0));
     wtf_quat_t qr = wtf_quat_real(1.0);
 
     mu_assert("error, wtf_quat_empty(q) != expected", wtf_quat_compare(&qe, &qe_expected));
