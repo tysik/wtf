@@ -16,21 +16,7 @@ void draw_wtf_point(SDL_Renderer* r, const wtf_vec_t* p) {
     SDL_RenderDrawPoint(r, x, y);
 }
 
-#define take_vec(X,Y) _Generic((Y), wtf_vec_t : take_vec_val, wtf_vec_t * : take_vec_ptr)(X,Y)
-
-void take_vec_ptr(const wtf_vec_t* v, const wtf_vec_t* v2) {
-    printf("taken by ptr\n");
-}
-
-void take_vec_val(wtf_vec_t v, wtf_vec_t v2) {
-    printf("taken by val\n");
-}
-
 int main() {
-    wtf_vec_t dummy = wtf_vec_empty();
-    take_vec(&dummy, &dummy);
-    take_vec(dummy, dummy);
-
     SDL_Init(SDL_INIT_VIDEO);
     SDL_Window* win =
         SDL_CreateWindow("WTF Example", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,

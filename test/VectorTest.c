@@ -233,20 +233,17 @@ static char* test_norm() {
 }
 
 static char* test_normalize() {
-    wtf_vec_t v1 = {.x = 0.0, .y = 2.0, .z = 0.0};
-    wtf_vec_t v2 = {.x = 0.0, .y = 20.05, .z = -20.05};
-
     wtf_vec_t v1_expected = {.x = 0.0, .y = 1.0, .z = 0.0};
     wtf_vec_t v2_expected = {.x = 0.0, .y = 0.707106781, .z = -0.707106781};
 
-    v1 = wtf_vec_normalized(&v1);
-    v2 = wtf_vec_normalized(&v2);
+    wtf_vec_t v1 = wtf_vec_normalized(wtf_vec_custom(0.0, 2.0, 0.0));
+    wtf_vec_t v2 = wtf_vec_normalized(wtf_vec_custom(0.0, 20.05, -20.05));
 
-    mu_assert("error, wtf_vec_normalized(v) != expected", wtf_vec_compare(&v1, &v1_expected));
-    mu_assert("error, norm(v) != 1.0", wtf_vec_is_normalized(&v1));
+    mu_assert("error, wtf_vec_normalized(v) != expected", wtf_vec_compare(v1, v1_expected));
+    mu_assert("error, norm(v) != 1.0", wtf_vec_is_normalized(v1));
 
-    mu_assert("error, wtf_vec_normalized(v) != expected", wtf_vec_compare(&v2, &v2_expected));
-    mu_assert("error, norm(v) != 1.0", wtf_vec_is_normalized(&v2));
+    mu_assert("error, wtf_vec_normalized(v) != expected", wtf_vec_compare(v2, v2_expected));
+    mu_assert("error, norm(v) != 1.0", wtf_vec_is_normalized(v2));
 
     return 0;
 }
