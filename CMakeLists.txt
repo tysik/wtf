@@ -34,9 +34,10 @@ include_directories(include)
 
 add_library(${LIB_NAME} SHARED 
     src/MathUtils.c
-    src/Matrix.c
+    # src/Matrix.c
     src/Quaternion.c
-    src/Rotation.c
+    # src/Rotation.c
+    # src/Transformation.c
     src/Vector.c
 )
 target_link_libraries(${LIB_NAME} m)
@@ -48,13 +49,13 @@ enable_testing()
 if(BUILD_TESTING)
     add_new_test(math_utils_test test/MathUtilsTest.c)
     add_new_test(vector_test test/VectorTest.c)
-    add_new_test(matrix_test test/MatrixTest.c)
+    # add_new_test(matrix_test test/MatrixTest.c)
     add_new_test(quaternion_test test/QuaternionTest.c)
-    add_new_test(rotation_test test/RotationTest.c)
+    # add_new_test(rotation_test test/RotationTest.c)
 endif()
 
 if(BUILD_EXAMPLES)
-    add_new_example(example examples/main.c)
+    # add_new_example(example examples/main.c)
 endif()
 
 install(TARGETS ${LIB_NAME}
@@ -70,6 +71,7 @@ install(FILES
     include/Matrix.h
     include/Rotation.h
     include/Quaternion.h
+    include/Transformation.h
     DESTINATION include/${LIB_NAME}
 )
 

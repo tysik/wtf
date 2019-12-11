@@ -1,16 +1,9 @@
 #ifndef WTF_VECTOR_H_
 #define WTF_VECTOR_H_
 
-#include "types/ScalarType.h"
-
-#include <stdbool.h>
-
-#define MUST_USE __attribute__((warn_unused_result))
-
-// Forward declarations:
-//
-
-typedef union wtf_vec_t wtf_vec_t;
+#include "MacroUtils.h"
+#include "TypesFwd.h"
+#include "VectorImpl.h"
 
 // Constructors:
 //
@@ -34,14 +27,14 @@ wtf_vec_t wtf_vec_custom(wtf_scalar_t x, wtf_scalar_t y, wtf_scalar_t z);
 //
 
 // Negate a vector
-wtf_vec_t wtf_vec_negated(const wtf_vec_t* v);
+#define wtf_vec_negated(v) WTF_ONE_ARG_VEC_FUNC(negated, v)
 
 // Scale a vector by a scalar
-wtf_vec_t wtf_vec_scaled(const wtf_vec_t* v, wtf_scalar_t s);
+#define wtf_vec_scaled(v, s) WTF_TWO_ARGS_VEC_FUNC(scaled, v, s)
 
 // Get a normalized version of a vector
 // The vector length must be greater than 0.
-wtf_vec_t wtf_vec_normalized(const wtf_vec_t* v);
+#define wtf_vec_normalized(v) WTF_ONE_ARG_VEC_FUNC(normalized, v)
 
 // TODO: Add reflected vector
 // TODO: Add LERP https://en.wikipedia.org/wiki/Linear_interpolation
@@ -50,38 +43,36 @@ wtf_vec_t wtf_vec_normalized(const wtf_vec_t* v);
 //
 
 // Add vectors v1 and v2
-wtf_vec_t wtf_vec_add(const wtf_vec_t* v1, const wtf_vec_t* v2);
+#define wtf_vec_add(v1, v2) WTF_TWO_ARGS_VEC_FUNC(add, v1, v2)
 
 // Subtract vector v2 from vector v1
-wtf_vec_t wtf_vec_subtract(const wtf_vec_t* v1, const wtf_vec_t* v2);
+#define wtf_vec_subtract(v1, v2) WTF_TWO_ARGS_VEC_FUNC(subtract, v1, v2)
 
 // Get a cross product of two vectors: v1 x v2
-wtf_vec_t wtf_vec_cross(const wtf_vec_t* v1, const wtf_vec_t* v2);
+#define wtf_vec_cross(v1, v2) WTF_TWO_ARGS_VEC_FUNC(cross, v1, v2)
 
 // Get a dot product of two vectors: v1 * v2
-wtf_scalar_t wtf_vec_dot(const wtf_vec_t* v1, const wtf_vec_t* v2);
+#define wtf_vec_dot(v1, v2) WTF_TWO_ARGS_VEC_FUNC(dot, v1, v2)
 
 // Vector traits:
 //
 
 // Get a norm of a vector
-wtf_scalar_t wtf_vec_norm(const wtf_vec_t* v);
+#define wtf_vec_norm(v) WTF_ONE_ARG_VEC_FUNC(norm, v)
 
 // Get a squared norm of a vector
-wtf_scalar_t wtf_vec_squared_norm(const wtf_vec_t* v);
+#define wtf_vec_squared_norm(v) WTF_ONE_ARG_VEC_FUNC(squared_norm, v)
 
 // Check if vector is normalized
-bool wtf_vec_is_normalized(const wtf_vec_t* v);
+#define wtf_vec_is_normalized(v) WTF_ONE_ARG_VEC_FUNC(is_normalized, v)
 
 // Auxiliary:
 //
 
 // Compare two vectors by coordinates
-bool MUST_USE wtf_vec_compare(const wtf_vec_t* v1, const wtf_vec_t* v2);
+#define wtf_vec_compare(v1, v2) WTF_TWO_ARGS_VEC_FUNC(compare, v1, v2)
 
 // Print a vector to stdout
-void wtf_vec_print(const wtf_vec_t* v);
-
-#undef MUST_USE
+#define wtf_vec_print(v) WTF_ONE_ARG_VEC_FUNC(print, v)
 
 #endif // WTF_VECTOR_H_
