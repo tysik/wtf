@@ -39,6 +39,6 @@ $ ./clang-format-all src/ include/ test/ example/
 
 ## References
 
-[1] Understanding Quaternions - www.3dgep.com/understanding-quaternions
-[2] Lear OpenGL - www.learnopengl.com/Getting-started/Coordinate-Systems
-[3] The Perspective and Orthographic Projection Matrix - www.scratchapixel.com/lessons/3d-basic-rendering/perspective-and-orthographic-projection-matrix/projection-matrix-introduction
+- Understanding Quaternions - www.3dgep.com/understanding-quaternions
+- Lear OpenGL - www.learnopengl.com/Getting-started/Coordinate-Systems
+- The Perspective and Orthographic Projection Matrix - www.scratchapixel.com/lessons/3d-basic-rendering/perspective-and-orthographic-projection-matrix/projection-matrix-introduction
